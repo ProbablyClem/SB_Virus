@@ -70,15 +70,17 @@ package body p_virus is
     --{} => {la position de la pièce de couleur coul a été affichée si cette pièce est dans Grille
     --       exemple: ROUGE: F4 G5}
     begin
-        ecrire(coul);
+        ecrire(coul); ecrire(": ");
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
-                    ecrire(Grille(i, y));
+                    ecrire(i);
+                    ecrire(y);
                     ecrire(' ');
                 end if;
             end loop;
         end loop;
+        a_la_ligne;
     end PosPiece;
     
     ---------------Contrôle du jeu
