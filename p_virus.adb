@@ -68,8 +68,8 @@ package body p_virus is
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
                     ecrire(y);
-                    ecrire(i);
-                    ecrire(' ');
+                    ecrire(t_lig'image(i));
+                    ecrire(", ");
                 end if;
             end loop;
         end loop;
@@ -84,6 +84,10 @@ package body p_virus is
         compteurCouleur : natural := 0; --nombre d'elements de la couleur coul
         elementsBon : natural := 0; --nombre d'elemnts de la couleur coul qui peuvent se deplacer
     begin
+        if coul = blanc then
+            return false;
+        end if;
+
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
@@ -97,21 +101,22 @@ package body p_virus is
                 if Grille(i, y) = coul then
                     case Dir is
                     when bg => 
-                        if Grille(i+1, T_col'pred(y)) = vide then
+                        if (i /= t_lig'last and y /= t_col'first) and then ((Grille(i+1, T_col'pred(y)) = vide or Grille(i+1, T_col'pred(y)) = coul)) then
                             elementsBon := elementsBon +1;
                         end if;
                     when hg =>
-                        if Grille(i-1, t_col'pred(y)) = vide then
-                                elementsBon := elementsBon +1;
-                            end if;
+                        if (i /= t_lig'first and y /= t_col'first) and then ((Grille(i-1, t_col'pred(y)) = vide or Grille(i-1, t_col'pred(y)) = coul)) then
+                            elementsBon := elementsBon +1;
+                        end if;
                     when bd =>
-                        if Grille(i+1, t_col'pred(y)) = vide then
+                        if (i /= t_lig'last and y /= t_col'last) and then  ((Grille(i+1, t_col'succ(y)) = vide or Grille(i+1, t_col'succ(y)) = coul)) then
                             elementsBon := elementsBon +1;
                         end if;
                     when hd =>
-                        if Grille(i-1, t_col'pred(y)) = vide then
+                        if (i /= t_lig'first and y /= t_col'last) and then ((Grille(i-1, t_col'succ(y)) = vide or Grille(i-1, t_col'succ(y)) = coul)) then
                             elementsBon := elementsBon +1;
                         end if;
+                    when others => null;
                     end case;
                 end if;
 
@@ -120,28 +125,52 @@ package body p_virus is
                 end if;
             end loop;
         end loop;
-
         return false;
 
     exception 
-        when CONSTRAINT_ERROR => return false;
+      when CONSTRAINT_ERROR => return false;
     end Possible;
 
 
     procedure MajGrille (Grille: in out TV_Grille; coul: in T_coulP; Dir :in T_Direction) is
     --  {la pièce de couleur coul peut être déplacéedans la direction Dir} 
     --=> {Grillea été mis à jour suite au déplacement}
+    baseGrille : TV_Grille := grille;
     begin
-        return;
-        -- à compléter
+        for i in Grille'range(1) loop
+            for y in Grille'range(2) loop
+                if baseGrille(i, y) = coul then
+                    case Dir is
+                    when bg => 
+                        Grille(i+1, T_col'pred(y)) := baseGrille(i, y);
+                        Grille(i, y) := vide;
+                    when hg =>
+                        Grille(i-1, t_col'pred(y)) := baseGrille(i, y);
+                        Grille(i, y) := vide;
+                    when bd =>
+                        Grille(i+1, t_col'succ(y)) := baseGrille(i, y);
+                        Grille(i, y) := vide;
+                    when hd =>
+                        Grille(i-1, t_col'succ(y)) := baseGrille(i, y);
+                        Grille(i, y) := vide;
+                    when others => null;
+                    end case;
+                end if;
+            end loop;
+        end loop;
+
+    exception
+        when CONSTRAINT_ERROR => ecrire("erreur de merde");
     end MajGrille;
 
     function Guerison(Grille: in TV_Grille) return boolean is
     --{} => {résultat = le virus (pièce rouge) est prêt à sortir (position coin haut gauche)}
     begin
-        -- à compléter
-
-        return false; -- à enlever
+        if Grille(1, 'A') = rouge then
+            return true;
+        else 
+            return false;
+        end if;
     end Guerison;
 
 end p_virus;
