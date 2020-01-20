@@ -1,16 +1,13 @@
 V "GNAT Lib v8"
-A -gnatv
-A -gnato
 P ZX
 
 RN
-RV NO_DIRECT_BOOLEAN_OPERATORS
-RV NO_EXCEPTIONS
 RV NO_IO
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U p_virus%b		p_virus.adb		f433b21e NE OO PK IL
+U p_virus%b		p_virus.adb		60651455 NE OO PK IL
+Z ada.tags%s		a-tags.adb		a-tags.ali
 Z interfaces%s		interfac.ads		interfac.ali
 Z p_esiut%s		p_esiut.adb		p_esiut.ali  ED
 
@@ -52,8 +49,8 @@ D interfac.ads		20180111085525 5ab55268 interfaces%s
 D i-cstrea.ads		20180111085525 e53d8b8e interfaces.c_streams%s
 D p_esiut.ads		20190918114442 33d036dd p_esiut%s
 D p_esiut.adb		20190918114551 4a7ed7d1 p_esiut%b
-D p_virus.ads		20200120100704 60a99d60 p_virus%s
-D p_virus.adb		20200120103824 949a2f7e p_virus%b
+D p_virus.ads		20200120113519 60a99d60 p_virus%s
+D p_virus.adb		20200120140446 00cc8935 p_virus%b
 D sequenio.ads		20170908151217 46f09bdc sequential_io%s
 D system.ads		20180111085525 4635ec04 system%s
 D s-bytswa.ads		20180111085525 799c7440 system.byte_swapping%s
@@ -81,24 +78,23 @@ D s-wchcon.ads		20180111085525 1b7d22d2 system.wch_con%s
 D text_io.ads		20170908151217 21b2c898 text_io%s
 D unchconv.ads		20170908151217 ca2f9e18 unchecked_conversion%s
 X 4 a-sequio.ads
-53P9*File_Type<32|63P9> 16|44r48[28] 17|20r48[16|28]
-85U14*Reset 17|42s9[16|28]
-99U14*Read 17|45s13[16|28] 57s13[16|28]
-102V13*End_Of_File{boolean} 17|44s36[16|28] 50s12[16|28]
+53P9*File_Type<32|63P9> 16|44r48[28] 17|19r48[16|28]
+85U14*Reset 17|41s9[16|28]
+99U14*Read 17|44s13[16|28] 51s13[16|28]
 X 14 p_esiut.ads
 15K11*p_esiut 181e14 16|1w26 1r39
-21U16*ECRIRE 17|77s21
-53U16*ECRIRE=54:42 17|78s21 79s21
-69U16*ECRIRE=70:42 17|73s23
-112U16*A_LA_LIGNE=113:42 17|83s9
+21U16*ECRIRE 17|71s21
+53U16*ECRIRE=54:42 17|72s21 73s21
+69U16*ECRIRE=70:42 17|67s23
+112U16*A_LA_LIGNE=113:42 17|77s9
 144k14*P_ENUM 170e19 16|17r30 32r29
-163U21*ECRIRE 17|73s9[16|17]
+163U21*ECRIRE 17|67s9[16|17]
 X 16 p_virus.ads
-3K9*p_virus 70l5 70e12 17|1b14 111l5 111t12
+3K9*p_virus 70l5 70e12 17|1b14 105l5 105t12
 8E13*T_Col{character} 12r37 20r17
 9I13*T_Lig{integer} 12r30 21r15
 10E10*T_Coul 10e100 12r47 16r24
-10n21*rouge{10E10} 16r37 17|31r31
+10n21*rouge{10E10} 16r37 17|30r31
 10n28*turquoise{10E10}
 10n39*orange{10E10}
 10n47*rose{10E10}
@@ -110,55 +106,54 @@ X 16 p_virus.ads
 10n88*blanc{10E10} 16r44
 10n95*vide{10E10} 17|10r32
 12A10*TV_Grille(10E10)<integer><character> 39r41 44r91 54r35 59r35 63r41
-. 67r34 17|3r41 20r92 69r35 87r35 95r41 103r34
-16E13*T_CoulP{10E10} 17r37 22r17 25r29 54r55 59r52 63r61 17|69r55 87r52 95r61
+. 67r34 17|3r41 19r92 63r35 81r35 89r41 97r34
+16E13*T_CoulP{10E10} 17r37 22r17 25r29 54r55 59r52 63r61 17|63r55 81r52 89r61
 17K13*p_coul_io[14|144] 17r51
-19R10*TR_ElemP 23e15 28r45 17|28r38 36r15
-20e9*colonne{8E13} 17|59r37
-21i9*ligne{9I13} 17|59r25
-22e9*couleur{16E13} 17|31r21 59r54 60r25
-25A10*TV_Pieces(boolean)<10E10> 39r67 44r117 17|3r67 20r118
-28K13*p_piece_io[4|43] 28r61 44r37 17|20r37
-31E10*T_Direction 31e41 32r36 59r70 63r78 17|87r70 95r78
+19R10*TR_ElemP 23e15 28r45 17|27r38 35r15
+20e9*colonne{8E13} 17|53r37
+21i9*ligne{9I13} 17|53r25
+22e9*couleur{16E13} 17|30r21 53r54 54r25
+25A10*TV_Pieces(boolean)<10E10> 39r67 44r117 17|3r67 19r118
+28K13*p_piece_io[4|43] 28r61 44r37 17|19r37
+31E10*T_Direction 31e41 32r36 59r70 63r78 17|81r70 89r78
 31n26*bg{31E10}
 31n30*hg{31E10}
 31n34*bd{31E10}
 31n38*hd{31E10}
 32K13*p_dir_io[14|144] 32r54
 35X7*EX_NumConfig
-39U15*InitPartie 39=26 39=52 17|3b15 17l9 17t19
+39U15*InitPartie 39=26 39=52 17|3b15 16l9 16t19
 39a26 Grille{12A10} 17|3b26 8r18 9r22 10m17
-39a52 Pieces{25A10} 17|3b52 14r18 15m13
-44U15*Configurer 44=26 44>59 44=77 44=102 17|20b15 66l9 66t19
-44p26 f{4|53P9[28]} 17|20b26 42m15 44r48 45r18 50r24 57r18
-44i59 nb{positive} 17|20b59 44r20
-44a77 Grille{12A10} 17|20b77 59m13
-44a102 Pieces{25A10} 17|20b103 60m13
-54U15*PosPiece 54>24 54>46 17|69b15 84l9 84t17
-54a24 Grille{12A10} 17|69b24 74r18 75r22 76r20
-54e46 coul{16E13} 17|69b46 73r16 76r35
-59V14*Possible{boolean} 59>24 59>46 59>61 17|87b14 92l9 92t17
-59a24 Grille{12A10} 17|87b24
-59e46 coul{16E13} 17|87b46
-59e61 Dir{31E10} 17|87b61
-63U15*MajGrille 63=26 63>52 63>70 17|95b15 101l9 101t18
-63a26 Grille{12A10} 17|95b26
-63e52 coul{16E13} 17|95b52
-63e70 Dir{31E10} 17|95b70
-67V14*Guerison{boolean} 67>23 17|103b14 109l9 109t17
-67a23 Grille{12A10} 17|103b23
+39a52 Pieces{25A10} 17|3b52 14m9
+44U15*Configurer 44=26 44>59 44=77 44=102 17|19b15 60l9 60t19
+44p26 f{4|53P9[28]} 17|19b26 41m15 44r18 51r18
+44i59 nb{positive} 17|19b59 43r20
+44a77 Grille{12A10} 17|19b77 53m13
+44a102 Pieces{25A10} 17|19b103 54m13
+54U15*PosPiece 54>24 54>46 17|63b15 78l9 78t17
+54a24 Grille{12A10} 17|63b24 68r18 69r22 70r20
+54e46 coul{16E13} 17|63b46 67r16 70r35
+59V14*Possible{boolean} 59>24 59>46 59>61 17|81b14 86l9 86t17
+59a24 Grille{12A10} 17|81b24
+59e46 coul{16E13} 17|81b46
+59e61 Dir{31E10} 17|81b61
+63U15*MajGrille 63=26 63>52 63>70 17|89b15 95l9 95t18
+63a26 Grille{12A10} 17|89b26
+63e52 coul{16E13} 17|89b52
+63e70 Dir{31E10} 17|89b70
+67V14*Guerison{boolean} 67>23 17|97b14 103l9 103t17
+67a23 Grille{12A10} 17|97b23
 X 17 p_virus.adb
 8i13 i{integer} 10r24
 9e17 y{character} 10r26
-14e13 i{16|10E10} 15r20
-28U19 estRouge 28b19 28>29 28=48 34l13 34t21 47s13 62s13
-28r29 elem{16|19R10} 31r16
-28i48 i{natural} 32m17 32r22
-36r9 elem{16|19R10} 45m21 47r22 57m21 59r20 59r32 59r49 60r20 62r22
-37i9 i{natural} 44r15 47m28 47r28 54m9 62m28 62r28 63r19
-38i9 j{natural}
-74i13 i{integer} 76r27 77r28
-75e17 y{character} 76r30 78r28
+27U19 estRouge 27b19 27>29 27=48 33l13 33t21 45s13 56s13
+27r29 elem{16|19R10} 30r16
+27i48 i{natural} 31m17 31r22
+35r9 elem{16|19R10} 44m21 45r22 51m21 53r20 53r32 53r49 54r20 56r22
+36i9 i{natural} 43r15 45m28 45r28 48m9 56m28 56r28 57r19
+37i9 j{natural}
+68i13 i{integer} 70r27 71r28
+69e17 y{character} 70r30 72r28
 X 18 sequenio.ads
 24k17*Sequential_IO 16|1w6 28r31
 X 32 s-sequio.ads

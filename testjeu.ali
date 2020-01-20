@@ -1,7 +1,5 @@
 V "GNAT Lib v8"
 M P W=b
-A -gnatv
-A -gnato
 P ZX
 
 RN
@@ -9,9 +7,10 @@ RV NO_IO
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U testjeu%b		testjeu.adb		7539c6f5 NE OO SU IL
+U testjeu%b		testjeu.adb		1412a03a NE OO SU IL
 W p_esiut%s		p_esiut.adb		p_esiut.ali
 W p_virus%s		p_virus.adb		p_virus.ali
+W p_vuetest%s		p_vuetest.adb		p_vuetest.ali
 W sequential_io%s
 
 D ada.ads		20170911084841 76789da1 ada%s
@@ -25,7 +24,8 @@ D a-unccon.ads		20170908151217 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20180111085525 5ab55268 interfaces%s
 D i-cstrea.ads		20180111085525 e53d8b8e interfaces.c_streams%s
 D p_esiut.ads		20190918114442 33d036dd p_esiut%s
-D p_virus.ads		20200120100704 60a99d60 p_virus%s
+D p_virus.ads		20200120113519 60a99d60 p_virus%s
+D p_vuetest.ads		20200120124418 c6fcfb4c p_vuetest%s
 D sequenio.ads		20170908151217 46f09bdc sequential_io%s
 D system.ads		20180111085525 4635ec04 system%s
 D s-crtl.ads		20180111085525 0ebbdb71 system.crtl%s
@@ -41,34 +41,37 @@ D s-stoele.ads		20180111085525 2dc34a04 system.storage_elements%s
 D s-traent.ads		20180111085525 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20180111085525 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20180111085525 1b7d22d2 system.wch_con%s
-D testjeu.adb		20200120103749 60b0f694 testjeu%b
+D testjeu.adb		20200120124520 c7676b17 testjeu%b
 D text_io.ads		20170908151217 21b2c898 text_io%s
 X 4 a-sequio.ads
-53P9*File_Type<20|63P9> 28|7r20[12|28]
+53P9*File_Type<21|63P9> 29|7r20[12|28]
 55E9*File_Mode
-55n23*In_File{55E9[12|28]} 28|11r35[12|28]
-76U14*Open 28|11s16[12|28]
+55n23*In_File{55E9[12|28]} 29|11r35[12|28]
+76U14*Open 29|11s16[12|28]
 X 11 p_esiut.ads
-15K11*p_esiut 181e14 28|1w6 1r43
-26U16*LIRE 28|15s9
-69U16*ECRIRE=70:42 28|14s9
-87U16*ECRIRE_LIGNE=88:42 28|17s9
+15K11*p_esiut 181e14 29|1w6 1r54
+26U16*LIRE 29|15s9
+69U16*ECRIRE=70:42 29|14s9
+87U16*ECRIRE_LIGNE=88:42 29|17s9
 X 12 p_virus.ads
-3K9*p_virus 70e12 28|1w15 1r52
-12A10*TV_Grille(10E10)<integer><character> 28|4r14
-16E13*T_CoulP{10E10} 28|22r14
-25A10*TV_Pieces(boolean)<10E10> 28|5r14
-28K13*p_piece_io[4|43] 28|7r9 11r5 11r24
-39U15*InitPartie 28|12s5
-44U15*Configurer 28|20s5
-54U15*PosPiece 28|24s13
-X 13 sequenio.ads
-24k17*Sequential_IO 28|1w24
-X 20 s-sequio.ads
+3K9*p_virus 70e12 29|1w15 1r63
+12A10*TV_Grille(10E10)<integer><character> 29|4r14
+16E13*T_CoulP{10E10} 29|22r14
+25A10*TV_Pieces(boolean)<10E10> 29|5r14
+28K13*p_piece_io[4|43] 29|7r9 11r5 11r24
+39U15*InitPartie 29|12s5
+44U15*Configurer 29|20s5
+54U15*PosPiece 29|24s13
+X 13 p_vuetest.ads
+4K9*p_vuetest 15e14 29|1w39 1r72
+6U15*AfficheGrille 29|28s5
+X 14 sequenio.ads
+24k17*Sequential_IO 29|1w24
+X 21 s-sequio.ads
 63P9*File_Type(43R9)
-X 28 testjeu.adb
-2U11*testjeu 2b11 27l5 27t12
-4a5 grille{12|12A10} 12m16 12r16 20m30 20r30 24r22
+X 29 testjeu.adb
+2U11*testjeu 2b11 29l5 29t12
+4a5 grille{12|12A10} 12m16 12r16 20m30 20r30 24r22 28r19
 5a5 pieces{12|25A10} 12m24 12r24 20m38 20r38 23r12
 6i5 numConfig{natural} 15m14 16r15 20r19
 7p5 f{4|53P9[12|28]} 11m21 11r21 20m16 20r16

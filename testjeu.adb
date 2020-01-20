@@ -1,4 +1,4 @@
-with p_esiut, p_virus, sequential_io; use p_esiut, p_virus;
+with p_esiut, p_virus, sequential_io, p_vuetest; use p_esiut, p_virus, p_vuetest;
 procedure testjeu is
 
     grille : TV_Grille;
@@ -24,4 +24,6 @@ begin
             PosPiece(grille, i);
         end if;
     end loop;
+
+    AfficheGrille(Grille);
 end testjeu;
