@@ -14,31 +14,37 @@ package body p_vuetest is
 
     begin
 
+        put_line("  Plateau de jeu");
+        put_line("------------------");
+        new_line;
+
         put_line("     A B C D E F G");
         put_line("   S - - - - - - -");
 
         for i in T_lig'range loop
             put(integer'image(i) & " |");
             for j in T_col'range loop
-                begin
-                    case Grille(i, j) is
-                        when vide =>
-
-                            if (T_lig'pos(i) mod 2) = (T_col'pos(j) mod 2) then
-                                put(" .");
-                            else
-                                put("  ");
-                            end if;
-                        when blanc =>
-                            put(" F");
-                        when others =>
-                            put(integer'image(T_coul'pos(Grille(i, j))));
-                    end case;
-                end;
+                case Grille(i, j) is
+                    when vide =>
+                        if (T_lig'pos(i) mod 2) = (T_col'pos(j) mod 2) then
+                            put(" ·");
+                        else
+                            put("  ");
+                        end if;
+                    when blanc =>
+                        put(" F");
+                    when others =>
+                        put(integer'image(T_coul'pos(Grille(i, j))));
+                end case;
             end loop;
             new_line;
         end loop;
 
     end AfficheGrille;
+
+    procedure clear is
+    begin
+        put(ASCII.ESC & "[2J");
+    end clear;
 
 end p_vuetest;

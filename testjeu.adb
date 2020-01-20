@@ -25,6 +25,8 @@ begin
         end if;
     end loop;
 
+    clear;
+
     AfficheGrille(Grille);
 EXCEPTION
     when p_piece_io.END_ERROR => ecrire("Fichier corompu");

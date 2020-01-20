@@ -82,7 +82,7 @@ package body p_virus is
     --=> {résultat= vrai si la pièce de couleur coul peut être déplacée dans la direction Dir}
 
         compteurCouleur : natural := 0; --nombre d'elements de la couleur coul
-        elementsBon : natural := 0; --nombre d'elemnts de la couleur coul qui peuvent se deplacer;
+        elementsBon : natural := 0; --nombre d'elemnts de la couleur coul qui peuvent se deplacer
     begin
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop

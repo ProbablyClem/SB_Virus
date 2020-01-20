@@ -12,4 +12,6 @@ package p_vuetest is
     --      *une case de la couleur d’une pièce mobile contient le chiffre correspondant à la
     --       position de cette couleur dans le type T_Coul}
 
+    procedure clear;
+
 end p_vuetest;
