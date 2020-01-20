@@ -14,4 +14,6 @@ package p_vuetxt is
 
     procedure clear;
 
+    procedure sautLigne (x: in positive);
+
 end p_vuetxt;

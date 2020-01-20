@@ -51,4 +51,11 @@ package body p_vuetxt is
         put(ASCII.ESC & "[2J");
     end clear;
 
+    procedure sautLigne (x: in positive) is
+    begin
+        for i in 1..x loop
+            new_line;
+        end loop;
+    end sautLigne;
+
 end p_vuetxt;

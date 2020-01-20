@@ -70,6 +70,7 @@ procedure av_txt is
                 put_line(T_coul'image(i));
             end if;
         end loop;
+        new_line;
         put_line("------------------------");
     end showAvailable;
 
@@ -82,11 +83,12 @@ begin
 
     Configurer(f, conf, grille, pieces);
 
-    while not guerison(grille) loop
+     while not guerison(grille) loop
         clear;
         showAvailable(Pieces);
-
         AfficheGrille(grille);
+
+        sautLigne(3);
 
         getCoul(coul);
 
@@ -94,6 +96,13 @@ begin
             put_line("Cette pièce ne peut pas bouger");
             skip_line;
         else
+
+            clear;
+            showAvailable(Pieces);
+            AfficheGrille(grille);
+            put_line("Quelle pièce souhaitez vous déplacer");
+            put_line("-->" & T_coul'image(coul));
+
             getDirection(dir);
 
             if Possible(grille, coul, dir) then
@@ -105,5 +114,12 @@ begin
         end if;
 
     end loop;
+
+    clear;
+    AfficheGrille(grille);
+
+    new_line;
+
+    put_line("BRAVO, vous avez battu le niveau" & integer'image(conf));
 
 end av_txt;
