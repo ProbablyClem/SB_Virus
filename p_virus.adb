@@ -34,9 +34,13 @@ package body p_virus is
             end if;
         end test
         
-        i: natural := 0;
         elem: TR_elemP;
+        i: natural := 0; -- variable destinée à compter les pieces rouges
+        j: natural := 1;
+
     begin
+
+        reset(f);
 
         while i < (nb-1)*2 and while not end_of_file(f) loop -- on skip les configs précédentes
             read(f, elem);
@@ -52,9 +56,12 @@ package body p_virus is
 
         loop
             read(f, elem);
-            Grille(elem.lig, elem.col) := elem.couleur; -- on ajoute la pièce à la grille
             
+            Grille(elem.lig, elem.col) := elem.couleur; -- on ajoute la pièce à la grille
+            Pieces(j) := elem;
+
             test(elem, i);
+            j := j + 1;
         exit when i = 2;
         end loop;
 

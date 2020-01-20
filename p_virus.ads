@@ -22,7 +22,7 @@ package p_virus is
         couleur:T_CoulP;   --sa couleur
     end record;
     
-    type TV_Pieces is array(T_coulP)of boolean;
+    type TV_Pieces is array(T_coulP) of boolean;
   
   ----Instanciation de sequential_io pour un fichier de TR_ElemP;
     package p_piece_io is new sequential_io(TR_ElemP);  use p_piece_io;
