@@ -51,7 +51,7 @@ package body p_virus is
     --  {coul/= blanc} 
     --=> {résultat= vrai si la pièce de couleur coul peut être déplacée dans la direction Dir}
     begin
-        -- à compléter
+        
     end Possible;
 
 
