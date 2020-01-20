@@ -15,7 +15,8 @@ package body p_virus is
             Pieces(i) := false;
         end loop;
     end InitPartie;
-
+    --hmm
+    
     procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
     --  {f ouvert, nb est un numéro de configuration (appelé numéro de partie),
     --  une configuration décrit le placement des pièces du jeu, pour chaque configuration:
