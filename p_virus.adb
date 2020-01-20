@@ -26,23 +26,41 @@ package body p_virus is
     --      *les deux éléments constituant le virus (couleur rouge)terminent la configuration}
     --  =>  {Grille a été mis à jour par lecture dans f de la configuration de numéro nb
     --          Pieces a été initialisé en fonction des pièces de cette configuration}
+        procedure test (elem: in TR_elemP, i: in out natural) is
+        -- on test si la pièce est rouge, si oui, on incrémente i
+        begin
+            if elem.couleur = rouge then
+                i := i + 1;
+            end if;
+        end test
+        
+        i: natural := 0;
+        elem: TR_elemP;
     begin
 
-        for i in 1..nb-1 loop -- on skip les configs précédentes
-            loop
-                read(f, elem);
-            exit when elem.couleur = Rouge and then last.couleur = Rouge;
-                last := elem; -- on le met à la fin pour pas donner à last une valeur vide au début
-            end loop;
-        end loop;
-
-        loop
-            last := elem;
+        while i < (nb-1)*2 and while not end_of_file(f) loop -- on skip les configs précédentes
             read(f, elem);
 
-            Grille(elem.lig, elem.col) := elem.couleur;
-        exit when elem.couleur = Rouge and last.couleur = Rouge;
+            test(elem, i);
         end loop;
+
+        if end_of_file(f) then
+            raise CONSTRAINT_ERROR;
+        end if;
+
+        i := 0;
+
+        loop
+            read(f, elem);
+            Grille(elem.lig, elem.col) := elem.couleur; -- on ajoute la pièce à la grille
+            
+            test(elem, i);
+        exit when i = 2;
+        end loop;
+
+    exception
+        when CONSTRAINT_ERROR =>
+            put_line("Veuillez rentrer une configuration entre 1 et 20");
 
     end Configurer;
 
