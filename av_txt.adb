@@ -61,6 +61,18 @@ procedure av_txt is
         end loop;
     end getDirection;
 
+    procedure showAvailable (Pieces: in TV_Pieces) is
+    begin
+        put_line("Pièces disponibles :");
+
+        for i in Pieces'range loop
+            if Pieces(i) then
+                put_line(T_coul'image(i));
+            end if;
+        end loop;
+        put_line("------------------------");
+    end showAvailable;
+
 begin
     
     open(f, in_file, "Parties");
@@ -70,14 +82,15 @@ begin
 
     Configurer(f, conf, grille, pieces);
 
-
     while not guerison(grille) loop
         clear;
+        showAvailable(Pieces);
+
         AfficheGrille(grille);
 
         getCoul(coul);
 
-        if not Possible(grille, coul, hg) and not Possible(grille, coul, hg) and not Possible(grille, coul, hg) and not Possible(grille, coul, hg) then
+        if not Possible(grille, coul, hg) and not Possible(grille, coul, hd) and not Possible(grille, coul, bg) and not Possible(grille, coul, bd) then
             put_line("Cette pièce ne peut pas bouger");
             skip_line;
         else
@@ -92,11 +105,5 @@ begin
         end if;
 
     end loop;
-
-
-
-
-
-   
 
 end av_txt;
