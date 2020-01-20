@@ -6,9 +6,13 @@ package body p_virus is
     --      Tous les éléments de Pieces ont été initialisés à false}
     begin
         for i in Grille'range(1) loop
-            for y in Grille(i)'range(2) loop
-                Grille(y) := Vide;
+            for y in Grille'range(2) loop
+                Grille(i,y) := Vide;
             end loop;
+        end loop;
+
+        for i in Pieces'range loop
+            Pieces(i) := false;
         end loop;
     end InitPartie;
 

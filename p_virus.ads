@@ -36,6 +36,7 @@ package p_virus is
     --{} => {Tous les éléments de Grilleont été initialisés avec la couleur vide
     --      y compris les cases inutilisables
     --      Tous les éléments de Pieces ont été initialisés à false}
+    
     procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille:in out TV_Grille; Pieces: in out TV_Pieces);
     --  {f ouvert, nb est un numéro de configuration (appelé numéro de partie),
     --  une configuration décrit le placement des pièces du jeu, pour chaque configuration:
