@@ -8,11 +8,11 @@ package p_virus is
     subtype T_Lig is integer range 1..7;
     type T_Coul is (rouge, turquoise, orange, rose, marron, bleu, violet, vert, jaune, blanc, vide);
 
-    type TV_Grille is array (T_lig, T_col) of T_Coul;4
+    type TV_Grille is array (T_lig, T_col) of T_Coul;
 
     ---------------Types pour représenter les pièces du jeu
 
-    subtype T_CoulPis T_Coul range rouge..blanc;  --couleurs des pièces
+    subtype T_CoulP is T_Coul range rouge..blanc;  --couleurs des pièces
     package p_coul_io is new p_enum(T_CoulP); use p_coul_io;
 
     type TR_ElemP is record --un élément constituant une pièce
@@ -24,11 +24,11 @@ package p_virus is
     type TV_Pieces is array(T_coulP)of boolean;
   
   ----Instanciation de sequential_iopour un fichier de TR_ElemP;
-    package p_piece_iois new sequential_io(TR_ElemP);  use p_piece_io;
+    package p_piece_io is new sequential_io(TR_ElemP);  use p_piece_io;
   
   ----type pour la direction dedéplacementdes pièces
     type T_Direction is (bg, hg, bd, hd);
-    package p_dir_iois new p_enum(T_Direction); use p_dir_io;
+    package p_dir_io is new p_enum(T_Direction); use p_dir_io;
     
     ---------------Primitives d’initialisation d’une partie
 
