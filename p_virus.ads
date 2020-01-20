@@ -2,6 +2,7 @@ with sequential_io; with p_esiut; use p_esiut;
 
 package p_virus is
 
+
     ---------------Types pour représenter lagrille de jeu
 
     subtype T_Col is character range 'A'..'G';
@@ -29,6 +30,9 @@ package p_virus is
   ----type pour la direction de déplacementdes pièces
     type T_Direction is (bg, hg, bd, hd);
     package p_dir_io is new p_enum(T_Direction); use p_dir_io;
+
+  ----Exeptions   
+      EX_NumConfig : Exception:
     
     ---------------Primitives d’initialisation d’une partie
 
