@@ -1,3 +1,4 @@
+with text_io; use text_io;
 package body p_virus is
     
     procedure InitPartie(Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
@@ -16,7 +17,7 @@ package body p_virus is
         end loop;
     end InitPartie;
     --hmm
-    
+
     procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
     --  {f ouvert, nb est un numéro de configuration (appelé numéro de partie),
     --  une configuration décrit le placement des pièces du jeu, pour chaque configuration:
@@ -34,7 +35,15 @@ package body p_virus is
     --{} => {la position de la pièce de couleur coul a été affichée si cette pièce est dans Grille
     --       exemple: ROUGE: F4 G5}
     begin
-        -- à compléter
+        put(Grille(i, y));
+        for i in Grille'range(1) loop
+            for y in Grille'range(2) loop
+                if Grille(i, y) = coul then
+                    put(Grille(i, y));
+                end if;
+            end loop;
+        end loop;
+        new_line;
     end PosPiece;
     
     ---------------Contrôledu jeu
