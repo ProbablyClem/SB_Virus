@@ -74,8 +74,8 @@ package body p_virus is
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
                     ecrire(y);
-                    ecrire(i);
-                    ecrire(' ');
+                    ecrire(t_lig'image(i));
+                    ecrire(", ");
                 end if;
             end loop;
         end loop;
@@ -138,8 +138,26 @@ package body p_virus is
     --  {la pièce de couleur coul peut être déplacéedans la direction Dir} 
     --=> {Grillea été mis à jour suite au déplacement}
     begin
-        return;
-        -- à compléter
+        for i in Grille'range(1) loop
+            for y in Grille'range(2) loop
+                if Grille(i, y) = coul then
+                    case Dir is
+                    when bg => 
+                        Grille(i+1, T_col'pred(y)) := Grille(i, y);
+                        Grille(i, y) := vide;
+                    when hg =>
+                        Grille(i-1, t_col'pred(y)) := Grille(i, y);
+                        Grille(i, y) := vide;
+                    when bd =>
+                        Grille(i+1, t_col'pred(y)) := grille(i, y);
+                        Grille(i, y) := vide;
+                    when hd =>
+                        Grille(i-1, t_col'pred(y)) := grille(i, y);
+                        Grille(i, y) := vide;
+                    end case;
+                end if;
+            end loop;
+        end loop;
     end MajGrille;
 
     function Guerison(Grille: in TV_Grille) return boolean is

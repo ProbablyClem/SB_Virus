@@ -19,6 +19,7 @@ begin
 
     Configurer(f, numConfig, grille, pieces);
     p_piece_io.close(f);
+    
     for i in T_CoulP loop
         if pieces(i) = true then
             PosPiece(grille, i);

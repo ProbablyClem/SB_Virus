@@ -11,9 +11,10 @@ RV NO_IO
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U p_virus%b		p_virus.adb		0cd6c2cb NE OO PK IL
+U p_virus%b		p_virus.adb		08288014 NE OO PK IL
 Z interfaces%s		interfac.ads		interfac.ali
 Z p_esiut%s		p_esiut.adb		p_esiut.ali  ED
+Z system.img_int%s	s-imgint.adb		s-imgint.ali
 
 U p_virus%s		p_virus.ads		15893061 EE OO PK IL
 W ada%s			ada.ads			ada.ali
@@ -54,7 +55,7 @@ D i-cstrea.ads		20180111085525 e53d8b8e interfaces.c_streams%s
 D p_esiut.ads		20190918114442 33d036dd p_esiut%s
 D p_esiut.adb		20190918114551 4a7ed7d1 p_esiut%b
 D p_virus.ads		20200120100704 60a99d60 p_virus%s
-D p_virus.adb		20200120125208 6c7f5fab p_virus%b
+D p_virus.adb		20200120131745 68811d74 p_virus%b
 D sequenio.ads		20170908151217 46f09bdc sequential_io%s
 D system.ads		20180111085525 4635ec04 system%s
 D s-bytswa.ads		20180111085525 799c7440 system.byte_swapping%s
@@ -88,16 +89,16 @@ X 4 a-sequio.ads
 102V13*End_Of_File{boolean} 17|43s36[16|28] 49s12[16|28]
 X 14 p_esiut.ads
 15K11*p_esiut 181e14 16|1w26 1r39
-21U16*ECRIRE 17|77s21
-53U16*ECRIRE=54:42 17|76s21 78s21
-69U16*ECRIRE=70:42 17|72s23
+53U16*ECRIRE=54:42 17|76s21
+69U16*ECRIRE=70:42 17|72s23 77s21 78s21
 112U16*A_LA_LIGNE=113:42 17|82s9
 144k14*P_ENUM 170e19 16|17r30 32r29
 163U21*ECRIRE 17|72s9[16|17]
 X 16 p_virus.ads
-3K9*p_virus 70l5 70e12 17|1b14 153l5 153t12
-8E13*T_Col{character} 12r37 20r17 17|106r40 110r40 114r40 118r40
-9I13*T_Lig{integer} 12r30 21r15
+3K9*p_virus 70l5 70e12 17|1b14 171l5 171t12
+8E13*T_Col{character} 12r37 20r17 17|106r40 110r40 114r40 118r40 146r37 149r37
+. 152r37 155r37
+9I13*T_Lig{integer} 12r30 21r15 17|77r28
 10E10*T_Coul 10e100 12r47 16r24
 10n21*rouge{10E10} 16r37 17|30r31
 10n28*turquoise{10E10}
@@ -109,9 +110,10 @@ X 16 p_virus.ads
 10n75*vert{10E10}
 10n81*jaune{10E10}
 10n88*blanc{10E10} 16r44
-10n95*vide{10E10} 17|10r32 106r57 110r57 114r57 118r57
+10n95*vide{10E10} 17|10r32 106r57 110r57 114r57 118r57 147r41 150r41 153r41
+. 156r41
 12A10*TV_Grille(10E10)<integer><character> 39r41 44r91 54r35 59r35 63r41
-. 67r34 17|3r41 19r92 68r35 86r35 137r41 145r34
+. 67r34 17|3r41 19r92 68r35 86r35 137r41 163r34
 16E13*T_CoulP{10E10} 17r37 22r17 25r29 54r55 59r52 63r61 17|68r55 86r52 137r61
 17K13*p_coul_io[14|144] 17r51
 19R10*TR_ElemP 23e15 28r45 17|27r38 35r15
@@ -121,10 +123,10 @@ X 16 p_virus.ads
 25A10*TV_Pieces(boolean)<10E10> 39r67 44r117 17|3r67 19r118
 28K13*p_piece_io[4|43] 28r61 44r37 17|19r37
 31E10*T_Direction 31e41 32r36 59r70 63r78 17|86r70 137r78
-31n26*bg{31E10} 17|105r26
-31n30*hg{31E10} 17|109r26
-31n34*bd{31E10} 17|113r26
-31n38*hd{31E10} 17|117r26
+31n26*bg{31E10} 17|105r26 145r26
+31n30*hg{31E10} 17|109r26 148r26
+31n34*bd{31E10} 17|113r26 151r26
+31n38*hd{31E10} 17|117r26 154r26
 32K13*p_dir_io[14|144] 32r54
 35X7*EX_NumConfig
 39U15*InitPartie 39=26 39=52 17|3b15 17l9 17t19
@@ -143,12 +145,13 @@ X 16 p_virus.ads
 . 110r28 114r28 118r28
 59e46 coul{16E13} 17|86b46 95r35 103r35
 59e61 Dir{31E10} 17|86b61 104r26
-63U15*MajGrille 63=26 63>52 63>70 17|137b15 143l9 143t18
-63a26 Grille{12A10} 17|137b26
-63e52 coul{16E13} 17|137b52
-63e70 Dir{31E10} 17|137b70
-67V14*Guerison{boolean} 67>23 17|145b14 151l9 151t17
-67a23 Grille{12A10} 17|145b23
+63U15*MajGrille 63=26 63>52 63>70 17|137b15 161l9 161t18
+63a26 Grille{12A10} 17|137b26 141r18 142r22 143r20 146m25 146r55 147m25 149m25
+. 149r55 150m25 152m25 152r55 153m25 155m25 155r55 156m25
+63e52 coul{16E13} 17|137b52 143r35
+63e70 Dir{31E10} 17|137b70 144r26
+67V14*Guerison{boolean} 67>23 17|163b14 169l9 169t17
+67a23 Grille{12A10} 17|163b23
 X 17 p_virus.adb
 8i13 i{integer} 10r24
 9e17 y{character} 10r26
@@ -159,7 +162,7 @@ X 17 p_virus.adb
 35r9 elem{16|19R10} 44m21 46r22 56m21 58r20 58r32 58r49 59r20 61r22
 36i9 i{natural} 43r15 46m28 46r28 53m9 61m28 61r28 62r19
 37i9 j{natural}
-73i13 i{integer} 75r27 77r28
+73i13 i{integer} 75r27 77r40
 74e17 y{character} 75r30 76r28
 90i9 compteurCouleur{natural} 96m21 96r40 124r20
 91i9 elementsBon{natural} 107m29 107r44 111m33 111r48 115m29 115r44 119m29
@@ -168,6 +171,10 @@ X 17 p_virus.adb
 94e17 y{character} 95r30
 101i13 i{integer} 103r27 106r35 110r35 114r35 118r35
 102e17 y{character} 103r30 106r51 110r51 114r51 118r51
+141i13 i{integer} 143r27 146r32 146r62 147r32 149r32 149r62 150r32 152r32
+. 152r62 153r32 155r32 155r62 156r32
+142e17 y{character} 143r30 146r48 146r65 147r35 149r48 149r65 150r35 152r48
+. 152r65 153r35 155r48 155r65 156r35
 X 18 sequenio.ads
 24k17*Sequential_IO 16|1w6 28r31
 X 32 s-sequio.ads
