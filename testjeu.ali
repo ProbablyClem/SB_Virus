@@ -8,10 +8,11 @@ RN
 RV NO_EXCEPTION_HANDLERS
 RV NO_EXCEPTIONS
 RV NO_IO
+RV NO_RECURSION
 RV NO_DEFAULT_INITIALIZATION
 RV SPARK_05
 
-U testjeu%b		testjeu.adb		1dbacac3 NE OO SU IL
+U testjeu%b		testjeu.adb		9d81ca98 NE OO SU IL
 W p_esiut%s		p_esiut.adb		p_esiut.ali
 W p_virus%s		p_virus.adb		p_virus.ali
 W sequential_io%s
@@ -43,38 +44,52 @@ D s-stoele.ads		20180111085525 2dc34a04 system.storage_elements%s
 D s-traent.ads		20180111085525 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20180111085525 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20180111085525 1b7d22d2 system.wch_con%s
-D testjeu.adb		20200120125642 0833faa2 testjeu%b
+D testjeu.adb		20200120143610 8808faf9 testjeu%b
 D text_io.ads		20170908151217 21b2c898 text_io%s
 X 4 a-sequio.ads
 53P9*File_Type<20|63P9> 28|7r20[12|28]
 55E9*File_Mode
-55n23*In_File{55E9[12|28]} 28|11r35[12|28]
-76U14*Open 28|11s16[12|28]
-82U14*Close 28|21s16[12|28]
-113X4*End_Error 28|30r21[12|28]
+55n23*In_File{55E9[12|28]} 28|36r35[12|28]
+76U14*Open 28|36s16[12|28]
+82U14*Close 28|60s16[12|28]
+113X4*End_Error 28|62r21[12|28]
 X 11 p_esiut.ads
 15K11*p_esiut 181e14 28|1w6 1r43
-26U16*LIRE 28|15s9
-69U16*ECRIRE=70:42 28|14s9 30s34
-87U16*ECRIRE_LIGNE=88:42 28|17s9
+26U16*LIRE 28|14s13
+69U16*ECRIRE=70:42 28|13s13 22s9 62s34
+87U16*ECRIRE_LIGNE=88:42 28|16s13 25s13 28s18
+159U21*LIRE 28|23s19[12|17]
 X 12 p_virus.ads
 3K9*p_virus 70e12 28|1w15 1r52
+10n88*blanc{10E10} 28|27r22
 12A10*TV_Grille(10E10)<integer><character> 28|4r14
-16E13*T_CoulP{10E10} 28|23r14
+16E13*T_CoulP{10E10} 28|8r12 20r44 43r14
+17K13*p_coul_io[11|144] 28|23r9
 25A10*TV_Pieces(boolean)<10E10> 28|5r14
-28K13*p_piece_io[4|43] 28|7r9 11r5 11r24 21r5 30r10
-39U15*InitPartie 28|12s5
-44U15*Configurer 28|20s5
-54U15*PosPiece 28|25s13
+28K13*p_piece_io[4|43] 28|7r9 36r5 36r24 60r5 62r10
+31E10*T_Direction 31e41 28|51r14
+39U15*InitPartie 28|37s5 55s13
+44U15*Configurer 28|40s5 56s13
+54U15*PosPiece 28|45s13 54s13
+59V14*Possible{boolean} 28|52s12
+63U15*MajGrille 28|53s13
 X 13 sequenio.ads
 24k17*Sequential_IO 28|1w24
 X 20 s-sequio.ads
 63P9*File_Type(43R9)
 X 28 testjeu.adb
-2U11*testjeu 2b11 31l5 31t12
-4a5 grille{12|12A10} 12m16 12r16 20m30 20r30 25r22
-5a5 pieces{12|25A10} 12m24 12r24 20m38 20r38 24r12
-6i5 numConfig{natural} 15m14 16r15 20r19
-7p5 f{4|53P9[12|28]} 11m21 11r21 20m16 20r16 21m22 21r22
-23e9 i{12|16E13} 24r19 25r30
+2U11*testjeu 2b11 63l5 63t12
+4a5 grille{12|12A10} 37m16 37r16 40m30 40r30 45r22 52r21 53m23 53r23 54r22
+. 55m24 55r24 56m38 56r38
+5a5 pieces{12|25A10} 24r12 37m24 37r24 40m38 40r38 44r12 55m32 55r32 56m46
+. 56r46
+6i5 numConfig{natural} 38m18 38r18 40r19 56r27
+7p5 f{4|53P9[12|28]} 36m21 36r21 40m16 40r16 56m24 56r24 60m22 60r22
+8e5 coul{12|16E13} 49m20 49r20 52r29 53r31 54r30
+10U15 getNumConfig 10b15 10=28 18l9 18t21 38s5
+10i28 num{natural} 14m18 15r19
+20U15 getCouleurTour 20b15 20=30 26s13 29s13 31l9 31t23 49s5
+20e30 coul{12|16E13} 23m24 24r19 26m28 27r15 29m28
+43e9 i{12|16E13} 44r19 45r30
+51e9 i{12|31E10} 52r35 53r37
 

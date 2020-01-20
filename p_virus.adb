@@ -115,11 +115,11 @@ package body p_virus is
                                 elementsBon := elementsBon +1;
                             end if;
                     when bd =>
-                        if Grille(i+1, t_col'pred(y)) = vide then
+                        if Grille(i+1, t_col'succ(y)) = vide then
                             elementsBon := elementsBon +1;
                         end if;
                     when hd =>
-                        if Grille(i-1, t_col'pred(y)) = vide then
+                        if Grille(i-1, t_col'succ(y)) = vide then
                             elementsBon := elementsBon +1;
                         end if;
                     end case;
@@ -134,7 +134,7 @@ package body p_virus is
         return false;
 
     exception 
-        when CONSTRAINT_ERROR => return false;
+      when CONSTRAINT_ERROR => return false;
     end Possible;
 
 
@@ -153,10 +153,10 @@ package body p_virus is
                         Grille(i-1, t_col'pred(y)) := Grille(i, y);
                         Grille(i, y) := vide;
                     when bd =>
-                        Grille(i+1, t_col'pred(y)) := grille(i, y);
+                        Grille(i+1, t_col'succ(y)) := grille(i, y);
                         Grille(i, y) := vide;
                     when hd =>
-                        Grille(i-1, t_col'pred(y)) := grille(i, y);
+                        Grille(i-1, t_col'succ(y)) := grille(i, y);
                         Grille(i, y) := vide;
                     end case;
                 end if;
