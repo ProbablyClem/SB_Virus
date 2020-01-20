@@ -101,19 +101,19 @@ package body p_virus is
                 if Grille(i, y) = coul then
                     case Dir is
                     when bg => 
-                        if Grille(i+1, T_col'pred(y)) = vide then
+                        if Grille(i+1, T_col'pred(y)) = vide or Grille(i+1, t'T_col'pred(y)) = coul then
                             elementsBon := elementsBon +1;
                         end if;
                     when hg =>
-                        if Grille(i-1, t_col'pred(y)) = vide then
+                        if Grille(i-1, t_col'pred(y)) = vide or Grille(i-1, t_col'pred(y)) = coul then
                                 elementsBon := elementsBon +1;
                             end if;
                     when bd =>
-                        if Grille(i+1, t_col'succ(y)) = vide then
+                        if Grille(i+1, t_col'succ(y)) = vide or Grille(i+1, t_col'succ(y)) = coul then
                             elementsBon := elementsBon +1;
                         end if;
                     when hd =>
-                        if Grille(i-1, t_col'succ(y)) = vide then
+                        if Grille(i-1, t_col'succ(y)) = vide or Grille(i-1, t_col'succ(y)) = coul then
                             elementsBon := elementsBon +1;
                         end if;
                     end case;
