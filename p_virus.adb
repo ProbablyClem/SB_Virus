@@ -56,6 +56,7 @@ package body p_virus is
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
                     put(Grille(i, y));
+                    put(' ');
                 end if;
             end loop;
         end loop;
