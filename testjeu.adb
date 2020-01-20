@@ -6,32 +6,22 @@ procedure testjeu is
     numConfig : natural;
     f : p_piece_io.file_type;
 
-    procedure main is
-    begin
+    
+begin
+    p_piece_io.open(f, p_piece_io.in_file, "Parties");
+    InitPartie(grille, pieces);
+    loop
         ecrire("Saisissez le numero de configuration : ");
         lire(numConfig);
-        if numConfig not in 1..20 then
-            raise EX_NumConfig;
-        end if;
+    exit when numConfig in 1..20;
+        ecrire_ligne("veuillez rentrer une valeur entre 1 et 20");
+    end loop;
 
-        Configurer(f, numConfig, grille, pieces);
+    Configurer(f, numConfig, grille, pieces);
     
     for i in T_CoulP loop
         if pieces(i) = true then
             PosPiece(grille, i);
         end if;
     end loop;
-
-    EXCEPTION
-        when EX_NumConfig => 
-        ecrire_ligne("veuillez rentrer une valeur entre 1 et 20");
-        main;
-    end main;
-
-    
-
-begin
-    p_piece_io.open(f, p_piece_io.in_file, "Parties");
-    InitPartie(grille, pieces);
-    main; 
 end testjeu;
