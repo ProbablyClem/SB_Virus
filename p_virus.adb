@@ -90,6 +90,10 @@ package body p_virus is
         compteurCouleur : natural := 0; --nombre d'elements de la couleur coul
         elementsBon : natural := 0; --nombre d'elemnts de la couleur coul qui peuvent se deplacer;
     begin
+        if coul = blanc then
+            return false;
+        end if;
+
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
@@ -163,9 +167,11 @@ package body p_virus is
     function Guerison(Grille: in TV_Grille) return boolean is
     --{} => {résultat = le virus (pièce rouge) est prêt à sortir (position coin haut gauche)}
     begin
-        -- à compléter
-
-        return false; -- à enlever
+        if Grille(1, 'A') = rouge then
+            return true;
+        else 
+            return false;
+        end if;
     end Guerison;
 
 end p_virus;
