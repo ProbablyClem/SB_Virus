@@ -18,7 +18,7 @@ begin
     end loop;
 
     Configurer(f, numConfig, grille, pieces);
-    
+    p_piece_io.close(f);
     for i in T_CoulP loop
         if pieces(i) = true then
             PosPiece(grille, i);
@@ -26,4 +26,6 @@ begin
     end loop;
 
     AfficheGrille(Grille);
+EXCEPTION
+    when p_piece_io.END_ERROR => ecrire("Fichier corompu");
 end testjeu;
