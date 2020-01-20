@@ -137,27 +137,43 @@ package body p_virus is
     --=> {Grillea été mis à jour suite au déplacement}
     baseGrille : TV_Grille := grille;
     begin
-        for i in Grille'range(1) loop
-            for y in Grille'range(2) loop
-                if baseGrille(i, y) = coul then
-                    case Dir is
-                        when bg => 
-                            Grille(i+1, T_col'pred(y)) := baseGrille(i, y);
-                            Grille(i, y) := vide;
-                        when hg =>
-                            Grille(i-1, t_col'pred(y)) := baseGrille(i, y);
-                            Grille(i, y) := vide;
-                        when bd =>
-                            Grille(i+1, t_col'succ(y)) := baseGrille(i, y);
-                            Grille(i, y) := vide;
-                        when hd =>
-                            Grille(i-1, t_col'succ(y)) := baseGrille(i, y);
-                            Grille(i, y) := vide;
-                        when others => null;
-                    end case;
-                end if;
-            end loop;
-        end loop;
+        
+        case Dir is
+        
+            when hg | hd =>
+                for i in Grille'range(1) loop
+                    for y in Grille'range(2) loop
+                        if baseGrille(i, y) = coul then
+                            case Dir is
+                                when hg =>
+                                    Grille(i-1, t_col'pred(y)) := baseGrille(i, y);
+                                    Grille(i, y) := vide;
+                                when hd =>
+                                    Grille(i-1, t_col'succ(y)) := baseGrille(i, y);
+                                    Grille(i, y) := vide;
+                                when others => null;
+                            end case;
+                        end if;
+                    end loop;
+                end loop;
+
+            when bg | bd =>
+                for i in reverse Grille'range(1) loop
+                    for y in reverse Grille'range(2) loop
+                        if baseGrille(i, y) = coul then
+                            case Dir is
+                                when bg => 
+                                    Grille(i+1, T_col'pred(y)) := baseGrille(i, y);
+                                    Grille(i, y) := vide;
+                                when bd =>
+                                    Grille(i+1, t_col'succ(y)) := baseGrille(i, y);
+                                    Grille(i, y) := vide;
+                                when others => null;
+                            end case;
+                        end if;
+                    end loop;
+                end loop;
+        end case;
 
     exception
         when CONSTRAINT_ERROR => ecrire("erreur de merde");
