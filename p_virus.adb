@@ -24,10 +24,26 @@ package body p_virus is
     --      * les éléments d’une même pièce (même couleur) sont stockés consécutivement 
     --      * il n’y a pas deux pièces mobiles ayant la même couleur 
     --      *les deux éléments constituant le virus (couleur rouge)terminent la configuration}
-    --  =>  {Grillea été mis à jour par lecture dans f de la configuration de numéro nb
+    --  =>  {Grille a été mis à jour par lecture dans f de la configuration de numéro nb
     --          Pieces a été initialisé en fonction des pièces de cette configuration}
     begin
-        -- à compléter
+
+        for i in 1..nb-1 loop -- on skip les configs précédentes
+            loop
+                read(f, elem);
+            exit when elem.couleur = Rouge and then last.couleur = Rouge;
+                last := elem; -- on le met à la fin pour pas donner à last une valeur vide au début
+            end loop;
+        end loop;
+
+        loop
+            last := elem;
+            read(f, elem);
+
+            Grille(elem.lig, elem.col) := elem.couleur;
+        exit when elem.couleur = Rouge and last.couleur = Rouge;
+        end loop;
+
     end Configurer;
 
     --pour test configuration... 
