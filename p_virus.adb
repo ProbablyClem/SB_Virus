@@ -57,7 +57,7 @@ package body p_virus is
     begin
         -- à compléter
 
-        return false;
+        return false; -- à enlever
     end Guerison;
 
 end p_virus;
