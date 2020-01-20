@@ -1,4 +1,3 @@
-with text_io; use text_io;
 package body p_virus is
     
     procedure InitPartie(Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
@@ -26,13 +25,13 @@ package body p_virus is
     --      *les deux éléments constituant le virus (couleur rouge)terminent la configuration}
     --  =>  {Grille a été mis à jour par lecture dans f de la configuration de numéro nb
     --          Pieces a été initialisé en fonction des pièces de cette configuration}
-        procedure test (elem: in TR_elemP, i: in out natural) is
+        procedure test (elem: in TR_elemP; i: in out natural) is
         -- on test si la pièce est rouge, si oui, on incrémente i
         begin
             if elem.couleur = rouge then
                 i := i + 1;
             end if;
-        end test
+        end test;
         
         elem: TR_elemP;
         i: natural := 0; -- variable destinée à compter les pieces rouges
@@ -42,7 +41,7 @@ package body p_virus is
 
         reset(f);
 
-        while i < (nb-1)*2 and while not end_of_file(f) loop -- on skip les configs précédentes
+        while i < (nb-1)*2 and not end_of_file(f) loop -- on skip les configs précédentes
             read(f, elem);
 
             test(elem, i);
@@ -76,16 +75,15 @@ package body p_virus is
     --{} => {la position de la pièce de couleur coul a été affichée si cette pièce est dans Grille
     --       exemple: ROUGE: F4 G5}
     begin
-        put(Grille(i, y));
+        ecrire(coul);
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
-                    put(Grille(i, y));
-                    put(' ');
+                    ecrire(Grille(i, y));
+                    ecrire(' ');
                 end if;
             end loop;
         end loop;
-        new_line;
     end PosPiece;
     
     ---------------Contrôle du jeu
@@ -93,7 +91,7 @@ package body p_virus is
     --  {coul/= blanc} 
     --=> {résultat= vrai si la pièce de couleur coul peut être déplacée dans la direction Dir}
     begin
-        
+        return false;
     end Possible;
 
 
@@ -101,6 +99,7 @@ package body p_virus is
     --  {la pièce de couleur coul peut être déplacéedans la direction Dir} 
     --=> {Grillea été mis à jour suite au déplacement}
     begin
+        return;
         -- à compléter
     end MajGrille;
 
