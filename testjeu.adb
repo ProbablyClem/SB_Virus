@@ -1,4 +1,4 @@
-with p_esiut, p_virus, sequential_io; use p_esiut, p_virus;
+with p_esiut, p_virus, sequential_io, p_vuetest; use p_esiut, p_virus, p_vuetest;
 procedure testjeu is
 
     grille : TV_Grille;
@@ -58,6 +58,7 @@ begin
     end loop;
 
     p_piece_io.close(f);
+    AfficheGrille(Grille);
 EXCEPTION
     when p_piece_io.END_ERROR => ecrire("Fichier corompu");
 end testjeu;

@@ -11,9 +11,8 @@ package body p_virus is
             end loop;
         end loop;
 
-        for i in Pieces'range loop
-            Pieces(i) := false;
-        end loop;
+        Pieces := (others => false);
+        
     end InitPartie;
 
     procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
@@ -40,15 +39,10 @@ package body p_virus is
 
         reset(f);
 
-        while i < (nb-1)*2 and not end_of_file(f) loop -- on skip les configs précédentes
+        while i < (nb-1)*2 loop -- on skip les configs précédentes
             read(f, elem);
-
             estRouge(elem, i);
         end loop;
-
-        if end_of_file(f) then
-            raise CONSTRAINT_ERROR;
-        end if;
 
         i := 0;
 
