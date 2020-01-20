@@ -15,7 +15,6 @@ package body p_virus is
             Pieces(i) := false;
         end loop;
     end InitPartie;
-    --hmm
 
     procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille: in out TV_Grille; Pieces: in out TV_Pieces) is
     --  {f ouvert, nb est un numéro de configuration (appelé numéro de partie),
@@ -74,8 +73,8 @@ package body p_virus is
         for i in Grille'range(1) loop
             for y in Grille'range(2) loop
                 if Grille(i, y) = coul then
-                    ecrire(i);
                     ecrire(y);
+                    ecrire(i);
                     ecrire(' ');
                 end if;
             end loop;
@@ -87,8 +86,51 @@ package body p_virus is
     function Possible (Grille: in TV_Grille; coul: T_CoulP; Dir : in T_Direction) return boolean is
     --  {coul/= blanc} 
     --=> {résultat= vrai si la pièce de couleur coul peut être déplacée dans la direction Dir}
+
+        compteurCouleur : natural := 0; --nombre d'elements de la couleur coul
+        elementsBon : natural := 0; --nombre d'elemnts de la couleur coul qui peuvent se deplacer;
     begin
+        for i in Grille'range(1) loop
+            for y in Grille'range(2) loop
+                if Grille(i, y) = coul then
+                    compteurCouleur := compteurCouleur +1;
+                end if;
+            end loop;
+        end loop;
+
+        for i in Grille'range(1) loop
+            for y in Grille'range(2) loop
+                if Grille(i, y) = coul then
+                    case Dir is
+                    when bg => 
+                        if Grille(i+1, T_col'pred(y)) = vide then
+                            elementsBon := elementsBon +1;
+                        end if;
+                    when hg =>
+                        if Grille(i-1, t_col'pred(y)) = vide then
+                                elementsBon := elementsBon +1;
+                            end if;
+                    when bd =>
+                        if Grille(i+1, t_col'pred(y)) = vide then
+                            elementsBon := elementsBon +1;
+                        end if;
+                    when hd =>
+                        if Grille(i-1, t_col'pred(y)) = vide then
+                            elementsBon := elementsBon +1;
+                        end if;
+                    end case;
+                end if;
+
+                if compteurCouleur = elementsBon then
+                    return true;
+                end if;
+            end loop;
+        end loop;
+
         return false;
+
+    exception 
+        when CONSTRAINT_ERROR => return false;
     end Possible;
 
 
