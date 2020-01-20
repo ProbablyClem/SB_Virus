@@ -32,7 +32,7 @@ package p_virus is
     package p_dir_io is new p_enum(T_Direction); use p_dir_io;
 
   ----Exeptions   
-      EX_NumConfig : Exception:
+      EX_NumConfig : Exception;
     
     ---------------Primitives d’initialisation d’une partie
 
