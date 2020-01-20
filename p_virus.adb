@@ -62,7 +62,7 @@ package body p_virus is
         new_line;
     end PosPiece;
     
-    ---------------Contrôledu jeu
+    ---------------Contrôle du jeu
     function Possible (Grille: in TV_Grille; coul: T_CoulP; Dir : in T_Direction) return boolean is
     --  {coul/= blanc} 
     --=> {résultat= vrai si la pièce de couleur coul peut être déplacée dans la direction Dir}
