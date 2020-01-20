@@ -52,8 +52,10 @@ begin
         if Possible(grille, coul, i) = true then
             MajGrille(grille, coul, i);
             PosPiece(grille, coul);
+            AfficheGrille(Grille);
             InitPartie(grille, pieces);
             Configurer(f, numConfig, grille, pieces);
+            
         end if;
     end loop;
 
