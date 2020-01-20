@@ -1,4 +1,4 @@
-with p_esiut, p_virus, sequential_io, p_vuetest; use p_esiut, p_virus, p_vuetest;
+with p_esiut, p_virus, sequential_io, p_vuetxt; use p_esiut, p_virus, p_vuetxt;
 procedure testjeu is
 
     grille : TV_Grille;
@@ -29,8 +29,6 @@ procedure testjeu is
             getCouleurTour(coul);
         end if;
     end getCouleurTour;
-                
-
     
 begin
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
@@ -38,7 +36,6 @@ begin
     getNumConfig(numConfig);
 
     Configurer(f, numConfig, grille, pieces);
-    
 
     for i in T_CoulP loop
         if pieces(i) = true then
@@ -46,6 +43,8 @@ begin
         end if;
     end loop;
     
+    AfficheGrille(Grille);
+
     getCouleurTour(coul); --recupere la couleur de la piece a deplacer pour le tour
 
     for i in T_Direction'range loop
@@ -60,7 +59,6 @@ begin
     end loop;
 
     p_piece_io.close(f);
-    AfficheGrille(Grille);
 EXCEPTION
     when p_piece_io.END_ERROR => ecrire("Fichier corompu");
 end testjeu;

@@ -141,19 +141,19 @@ package body p_virus is
             for y in Grille'range(2) loop
                 if baseGrille(i, y) = coul then
                     case Dir is
-                    when bg => 
-                        Grille(i+1, T_col'pred(y)) := baseGrille(i, y);
-                        Grille(i, y) := vide;
-                    when hg =>
-                        Grille(i-1, t_col'pred(y)) := baseGrille(i, y);
-                        Grille(i, y) := vide;
-                    when bd =>
-                        Grille(i+1, t_col'succ(y)) := baseGrille(i, y);
-                        Grille(i, y) := vide;
-                    when hd =>
-                        Grille(i-1, t_col'succ(y)) := baseGrille(i, y);
-                        Grille(i, y) := vide;
-                    when others => null;
+                        when bg => 
+                            Grille(i+1, T_col'pred(y)) := baseGrille(i, y);
+                            Grille(i, y) := vide;
+                        when hg =>
+                            Grille(i-1, t_col'pred(y)) := baseGrille(i, y);
+                            Grille(i, y) := vide;
+                        when bd =>
+                            Grille(i+1, t_col'succ(y)) := baseGrille(i, y);
+                            Grille(i, y) := vide;
+                        when hd =>
+                            Grille(i-1, t_col'succ(y)) := baseGrille(i, y);
+                            Grille(i, y) := vide;
+                        when others => null;
                     end case;
                 end if;
             end loop;

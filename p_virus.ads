@@ -15,6 +15,9 @@ package p_virus is
 
     subtype T_CoulP is T_Coul range rouge..blanc;  --couleurs des pièces
     package p_coul_io is new p_enum(T_CoulP); use p_coul_io;
+    type TV_Coul is array (T_Coul range rouge..blanc) of natural;
+    colors : constant TV_Coul := (9,     14,        214,    219,  94,     110,  99,     106,  178,   15);
+    --                            rouge, turquoise, orange, rose, marron, bleu, violet, vert, jaune, blanc
 
     type TR_ElemP is record --un élément constituant une pièce
         colonne:T_Col;  --la colonne qu’il occupe dans la grille

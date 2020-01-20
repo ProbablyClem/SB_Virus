@@ -1,7 +1,7 @@
 with text_io; use text_io;
 with p_virus; use p_virus;
 
-package body p_vuetest is
+package body p_vuetxt is
     
     procedure AfficheGrille (Grille: in TV_Grille) is
     --{} => {la grille a été affichée selon les spécifications suivantes :
@@ -14,12 +14,12 @@ package body p_vuetest is
 
     begin
 
-        put_line("  Plateau de jeu");
-        put_line("------------------");
+        put_line("     Plateau de jeu");
+        put_line("------------------------");
         new_line;
 
         put_line("     A B C D E F G");
-        put_line("   S - - - - - - -");
+        put_line("   S - - - - - - - \");
 
         for i in T_lig'range loop
             put(integer'image(i) & " |");
@@ -27,18 +27,22 @@ package body p_vuetest is
                 case Grille(i, j) is
                     when vide =>
                         if (T_lig'pos(i) mod 2) = (T_col'pos(j) mod 2) then
-                            put(" ·");
+                            put(" .");
                         else
                             put("  ");
                         end if;
                     when blanc =>
                         put(" F");
                     when others =>
-                        put(integer'image(T_coul'pos(Grille(i, j))));
+                        put(ASCII.ESC & "[34;5;" & integer'image(colors(Grille(i,j)))(2..integer'image(colors(Grille(i,j)))'last) & "m" & "O" & ASCII.ESC & "[0m");
+                        --put(integer'image(T_coul'pos(Grille(i, j))));
                 end case;
             end loop;
-            new_line;
+            put_line(" |");
         end loop;
+
+        put_line("   \ - - - - - - - /");
+        new_line;
 
     end AfficheGrille;
 
@@ -47,4 +51,4 @@ package body p_vuetest is
         put(ASCII.ESC & "[2J");
     end clear;
 
-end p_vuetest;
+end p_vuetxt;

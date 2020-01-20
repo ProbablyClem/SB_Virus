@@ -1,7 +1,7 @@
 with text_io; use text_io;
 with p_virus; use p_virus;
 
-package p_vuetest is
+package p_vuetxt is
     
     procedure AfficheGrille (Grille: in TV_Grille);
     --{} => {la grille a été affichée selon les spécifications suivantes :
@@ -14,4 +14,4 @@ package p_vuetest is
 
     procedure clear;
 
-end p_vuetest;
+end p_vuetxt;
