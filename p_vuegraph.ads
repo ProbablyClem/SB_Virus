@@ -4,8 +4,12 @@ package p_vuegraph is
     
     type TV_Couleurs is array(t_coulP) of T_Couleur;
 
+    Quitter : exception;
+
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
     procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; couleurs : in TV_Couleurs);
     
+    procedure detectButton (btnStr: string; grille: in TV_Grille);
+
 end p_vuegraph;

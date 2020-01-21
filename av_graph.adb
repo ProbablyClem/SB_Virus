@@ -23,8 +23,15 @@ begin
         end if;
     end loop;
     RefreshfGrille(fGrille, Grille, couleurs);
-    While AttendreBouton(fGrille) /="boutonQuitter" loop
-        null;
+    
+    loop
+        begin
+            detectButton(AttendreBouton(fgrille), grille);
+        exception
+            when Quitter =>
+                exit;
+        end;    
     end loop;
+
     finFenetre(fGrille);
 end av_graph;
