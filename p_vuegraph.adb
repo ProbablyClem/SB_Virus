@@ -21,8 +21,8 @@ package body p_vuegraph is
             for l in T_lig'range loop
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
                     AjouterBouton(f,
-                                  T_lig'image(l)(1..2) & c,
-                                  T_lig'image(l)(1..2) & c,
+                                  "bg" & T_lig'image(l)(2..2) & c,
+                                  T_lig'image(l)(2..2) & c,
                                   (largeur - (hauteur-160)) / 2 + (T_col'pos(c) - 65) * (hauteur - 160)/7,
                                   80 + (l - 1) * (hauteur - 160)/7,
                                   (hauteur - 160)/7,
@@ -57,23 +57,49 @@ package body p_vuegraph is
         end loop;
 
 
-        for i in T_lig'range loop
-                for y in T_col'range loop
-                    case Grille(i, y) is
-                        when vide =>
-                            if (T_lig'pos(i) mod 2) = (T_col'pos(y) mod 2) then
-                                ChangerEtatBouton(f, t_lig'image(i)(1..2) & y, arret);
+    for i in T_lig'range loop
+            for y in T_col'range loop
+                case Grille(i, y) is
+                    when vide =>
+                        if (T_lig'pos(i) mod 2) = (T_col'pos(y) mod 2) then
+                            ChangerEtatBouton(f, "bg" & t_lig'image(i)(1..2) & y, arret);
 
-                            end if;
-                        when blanc =>
-                            ChangerEtatBouton(f, t_lig'image(i) & y, arret);
-                            ChangerCouleurFond(f, t_lig'image(i) & y, FL_WHITE);
-                        when others =>
-                            ChangerEtatBouton(f, t_lig'image(i) & y, marche);
-                            ChangerCouleurFond(f, t_lig'image(i) & y, couleurs(grille(i,y)));
-                    end case;
-                end loop;
+                        end if;
+                    when blanc =>
+                        ChangerEtatBouton(f, "bg" & t_lig'image(i)(2..2) & y, arret);
+                        ChangerCouleurFond(f, "bg" & t_lig'image(i)(2..2) & y, FL_WHITE);
+                    when others =>
+                        ChangerEtatBouton(f, "bg" & t_lig'image(i)(2..2) & y, marche);
+                        ChangerCouleurFond(f, "bg" & t_lig'image(i)(2..2) & y, couleurs(grille(i,y)));
+                end case;
             end loop;
     end RefreshfGrille;
+
+    procedure detectButton (btnStr: string; grille: in TV_Grille) is
+    
+        c : T_col;
+        l : T_lig;
+
+    begin
+        put_line("'" & btnStr & "'");
+
+        if btnStr(1..2) = "bg" then
+            l := T_lig'value(btnStr(3..3));
+            put_line("l =" & T_lig'image(l));
+            c := btnStr(4);
+            put_line("c =" & T_col'image(c));
+            put_line(T_lig'image(l) & T_col'image(c));
+            put_line(T_coul'image(grille(l, c)));
+            put_line("---");
+        else
+                if btnStr = "boutonQuitter" then
+                    raise Quitter;
+                else
+                    put_line("pas encore implémenté");
+                    return;
+                end if;
+        
+        end if;
+    end detectButton;
 
 end p_vuegraph;

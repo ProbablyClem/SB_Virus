@@ -20,5 +20,15 @@ begin
     cacherFenetre(fmenu);
     AffichefGrille(fGrille, grille);
     RefreshfGrille(fGrille, Grille, couleurs);
+    
+    loop
+        begin
+            detectButton(AttendreBouton(fgrille), grille);
+        exception
+            when Quitter =>
+                exit;
+        end;    
+    end loop;
+
     finFenetre(fGrille);
 end av_graph;
