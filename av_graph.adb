@@ -16,15 +16,9 @@ begin
 
     Configurer(f, 1, grille, pieces);
     InitialiserFenetres;
+    AffichefMenu(fmenu);
+    cacherFenetre(fmenu);
     AffichefGrille(fGrille, grille);
-    for i in T_CoulP loop
-        if pieces(i) = true then
-            PosPiece(grille, i);
-        end if;
-    end loop;
     RefreshfGrille(fGrille, Grille, couleurs);
-    While AttendreBouton(fGrille) /="boutonQuitter" loop
-        null;
-    end loop;
     finFenetre(fGrille);
 end av_graph;

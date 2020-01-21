@@ -33,36 +33,47 @@ package body p_vuegraph is
         MontrerFenetre(f);
     end AffichefGrille;
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; couleurs : in TV_Couleurs) is
-
+    procedure AffichefMenu(f : in out TR_Fenetre) is
+    largeur : natural := 700;
+    hauteur : natural := 500;
     begin
-    for i in grille'range(1) loop
-        for y in grille'range(2) loop
-            if grille(i,y) = vide then
-                ChangerEtatBouton(f,t_lig'image(i) & y , arret);
-            end if;
-        end loop;
+    f := DebutFenetre("Menu", largeur, hauteur);
+        AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 50, 70, 30); 
+        AjouterChamp(f, "inputPseudo","Pseudo","", largeur/2 - 130/2, 90, 130, 30);
+    MontrerFenetre(f);
+    While AttendreBouton(f) /="boutonJouer" loop
+        null;
     end loop;
+    end AffichefMenu;
 
-
-    for i in T_lig'range loop
-            for y in T_col'range loop
-                case Grille(i, y) is
-                    when vide =>
-                        if (T_lig'pos(i) mod 2) = (T_col'pos(y) mod 2) then
-                            ChangerEtatBouton(f, t_lig'image(i)(1..2) & y, arret);
-
-                        end if;
-                    when blanc =>
-                        ChangerEtatBouton(f, t_lig'image(i) & y, arret);
-                        ChangerCouleurFond(f, t_lig'image(i) & y, FL_WHITE);
-                    when others =>
-                        ChangerEtatBouton(f, t_lig'image(i) & y, marche);
-                        ChangerCouleurFond(f, t_lig'image(i) & y, couleurs(grille(i,y)));
-                end case;
+    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; couleurs : in TV_Couleurs) is
+    begin
+        for i in grille'range(1) loop
+            for y in grille'range(2) loop
+                if grille(i,y) = vide then
+                    ChangerEtatBouton(f,t_lig'image(i) & y , arret);
+                end if;
             end loop;
         end loop;
 
+
+        for i in T_lig'range loop
+                for y in T_col'range loop
+                    case Grille(i, y) is
+                        when vide =>
+                            if (T_lig'pos(i) mod 2) = (T_col'pos(y) mod 2) then
+                                ChangerEtatBouton(f, t_lig'image(i)(1..2) & y, arret);
+
+                            end if;
+                        when blanc =>
+                            ChangerEtatBouton(f, t_lig'image(i) & y, arret);
+                            ChangerCouleurFond(f, t_lig'image(i) & y, FL_WHITE);
+                        when others =>
+                            ChangerEtatBouton(f, t_lig'image(i) & y, marche);
+                            ChangerCouleurFond(f, t_lig'image(i) & y, couleurs(grille(i,y)));
+                    end case;
+                end loop;
+            end loop;
     end RefreshfGrille;
 
 end p_vuegraph;

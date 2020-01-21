@@ -6,6 +6,8 @@ package p_vuegraph is
 
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
+    procedure AffichefMenu(f : in out TR_Fenetre);
+
     procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; couleurs : in TV_Couleurs);
     
 end p_vuegraph;
