@@ -11,6 +11,9 @@ package body p_vuegraph is
             AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
             AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
 
+        AjouterBouton(f,"boutonFond", "", (largeur - (hauteur - 160)) / 2, 80, hauteur - 160, hauteur - 160);
+        ChangerCouleurFond(f, "boutonFond", FL_BLACK);
+
         for c in T_col'range loop
             for l in T_lig'range loop
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
