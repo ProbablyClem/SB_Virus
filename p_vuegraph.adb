@@ -8,9 +8,10 @@ package body p_vuegraph is
         largeur := 700;
         hauteur := 500;
         f := DebutFenetre("Virus", largeur, hauteur);
+            AjouterBouton(f, "background", "", 0, 0, largeur-2, hauteur-2);
             AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
             AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
-
+        ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
         for c in T_col'range loop
             for l in T_lig'range loop
 
