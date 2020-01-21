@@ -18,6 +18,8 @@ procedure av_txt is
     coul: T_CoulP;
     dir: T_direction;
 
+    ----------
+
     procedure getNumConf (conf: out natural) is
     begin
         put_line("Quelle configuration souhaitez vous [Entre 1 et 20] :");
@@ -55,18 +57,24 @@ procedure av_txt is
 
         loop
             put("--> "); lire(dir);
-        exit when dir IN bg..hd;
-            put_line("Veuillez saisir une direction valide");
-            put_line("(hg: ↖, hd: ↗, bg: ↙, bd ↘)");
+            case dir is
+                when hg|hd|bg|bd =>
+                    exit;
+                when others =>
+                put_line("Veuillez saisir une direction valide");
+                put_line("(hg: ↖, hd: ↗, bg: ↙, bd ↘)");
+            end case;
         end loop;
     end getDirection;
+
+    ----------
 
     procedure showAvailable (Pieces: in TV_Pieces) is
     begin
         put_line("Pièces disponibles :");
 
         for i in Pieces'range loop
-            if Pieces(i) then
+            if Pieces(i) and i /= blanc then
                 put_line(T_coul'image(i));
             end if;
         end loop;

@@ -19,7 +19,7 @@ package body p_vuetxt is
         new_line;
 
         put_line("     A B C D E F G");
-        put_line("   S - - - - - - - ┐");
+        put_line("   S --------------┐");
 
         for i in T_lig'range loop
             put(integer'image(i) & " |");
@@ -41,7 +41,7 @@ package body p_vuetxt is
             put_line(" |");
         end loop;
 
-        put_line("   └ - - - - - - - ┘");
+        put_line("   └---------------┘");
         new_line;
 
     end AfficheGrille;
