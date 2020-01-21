@@ -57,7 +57,7 @@ package body p_vuegraph is
         end loop;
 
 
-    for i in T_lig'range loop
+        for i in T_lig'range loop
             for y in T_col'range loop
                 case Grille(i, y) is
                     when vide =>
@@ -73,6 +73,7 @@ package body p_vuegraph is
                         ChangerCouleurFond(f, "bg" & t_lig'image(i)(2..2) & y, couleurs(grille(i,y)));
                 end case;
             end loop;
+        end loop;
     end RefreshfGrille;
 
     procedure detectButton (btnStr: string; grille: in TV_Grille) is
