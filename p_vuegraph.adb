@@ -13,7 +13,6 @@ package body p_vuegraph is
 
         for c in T_col'range loop
             for l in T_lig'range loop
-
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
                     AjouterBouton(f,
                                   T_lig'image(l) & c,
