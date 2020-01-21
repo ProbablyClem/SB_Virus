@@ -1,6 +1,6 @@
 package body p_vuegraph is
 
-    procedure AffichefGrille(f : in out TR_Fenetre, grille : in TV_Grille) is
+    procedure AffichefGrille(f : in out TR_Fenetre; grille : in TV_Grille) is
         largeur, hauteur : natural;
     begin
         largeur := 600;
