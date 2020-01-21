@@ -15,8 +15,8 @@ package body p_vuegraph is
             for l in T_lig'range loop
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
                     AjouterBouton(f,
-                                  T_lig'image(l) & c,
-                                  T_lig'image(l) & c,
+                                  T_lig'image(l)(1..2) & c,
+                                  T_lig'image(l)(1..2) & c,
                                   (largeur - (hauteur-160)) / 2 + (T_col'pos(c) - 65) * (hauteur - 160)/7,
                                   80 + (l - 1) * (hauteur - 160)/7,
                                   (hauteur - 160)/7,
@@ -24,23 +24,39 @@ package body p_vuegraph is
                 end if;
             end loop;
         end loop;
-
         MontrerFenetre(f);
-        While AttendreBouton(f) /="boutonQuitter" loop
-            null;
-        end loop;
     end AffichefGrille;
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
+    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; couleurs : in TV_Couleurs) is
 
     begin
     for i in grille'range(1) loop
         for y in grille'range(2) loop
             if grille(i,y) = vide then
-                ChangerEtatBouton(f, t_lig'image(i) & t_col'image(y), arret);
+                ChangerEtatBouton(f,t_lig'image(i) & y , arret);
             end if;
         end loop;
     end loop;
+
+
+    for i in T_lig'range loop
+            for y in T_col'range loop
+                case Grille(i, y) is
+                    when vide =>
+                        if (T_lig'pos(i) mod 2) = (T_col'pos(y) mod 2) then
+                            ChangerEtatBouton(f, t_lig'image(i)(1..2) & y, arret);
+
+                        end if;
+                    when blanc =>
+                        ChangerEtatBouton(f, t_lig'image(i) & y, arret);
+                        ChangerCouleurFond(f, t_lig'image(i) & y, FL_WHITE);
+                    when others =>
+                        ChangerEtatBouton(f, t_lig'image(i) & y, marche);
+                        ChangerCouleurFond(f, t_lig'image(i) & y, couleurs(grille(i,y)));
+                end case;
+            end loop;
+        end loop;
+
     end RefreshfGrille;
 
 end p_vuegraph;
