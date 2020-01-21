@@ -1,5 +1,5 @@
-with p_fenbase, forms, p_virus; use p_fenbase, forms, p_virus;
 with p_vuetxt; use p_vuetxt;
+with p_fenbase, forms, p_virus, ada.strings.unbounded; use p_fenbase, forms, p_virus, ada.strings.unbounded;
 
 package p_vuegraph is
     
@@ -10,7 +10,7 @@ package p_vuegraph is
 
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
-    procedure AffichefMenu(f : in out TR_Fenetre);
+    function AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural) return boolean;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille);
     

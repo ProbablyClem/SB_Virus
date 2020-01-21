@@ -1,4 +1,4 @@
-with text_io; use text_io;
+with text_io, ada.strings.unbounded; use text_io, ada.strings.unbounded;
 
 package body p_vuegraph is
 
@@ -48,17 +48,58 @@ package body p_vuegraph is
         MontrerFenetre(f);
     end AffichefGrille;
 
-    procedure AffichefMenu(f : in out TR_Fenetre) is
+    function AffichefMenu(f : in out TR_Fenetre; pseudo : out unbounded_string; niveau : out natural) return boolean is
     largeur : natural := 700;
     hauteur : natural := 500;
+    niveauBool : boolean := true;
+
+        procedure getNiveau (returnBool : out boolean) is
+
+        begin
+            while AttendreBouton(f) /= "boutonJouer" loop
+                if AttendreBouton(f) = "boutonQuitter" then
+                    returnBool := false;      
+                end if;
+            end loop;
+
+            if AttendreBouton(f) = "boutonJouer" then
+                niveau := natural'value(ConsulterContenu(f, "inputNiveau"));
+                returnBool := true;
+            end if;
+            
+
+            exception
+                when CONSTRAINT_ERROR =>
+                    MontrerElem(f, "warningMessage");
+                    put_line("CONSTRAINT_ERROR");
+                    getNiveau(niveauBool);
+        end getNiveau;
+
     begin
     f := DebutFenetre("Menu", largeur, hauteur);
-        AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 50, 70, 30); 
-        AjouterChamp(f, "inputPseudo","Pseudo","", largeur/2 - 130/2, 90, 130, 30);
-    MontrerFenetre(f);
-    While AttendreBouton(f) /="boutonJouer" loop
-        null;
-    end loop;
+
+        AjouterBouton(f, "background", "", 0, 0, largeur-2, hauteur-2);
+        ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
+        ChangerEtatBouton(f, "background", arret);
+
+        AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
+        AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 130, 70, 30); 
+        AjouterChamp(f, "inputPseudo","Pseudo","", largeur/2 - 130/2, 50, 130, 30);
+        AjouterChamp(f, "inputNiveau", "niveau", "", largeur/2 - 70/2, 90, 70, 30);
+        AjouterTexte(f, "warningMessage", "Veulliez rentrer un niveau entre 1 et 20", largeur/2 + 45, 90, 280, 30);
+        ChangerCouleurTexte(f, "warningMessage", FL_RED);
+        cacherElem (f, "warningMessage");
+        ChangerCouleurTexte(f, "inputPseudo", FL_WHITE);
+        ChangerCouleurTexte(f, "inputNiveau", FL_WHITE);
+        ChangerCouleurTexte(f, "boutonJouer", FL_WHITE);
+        ChangerCouleurFond(f, "boutonJouer", FL_RIGHT_BCOL);
+        ChangerCouleurFond(f, "warningMessage", FL_RIGHT_BCOL);
+        MontrerFenetre(f);
+
+    getNiveau(niveauBool);
+    put_line(boolean'image(niveauBool));
+    pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+    return niveauBool;
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
