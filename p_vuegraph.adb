@@ -37,6 +37,11 @@ package body p_vuegraph is
         AjouterBouton(f, "mvBD", "", largeur-75, hauteur / 2 + 5, 70, 70);
         AjouterImage(f, "imgBD", "img/BD.xpm", "", largeur-65, hauteur / 2 + 15, 50, 50);
 
+        AjouterTexte(f, "scoreText", "score : 0", 15, 70, 100, 30);
+        ChangerCouleurFond(f, "scoreText", FL_RIGHT_BCOL);
+        ChangerCouleurTexte(f, "scoreText", FL_WHITE);
+        ChangerTailleTexte(f, "scoreText", 14);
+
 
         for i in 0..3 loop
             put_line("cache '" & "mv" & T_direction'image(T_direction'val(i)) & "'");
@@ -146,7 +151,7 @@ package body p_vuegraph is
 
     end AffichefMenu;
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
+    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in natural) is
     begin
         for i in grille'range(1) loop
             for y in grille'range(2) loop
@@ -175,9 +180,11 @@ package body p_vuegraph is
                 end case;
             end loop;
         end loop;
+
+        ChangerTexte(f, "scoreText", "score : " & natural'image(score));
     end RefreshfGrille;
 
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul) return unbounded_string is
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural) return unbounded_string is
     
         c : T_col;
         l : T_lig;
@@ -201,11 +208,11 @@ package body p_vuegraph is
             showMoves(f, grille, coul);
         
         elsif btnStr(1..2) = "mv" then
-
+            score := score +1;
             MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
             showMoves(f, grille, coul);
             AfficheGrille(grille);
-            RefreshfGrille(f, grille);
+            RefreshfGrille(f, grille, score);
             if Guerison(grille) then
                 return to_unbounded_string("GG");
             end if;
