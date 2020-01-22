@@ -29,7 +29,14 @@ begin
             exit;
         elsif btnResult = "GG" then
             affichefGG(niveau);
-            exit;
+            cacherFenetre(fGrille);
+            InitPartie(grille, pieces);
+            AffichefMenu(fmenu, pseudo, niveau);
+            MontrerFenetre(fGrille);
+            cacherFenetre(fmenu);     
+            Configurer(f, niveau, grille, pieces);
+            ecrire_ligne(to_string(pseudo));
+            RefreshfGrille(fGrille, Grille);
         elsif btnResult = "menu" then
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
@@ -38,6 +45,10 @@ begin
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
             ecrire_ligne(to_string(pseudo));
+            RefreshfGrille(fGrille, Grille);
+        elsif btnResult = "reset" then
+            InitPartie(grille, pieces);
+            Configurer(f, niveau, grille, pieces);
             RefreshfGrille(fGrille, Grille);
         end if;    
     end loop;

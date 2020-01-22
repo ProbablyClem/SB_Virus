@@ -192,6 +192,8 @@ package body p_vuegraph is
                     return to_unbounded_string("quit");
                 elsif btnStr = "boutonMenu" then
                     return to_unbounded_string("menu");
+                elsif btnStr = "boutonReset" then
+                    return to_unbounded_string("reset");
                 else
                     put_line("pas encore implémenté");
                 end if;
