@@ -132,7 +132,7 @@ begin
                 showAvailable(Pieces);
                 AfficheGrille(grille);
                 put_line("Quelle pièce souhaitez vous déplacer");
-                put_line("-->" & T_coul'image(coul));
+                put_line("--> " & T_coul'image(coul));
 
                 getDirection(dir);
 
