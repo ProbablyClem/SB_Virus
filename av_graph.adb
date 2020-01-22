@@ -13,7 +13,7 @@ begin
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
     InitPartie(grille, pieces);
 
-    Configurer(f, 1, grille, pieces);
+    Configurer(f, 2, grille, pieces);
     InitialiserFenetres;
     AffichefMenu(fmenu);
     cacherFenetre(fmenu);

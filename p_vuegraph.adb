@@ -117,7 +117,9 @@ package body p_vuegraph is
         
         elsif btnStr(1..2) = "mv" then
 
-            MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
+            if Possible(grille, coul, T_direction'value(btnStr(3..4))) then
+                MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
+            end if;
             AfficheGrille(grille);
             RefreshfGrille(f, grille);
 
