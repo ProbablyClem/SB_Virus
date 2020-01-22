@@ -9,7 +9,8 @@ procedure av_graph is
     coul : T_coul := vide;
     couleurs : TV_Couleurs;
     pseudo : unbounded_string;
-    niveau : natural;
+    niveau : positive;
+    btnResult : unbounded_string;
 begin
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
     InitPartie(grille, pieces);
@@ -23,15 +24,22 @@ begin
     RefreshfGrille(fGrille, Grille);
 
     loop
-        begin
-            detectButton(fgrille, AttendreBouton(fgrille), grille, coul);
-        exception
-            when ex_Quitter =>
-                exit;
-            when EX_GG =>
-                affichefGG(lvl);
-                exit;
-        end;    
+        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul);
+        if btnResult = "quit" then
+            exit;
+        elsif btnResult = "GG" then
+            affichefGG(niveau);
+            exit;
+        elsif btnResult = "menu" then
+            cacherFenetre(fGrille);
+            InitPartie(grille, pieces);
+            AffichefMenu(fmenu, pseudo, niveau);
+            MontrerFenetre(fGrille);
+            cacherFenetre(fmenu);     
+            Configurer(f, niveau, grille, pieces);
+            ecrire_ligne(to_string(pseudo));
+            RefreshfGrille(fGrille, Grille);
+        end if;    
     end loop;
 
     finFenetre(fGrille);

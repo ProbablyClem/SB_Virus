@@ -50,12 +50,14 @@ procedure av_txt is
         
         loop
             put("--> "); lire(coul);
-        exit when coul in rouge..jaune;
+        exit when coul in rouge..jaune and pieces(coul) = true;
             if coul = blanc then
                 put_line("Les pièces blanches ne peuvent pas bouger");
             end if;
+            if pieces(coul) = false then
+                ecrire_ligne("cette pieces n'est pas presente dans cette configuration");
+            end if;
             put_line("Veuillez saisir une couleur valide");
-            put_line("{guide}");
         end loop;
     end getCoul;
 

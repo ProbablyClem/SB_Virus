@@ -17,7 +17,7 @@ package p_vuegraph is
 
     procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille);
     
-    procedure detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul);
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul) return unbounded_string;
 
     procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
