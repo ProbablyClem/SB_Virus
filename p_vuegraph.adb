@@ -16,6 +16,15 @@ package body p_vuegraph is
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
         AjouterBouton(f,"boutonMenu","Menu", 15 , 15, 70, 30);
 
+        AjouterBouton(f, "boutonRetour", "Annuler", largeur-130 , hauteur / 2 + 105, 105, 40);
+        CacherElem(f, "boutonRetour");
+        AjouterTexte(f, "errorRetour", "Aucun mouvement precedent", 0, 430, largeur, 50);
+        ChangerAlignementTexte(f, "errorRetour", FL_ALIGN_CENTER);
+        ChangerCouleurFond(f, "errorRetour", FL_RIGHT_BCOL);
+        ChangerCouleurTexte(f, "errorRetour", FL_RED);
+        ChangerTailleTexte(f, "errorRetour", 15);
+        cacherElem(f, "errorRetour");
+
         AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
 
         AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
@@ -25,7 +34,7 @@ package body p_vuegraph is
         ChangerCouleurFond(f, "fondGrille2", FL_RIGHT_BCOL);
         --ChangerEtatBouton(f, "boutonFond", arret);
 
-        AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 + 90, 65, 65);
+        AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 - 155, 65, 65);
         CacherElem(f, "colorCase");
 
         AjouterBouton(f, "mvHG", "", largeur-155, hauteur / 2 - 75, 70, 70);
@@ -222,7 +231,7 @@ package body p_vuegraph is
         end loop;
     end RefreshfGrille;
 
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul) return unbounded_string is
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string is
     
         c : T_col;
         l : T_lig;
@@ -254,8 +263,9 @@ package body p_vuegraph is
             RefreshfGrille(f, grille);
             if Guerison(grille) then
                 return to_unbounded_string("GG");
+            else
+                addMove(moves, indMoves, (coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3)))));
             end if;
-
         else
                 if btnStr = "boutonQuitter" then
                     return to_unbounded_string("quit");
@@ -265,6 +275,20 @@ package body p_vuegraph is
                     return to_unbounded_string("reset");
                 elsif btnStr = "boutonAide" then
                     return to_unbounded_string("aide");
+                elsif btnStr = "boutonRetour" then
+                    if not removeLastMove(indMoves) then
+                        MontrerElem(f, "errorRetour");
+                    else
+                        MajGrille(grille, moves(indMoves + 1).coul,
+                        (case moves(indMoves + 1).dir is
+                            when hg => bd,
+                            when hd => bg,
+                            when bg => hd,
+                            when bd => hg));
+                        coul := moves(indMoves + 1).coul;
+                        showMoves(f, grille, coul);
+                        RefreshfGrille(f, grille);
+                    end if;
                 else
                     put_line("pas encore implémenté");
                 end if;
@@ -292,6 +316,8 @@ package body p_vuegraph is
     procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul) is
     begin
         MontrerElem(f, "colorCase");
+        MontrerElem(f, "boutonRetour");
+        cacherElem(f, "errorRetour");
         ChangerCouleurFond(f, "colorCase", couleurs(coul));
         for i in 0..3 loop
             MontrerElem(f, "mv" & T_direction'image(T_direction'val(i)));
@@ -320,7 +346,7 @@ package body p_vuegraph is
         ChangerTailleTexte(f, "txtGG", FL_MEDIUM_SIZE);
         ChangerAlignementTexte(f, "txtGG", FL_ALIGN_CENTER);
 
-        AjouterBouton(f, "btnGG", "Merci", 145, 200, 120 , 60);
+        AjouterBouton(f, "btnGG", "Retourner au menu", 80, 200, 240 , 60);
         ChangerTailleTexte(f, "btnGG", FL_LARGE_SIZE);
 
         MontrerFenetre(f);
@@ -351,13 +377,31 @@ package body p_vuegraph is
         CacherFenetre(f);
     end AffichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive) is
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural) is
     begin
         InitPartie(grille, pieces);
         Configurer(f, lvl, grille, pieces);
         RefreshfGrille(fGrille, Grille);
         showmoves(fgrille, grille, blanc);
+        indMoves := 0;
 
         cacherElem(fgrille, "colorCase");
+        cacherElem(fgrille, "boutonRetour");
     end reset;
+
+    procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement) is
+    begin
+        moves(indMoves + 1) := deplacement;
+        indMoves := indMoves + 1;
+    end addMove;
+
+    function removeLastMove (indMoves: in out natural) return boolean is
+    begin
+        if indMoves = 0 then
+            return false;
+        else
+        indMoves := indMoves - 1;
+            return true;
+        end if;
+    end removeLastMove;
 end p_vuegraph;
