@@ -62,8 +62,9 @@ package body p_vuegraph is
     end AffichefGrille;
 
     procedure AffichefMenu(f : in out TR_Fenetre; pseudo : out unbounded_string; niveau : out natural) is
-    largeur : natural := 700;
-    hauteur : natural := 500;
+        largeur : natural := 1200;
+        hauteur : natural := 1000;
+        fond: T_Couleur := FL_RIGHT_BCOL;
 
         procedure getNiveau is
             valBouton : unbounded_string;
@@ -71,20 +72,18 @@ package body p_vuegraph is
             valBouton := to_unbounded_string(AttendreBouton(f));
                put_line(to_string(valBouton));
 
-            if to_string(valBouton) = "boutonJouer" then
-                if ConsulterContenu(f, "inputNiveau") = "" then
-                    cacherElem(f, "warningPseudo");
-                    raise Ex_niveau;
-                elsif ConsulterContenu(f, "inputPseudo") = "" then
-                    cacherElem(f, "warningNiveau");
+            if to_string(valBouton)(1..3) = "cfg" then
+                if ConsulterContenu(f, "inputPseudo") = "" then
                     raise Ex_pseudo;
-                else niveau := natural'value(ConsulterContenu(f, "inputNiveau"));
+                else
+                    niveau := integer'value(to_string(valBouton)(4..to_string(valBouton)'last));
                 end if;
             elsif to_string(valBouton) = "boutonQuitter" then
                 raise Ex_Quitter;
             else getNiveau;
             end if;
-            
+
+            put_line(integer'image(niveau));
 
             exception
                 when Ex_niveau =>
@@ -96,37 +95,91 @@ package body p_vuegraph is
                 when Ex_pseudo =>
                     MontrerElem(f, "warningPseudo");
                     getNiveau;
-
         end getNiveau;
 
     begin
-    f := DebutFenetre("Menu", largeur, hauteur);
+        f := DebutFenetre("Menu", largeur, hauteur);
 
-        AjouterBouton(f, "background", "", 0, 0, largeur-2, hauteur-2);
-        ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
-        ChangerEtatBouton(f, "background", arret);
+        AjouterTexte(f, "background", "", 0, 0, largeur, hauteur);
+        ChangerCouleurFond(f, "background", fond);
 
-        AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
-        AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 130, 70, 30); 
-        AjouterChamp(f, "inputPseudo","Pseudo","Invite", largeur/2 - 130/2, 50, 130, 30);
-        AjouterChamp(f, "inputNiveau", "niveau", "", largeur/2 - 70/2, 90, 70, 30);
-        AjouterTexte(f, "warningNiveau", "Veuillez rentrer un niveau entre 1 et 20", largeur/2 + 45, 90, 280, 30);
+        AjouterTexte(f, "titre", "Anti-Virus", 0, 0, largeur, 120);
+        ChangerCouleurTexte(f, "titre", FL_WHITE);
+        ChangerCouleurFond(f, "titre", fond);
+        ChangerTailleTexte(f, "titre", 60);
+        ChangerAlignementTexte(f, "titre", FL_ALIGN_CENTER);
+
+        AjouterChamp(f, "inputPseudo", "", "Invite", largeur/2 + 10, 140, 200, 60);
+        ChangerTailleTexte(f, "inputPseudo", 30);
+
+        AjouterTexte(f, "txtPseudo", "Pseudo :", 0, 140, largeur/2 - 10, 60);
+        ChangerCouleurTexte(f, "txtPseudo", FL_CYAN);
+        ChangerCouleurFond(f, "txtPseudo", fond);
+        ChangerTailleTexte(f, "txtPseudo", 30);
+        ChangerAlignementTexte(f, "txtPseudo", FL_ALIGN_RIGHT);
+
+        AjouterTexte(f, "lvlTitre", "Niveaux", 0, 220, largeur, 40);
+        ChangerCouleurTexte(f, "lvlTitre", FL_WHITE);
+        ChangerCouleurFond(f, "lvlTitre", fond);
+        ChangerTailleTexte(f, "lvlTitre", 30);
+        ChangerAlignementTexte(f, "lvlTitre", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlS", "Starter", 0, 280, largeur, 40);
+        ChangerCouleurTexte(f, "lvlS", FL_GREEN);
+        ChangerCouleurFond(f, "lvlS", fond);
+        ChangerTailleTexte(f, "lvlS", 24);
+        ChangerAlignementTexte(f, "lvlS", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlJ", "Junior", 0, 460, largeur, 40);
+        ChangerCouleurTexte(f, "lvlJ", FL_DODGERBLUE);
+        ChangerCouleurFond(f, "lvlJ", fond);
+        ChangerTailleTexte(f, "lvlJ", 24);
+        ChangerAlignementTexte(f, "lvlJ", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlE", "Expert", 0, 640, largeur, 40);
+        ChangerCouleurTexte(f, "lvlE", FL_RED);
+        ChangerCouleurFond(f, "lvlE", fond);
+        ChangerTailleTexte(f, "lvlE", 24);
+        ChangerAlignementTexte(f, "lvlE", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlW", "Wizard", 0, 820, largeur, 40);
+        ChangerCouleurTexte(f, "lvlW", FL_MAGENTA);
+        ChangerCouleurFond(f, "lvlW", fond);
+        ChangerTailleTexte(f, "lvlW", 24);
+        ChangerAlignementTexte(f, "lvlW", FL_ALIGN_CENTER);
+
+        for i in 1..20 loop
+            AjouterBouton(f,
+                          "cfg" & integer'image(i)(2..integer'image(i)'last),
+                          "",
+                          260 + (((i - 1) mod 5)) * 140 ,
+                          330 + ((i- 1) / 5) * 180,
+                          120,
+                          120
+                          );
+            AjouterImage(f,
+                        "img" & integer'image(i)(2..integer'image(i)'last),
+                        "img/lvl" & integer'image(i)(2..integer'image(i)'last) & ".xpm",
+                        "",
+                        260 + (((i - 1) mod 5)) * 140 ,
+                        330 + ((i- 1) / 5) * 180,
+                        120,
+                        120);
+        end loop;
+
+        AjouterBouton(f,"boutonQuitter","Quitter", largeur - 155 , 15, 140, 60);
+        ChangerCouleurFond(f, "boutonQuitter", FL_WHITE);
+        ChangerTailleTexte(f, "boutonQuitter", 20);
+
         AjouterTexte(f, "warningPseudo", "Veuillez rentrer un pseudo", largeur/2 + 75, 50, 280, 30);
-        ChangerCouleurTexte(f, "warningNiveau", FL_RED);
         ChangerCouleurTexte(f, "warningPseudo", FL_RED);
-        cacherElem (f, "warningNiveau");
         cacherElem (f, "warningPseudo");
-        ChangerCouleurTexte(f, "inputPseudo", FL_WHITE);
-        ChangerCouleurTexte(f, "inputNiveau", FL_WHITE);
-        ChangerCouleurTexte(f, "boutonJouer", FL_WHITE);
-        ChangerCouleurFond(f, "boutonJouer", FL_RIGHT_BCOL);
-        ChangerCouleurFond(f, "warningNiveau", FL_RIGHT_BCOL);
         ChangerCouleurFond(f, "warningPseudo", FL_RIGHT_BCOL);
         MontrerFenetre(f);
 
-    getNiveau;
-    put_line(natural'image(niveau));
-    pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+        getNiveau;
+        put_line(natural'image(niveau));
+        pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
@@ -164,15 +217,16 @@ package body p_vuegraph is
     
         c : T_col;
         l : T_lig;
-        mv: T_direction;
 
     begin
         put_line("'" & btnStr & "'");
 
-        if btnStr(1..2) = "bg" then
-            l := T_lig'value(btnStr(3..3));
+        -- Il est obligatoire de mettre btnStr'first pour le compilateur sous peine de warning
+
+        if btnStr(btnStr'first..(btnStr'first+1)) = "bg" then
+            l := T_lig'value(btnStr((btnStr'first+2)..(btnStr'first+2)));
             put_line("l =" & T_lig'image(l));
-            c := btnStr(4);
+            c := btnStr((btnStr'first+3));
             put_line("c =" & T_col'image(c));
             put_line(T_coul'image(grille(l, c)));
             put_line("---");
@@ -181,11 +235,11 @@ package body p_vuegraph is
 
             selectPiece(f, grille, coul);
 
-            showMoves(f, grille, coul);
+            showMoves(f, grille, coul); 
         
-        elsif btnStr(1..2) = "mv" then
+        elsif btnStr(btnStr'first..(btnStr'first+1)) = "mv" then
 
-            MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
+            MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
             showMoves(f, grille, coul);
             AfficheGrille(grille);
             RefreshfGrille(f, grille);
