@@ -1,4 +1,4 @@
-with text_io, ada.strings.unbounded; use text_io, ada.strings.unbounded;
+with text_io, ada.strings.unbounded, forms; use text_io, ada.strings.unbounded, forms;
 
 package body p_vuegraph is
 
@@ -27,14 +27,20 @@ package body p_vuegraph is
         AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 + 90, 65, 65);
         CacherElem(f, "colorCase");
 
-        AjouterBouton(f, "mvHG", "HG", largeur-155, hauteur / 2 - 75, 70, 70);
-        AjouterBouton(f, "mvHD", "HD", largeur-75, hauteur / 2 - 75, 70, 70);
-        AjouterBouton(f, "mvBG", "BG", largeur-155, hauteur / 2 + 5, 70, 70);
-        AjouterBouton(f, "mvBD", "BD", largeur-75, hauteur / 2 + 5, 70, 70);
+        AjouterBouton(f, "mvHG", "", largeur-155, hauteur / 2 - 75, 70, 70);
+        AjouterImage(f, "imgHG", "img/HG.xpm", "", largeur-145, hauteur / 2 - 65, 50, 50);
+        AjouterBouton(f, "mvHD", "", largeur-75, hauteur / 2 - 75, 70, 70);
+        AjouterImage(f, "imgHD", "img/HD.xpm", "", largeur-65, hauteur / 2 - 65, 50, 50);
+        AjouterBouton(f, "mvBG", "", largeur-155, hauteur / 2 + 5, 70, 70);
+        AjouterImage(f, "imgBG", "img/BG.xpm", "", largeur-145, hauteur / 2 + 15, 50, 50);
+        AjouterBouton(f, "mvBD", "", largeur-75, hauteur / 2 + 5, 70, 70);
+        AjouterImage(f, "imgBD", "img/BD.xpm", "", largeur-65, hauteur / 2 + 15, 50, 50);
+
 
         for i in 0..3 loop
             put_line("cache '" & "mv" & T_direction'image(T_direction'val(i)) & "'");
             CacherElem(f, "mv" & T_direction'image(T_direction'val(i)));
+            CacherElem(f, "img" & T_direction'image(T_direction'val(i)));
         end loop;
 
 
@@ -225,9 +231,11 @@ package body p_vuegraph is
             if Possible(grille, coul, T_direction'val(i)) then
                 ChangerCouleurFond(f, "mv" & T_direction'image(T_direction'val(i)), FL_TOP_BCOL);
                 ChangerEtatBouton(f, "mv" & T_direction'image(T_direction'val(i)), marche);
+                MontrerElem(f, "img" & T_direction'image(T_direction'val(i)));
             else
                 ChangerCouleurFond(f, "mv" & T_direction'image(T_direction'val(i)), FL_INACTIVE);
                 ChangerEtatBouton(f, "mv" & T_direction'image(T_direction'val(i)), arret);
+                CacherElem(f, "img" & T_direction'image(T_direction'val(i)));
             end if;
         end loop;
     end showmoves;
@@ -238,12 +246,15 @@ package body p_vuegraph is
         f := DebutFenetre("GG", 400, 300);
 
         AjouterTexte(f, "titreGG", "Bravo !", 0, 0, 400, 125);
-        
+        ChangerTailleTexte(f, "titreGG", FL_HUGE_SIZE);
+        ChangerAlignementTexte(f, "titreGG", FL_ALIGN_CENTER);
+
         AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl), 0, 125, 400, 50);
+        ChangerTailleTexte(f, "txtGG", FL_MEDIUM_SIZE);
+        ChangerAlignementTexte(f, "txtGG", FL_ALIGN_CENTER);
 
-        AjouterBouton(f, "btnGG", "Merci", 160, 200, 80 , 40);
-
-        
+        AjouterBouton(f, "btnGG", "Merci", 145, 200, 120 , 60);
+        ChangerTailleTexte(f, "btnGG", FL_LARGE_SIZE);
 
         MontrerFenetre(f);
         while AttendreBouton(f) /= "btnGG" loop
