@@ -3,6 +3,9 @@ with p_virus; use p_virus;
 
 package p_vuetxt is
     
+    EX_QUITTER: exception;
+    EX_undefined: exception;
+
     procedure AfficheGrille (Grille: in TV_Grille);
     --{} => {la grille a été affichée selon les spécifications suivantes :
     --      *la sortie est indiquée par la lettre S

@@ -15,8 +15,19 @@ procedure av_txt is
     grille: TV_Grille;
     pieces : TV_Pieces;
 
+    act: character;
     coul: T_CoulP;
     dir: T_direction;
+    first: boolean := false;
+
+    ----------
+
+    procedure getAct (act: out character) is
+    begin
+        put_line("Veuillez saisir une action (a: abandonner, d : déplacer, r: retour");
+        put("--> ");
+        lire(act);
+    end getAct;
 
     ----------
 
@@ -92,31 +103,53 @@ begin
     Configurer(f, conf, grille, pieces);
 
      while not guerison(grille) loop
+
         clear;
         showAvailable(Pieces);
         AfficheGrille(grille);
 
         sautLigne(3);
 
-        getCoul(coul);
+        getAct(act);
 
-        if not Possible(grille, coul, hg) and not Possible(grille, coul, hd) and not Possible(grille, coul, bg) and not Possible(grille, coul, bd) then
-            put_line("Cette pièce ne peut pas bouger");
-            skip_line;
-        else
-
+        if act = 'd' then
             clear;
             showAvailable(Pieces);
             AfficheGrille(grille);
-            put_line("Quelle pièce souhaitez vous déplacer");
-            put_line("-->" & T_coul'image(coul));
 
-            getDirection(dir);
+            sautLigne(3);
 
-            if Possible(grille, coul, dir) then
+            getCoul(coul);
+
+            if not Possible(grille, coul, hg) and not Possible(grille, coul, hd) and not Possible(grille, coul, bg) and not Possible(grille, coul, bd) then
+                put_line("Cette pièce ne peut pas bouger");
+                skip_line;
+            else
+
+                clear;
+                showAvailable(Pieces);
+                AfficheGrille(grille);
+                put_line("Quelle pièce souhaitez vous déplacer");
+                put_line("-->" & T_coul'image(coul));
+
+                getDirection(dir);
+
+                if Possible(grille, coul, dir) then
+                    MajGrille(grille, coul, dir);
+                    first := true;
+                else
+                    put_line("Ce mouvement est impossible");
+                    skip_line;
+                end if;
+            end if;
+
+        elsif act = 'a' then
+            raise EX_QUITTER;
+        elsif act = 'r' then
+            if first then
                 MajGrille(grille, coul, dir);
             else
-                put_line("Ce mouvement est impossible");
+                put_line("Vous n'avez pas encore bougé");
                 skip_line;
             end if;
         end if;
@@ -130,4 +163,8 @@ begin
 
     put_line("BRAVO, vous avez battu le niveau" & integer'image(conf));
 
+exception
+    when EX_QUITTER =>
+        clear;
+        put_line("Au revoir");
 end av_txt;
