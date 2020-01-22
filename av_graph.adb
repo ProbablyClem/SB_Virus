@@ -50,6 +50,8 @@ begin
             InitPartie(grille, pieces);
             Configurer(f, niveau, grille, pieces);
             RefreshfGrille(fGrille, Grille);
+        elsif btnResult = "aide" then
+            affichefAide;
         end if;    
     end loop;
 
