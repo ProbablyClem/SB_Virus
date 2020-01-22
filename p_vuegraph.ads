@@ -23,8 +23,10 @@ package p_vuegraph is
 
     procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
-    procedure affichefGG(lvl: in positive);
+    procedure affichefGG (lvl: in positive);
 
     procedure affichefAide;
+
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive);
 
 end p_vuegraph;

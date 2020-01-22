@@ -350,4 +350,14 @@ package body p_vuegraph is
         end loop;
         CacherFenetre(f);
     end AffichefAide;
+
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive) is
+    begin
+        InitPartie(grille, pieces);
+        Configurer(f, lvl, grille, pieces);
+        RefreshfGrille(fGrille, Grille);
+        showmoves(fgrille, grille, blanc);
+
+        cacherElem(fgrille, "colorCase");
+    end reset;
 end p_vuegraph;

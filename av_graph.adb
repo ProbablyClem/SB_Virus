@@ -47,9 +47,7 @@ begin
             ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille);
         elsif btnResult = "reset" then
-            InitPartie(grille, pieces);
-            Configurer(f, niveau, grille, pieces);
-            RefreshfGrille(fGrille, Grille);
+            reset(f, fgrille, grille, pieces, niveau);
         elsif btnResult = "aide" then
             affichefAide;
         end if;    
