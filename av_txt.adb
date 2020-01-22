@@ -24,7 +24,7 @@ procedure av_txt is
 
     procedure getAct (act: out character) is
     begin
-        put_line("Veuillez saisir une action (a: abandonner, d : déplacer, r: retour");
+        put_line("Veuillez saisir une action (a: abandonner, d : déplacer, r: retour)");
         put("--> ");
         lire(act);
     end getAct;
@@ -122,7 +122,7 @@ begin
             getCoul(coul);
 
             if not Possible(grille, coul, hg) and not Possible(grille, coul, hd) and not Possible(grille, coul, bg) and not Possible(grille, coul, bd) then
-                put_line("Cette pièce ne peut pas bouger");
+                put_line("Cette pièce ne peut pas bouger (appuyez sur entrer)");
                 skip_line;
             else
 
@@ -138,7 +138,7 @@ begin
                     MajGrille(grille, coul, dir);
                     first := true;
                 else
-                    put_line("Ce mouvement est impossible");
+                    put_line("Ce mouvement est impossible (appuyez sur entrer)");
                     skip_line;
                 end if;
             end if;
@@ -147,9 +147,16 @@ begin
             raise EX_QUITTER;
         elsif act = 'r' then
             if first then
+
+                dir := (case dir is
+                    when hg => bd,
+                    when hd => bg,
+                    when bg => hd,
+                    when bd => hg);
+
                 MajGrille(grille, coul, dir);
             else
-                put_line("Vous n'avez pas encore bougé");
+                put_line("Vous n'avez pas encore bougé (appuyez sur entrer)");
                 skip_line;
             end if;
         end if;
