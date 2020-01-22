@@ -17,6 +17,8 @@ package body p_vuegraph is
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
         AjouterBouton(f,"boutonMenu","Menu", 15 , 15, 70, 30);
 
+        AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
+
         AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
         ChangerCouleurFond(f, "fondGrille1", FL_WHITE);
 
@@ -62,22 +64,30 @@ package body p_vuegraph is
         procedure getNiveau is
             valBouton : unbounded_string;
         begin
-            valBouton := to_unbounded_string(AttendreBouton(f));
-               put_line(to_string(valBouton));
 
-            if to_string(valBouton) = "boutonJouer" then
+           loop 
+           valBouton := to_unbounded_string(AttendreBouton(f));
+
+           if valBouton = "boutonJouer" then
                 if ConsulterContenu(f, "inputNiveau") = "" then
-                    cacherElem(f, "warningPseudo");
-                    raise Ex_niveau;
-                elsif ConsulterContenu(f, "inputPseudo") = "" then
-                    cacherElem(f, "warningNiveau");
-                    raise Ex_pseudo;
-                else niveau := natural'value(ConsulterContenu(f, "inputNiveau"));
+                        cacherElem(f, "warningPseudo");
+                        raise Ex_niveau;
+                    elsif ConsulterContenu(f, "inputPseudo") = "" then
+                        cacherElem(f, "warningNiveau");
+                        raise Ex_pseudo;
+                    else 
+                        niveau := natural'value(ConsulterContenu(f, "inputNiveau"));
+                        exit;
                 end if;
-            elsif to_string(valBouton) = "boutonQuitter" then
-                raise Ex_Quitter;
-            else getNiveau;
+            elsif valBouton = "boutonQuitter" then 
+                raise EX_Quitter;
+            elsif valBouton = "boutonAide" then
+                AffichefAide;
+                put("aide");
             end if;
+
+               
+           end loop;
             
 
             exception
@@ -102,6 +112,7 @@ package body p_vuegraph is
 
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 130, 70, 30); 
+        AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
         AjouterChamp(f, "inputPseudo","Pseudo","Invite", largeur/2 - 130/2, 50, 130, 30);
         AjouterChamp(f, "inputNiveau", "niveau", "", largeur/2 - 70/2, 90, 70, 30);
         AjouterTexte(f, "warningNiveau", "Veuillez rentrer un niveau entre 1 et 20", largeur/2 + 45, 90, 280, 30);
@@ -129,7 +140,7 @@ package body p_vuegraph is
             for y in grille'range(2) loop
                 ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
 
-                if grille(i,y) = vide then
+                if grille(i,y) = vide or grille(i,y) = blanc then
                     ChangerEtatBouton(f,"bg" & t_lig'image(i)(2..2) & y , arret);
                 end if;
             end loop;
@@ -194,6 +205,8 @@ package body p_vuegraph is
                     return to_unbounded_string("menu");
                 elsif btnStr = "boutonReset" then
                     return to_unbounded_string("reset");
+                elsif btnStr = "boutonAide" then
+                    return to_unbounded_string("aide");
                 else
                     put_line("pas encore implémenté");
                 end if;
@@ -207,7 +220,7 @@ package body p_vuegraph is
     begin
         for l in T_lig'range loop
             for c in T_col'range loop
-                if grille(l, c) = vide then
+                if grille(l, c) = vide or grille(l, c) = blanc then
                     null;
                 elsif grille(l, c) = coul then
                     ChangerEtatBouton(f, "bg" & t_lig'image(l)(2..2) & c, arret);
@@ -254,4 +267,24 @@ package body p_vuegraph is
         CacherFenetre(f);
     end affichefGG;
 
+    procedure AffichefAide is
+        f : TR_Fenetre;
+    begin
+        f := DebutFenetre("Regles", 400, 300);
+            AjouterTexte(f, "titre", "Regles du jeu", 400/2 - 100/2, 10, 100, 50);
+            AjouterTexte(f, "regles", "Le but du jeu Anti-Virus est de faire sortir le virus", 5, 60, 440, 30);
+            AjouterTexte(f, "regles2", "(la piece rouge), a l'aide de deplacements des autres pieces.", 5, 85, 440, 30);
+            AjouterTexte(f, "regles3", "Les pieces se deplacent exclusivement en diagonal", 5, 115, 440, 30);
+            AjouterTexte(f, "regles4", "et ne peuvent ni se chevaucher, ni sortir du plateau", 5, 140, 440, 30);
+            AjouterTexte(f, "regles5", "les pieces blanches sont des elements fixes", 5, 165, 440, 30);
+            AjouterTexte(f, "regles6", "Il existe 20 configurations de partie differentes", 5, 190, 440, 30);
+
+            AjouterBouton(f, "boutonOk", "ok", 400/2 - 70/2, 260, 70, 30);
+
+            MontrerFenetre(f);
+            while AttendreBouton(f) /= "boutonOk" loop
+            null;
+        end loop;
+        CacherFenetre(f);
+    end AffichefAide;
 end p_vuegraph;

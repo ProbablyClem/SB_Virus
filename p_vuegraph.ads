@@ -25,4 +25,6 @@ package p_vuegraph is
 
     procedure affichefGG(lvl: in positive);
 
+    procedure affichefAide;
+
 end p_vuegraph;
