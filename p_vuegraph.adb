@@ -150,13 +150,12 @@ package body p_vuegraph is
 
         for i in 1..20 loop
             AjouterBouton(f,
-                          "cfg" & integer'image(i)(2..integer'image(i)'last),
-                          "",
-                          260 + (((i - 1) mod 5)) * 140 ,
-                          330 + ((i- 1) / 5) * 180,
-                          120,
-                          120
-                          );
+                        "cfg" & integer'image(i)(2..integer'image(i)'last),
+                        "",
+                        260 + (((i - 1) mod 5)) * 140 ,
+                        330 + ((i- 1) / 5) * 180,
+                        120,
+                        120);
             AjouterImage(f,
                         "img" & integer'image(i)(2..integer'image(i)'last),
                         "img/lvl" & integer'image(i)(2..integer'image(i)'last) & ".xpm",
