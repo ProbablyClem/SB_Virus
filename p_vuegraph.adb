@@ -15,6 +15,7 @@ package body p_vuegraph is
         
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
+        AjouterBouton(f,"boutonMenu","Menu", 15 , 15, 70, 30);
 
         AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
         ChangerCouleurFond(f, "fondGrille1", FL_WHITE);
@@ -153,7 +154,7 @@ package body p_vuegraph is
         end loop;
     end RefreshfGrille;
 
-    procedure detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul) is
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul) return unbounded_string is
     
         c : T_col;
         l : T_lig;
@@ -183,18 +184,21 @@ package body p_vuegraph is
             AfficheGrille(grille);
             RefreshfGrille(f, grille);
             if Guerison(grille) then
-                raise EX_GG;
+                return to_unbounded_string("GG");
             end if;
 
         else
                 if btnStr = "boutonQuitter" then
-                    raise EX_Quitter;
+                    return to_unbounded_string("quit");
+                elsif btnStr = "boutonMenu" then
+                    return to_unbounded_string("menu");
                 else
                     put_line("pas encore implémenté");
-                    return;
                 end if;
         
         end if;
+
+        return to_unbounded_string("");
     end detectButton;
 
     procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul) is
@@ -239,7 +243,13 @@ package body p_vuegraph is
 
         AjouterBouton(f, "btnGG", "Merci", 160, 200, 80 , 40);
 
-        FinFenetre(f);
+        
+
+        MontrerFenetre(f);
+        while AttendreBouton(f) /= "btnGG" loop
+            null;
+        end loop;
+        CacherFenetre(f);
     end affichefGG;
 
 end p_vuegraph;
