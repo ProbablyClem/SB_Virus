@@ -11,7 +11,6 @@ package body p_vuegraph is
         
         AjouterTexte(f, "background", "", 0, 0, largeur, hauteur);
         ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
-        --ChangerEtatBouton(f, "background", arret);
         
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
@@ -28,6 +27,8 @@ package body p_vuegraph is
 
         AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 + 90, 65, 65);
         CacherElem(f, "colorCase");
+
+        --AjouterTexte(f, "scoreText", "Score : 0", 
 
         AjouterBouton(f, "mvHG", "HG", largeur-155, hauteur / 2 - 75, 70, 70);
         AjouterBouton(f, "mvHD", "HD", largeur-75, hauteur / 2 - 75, 70, 70);
@@ -69,7 +70,7 @@ package body p_vuegraph is
            valBouton := to_unbounded_string(AttendreBouton(f));
 
            if valBouton = "boutonJouer" then
-                if ConsulterContenu(f, "inputNiveau") = "" then
+                if positive'value(ConsulterContenu(f, "inputNiveau")) not in 1..20 then
                         cacherElem(f, "warningPseudo");
                         raise Ex_niveau;
                     elsif ConsulterContenu(f, "inputPseudo") = "" then
@@ -91,6 +92,12 @@ package body p_vuegraph is
             
 
             exception
+                when Constraint_Error => 
+                    MontrerElem(f, "warningNiveau");
+                    if ConsulterContenu(f, "inputPseudo") = "" then
+                        raise Ex_pseudo;
+                    end if;
+                    getNiveau;
                 when Ex_niveau =>
                     MontrerElem(f, "warningNiveau");
                     if ConsulterContenu(f, "inputPseudo") = "" then
@@ -100,7 +107,6 @@ package body p_vuegraph is
                 when Ex_pseudo =>
                     MontrerElem(f, "warningPseudo");
                     getNiveau;
-
         end getNiveau;
 
     begin
@@ -127,11 +133,13 @@ package body p_vuegraph is
         ChangerCouleurFond(f, "boutonJouer", FL_RIGHT_BCOL);
         ChangerCouleurFond(f, "warningNiveau", FL_RIGHT_BCOL);
         ChangerCouleurFond(f, "warningPseudo", FL_RIGHT_BCOL);
+
         MontrerFenetre(f);
 
     getNiveau;
     put_line(natural'image(niveau));
     pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
