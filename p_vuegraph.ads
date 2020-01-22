@@ -6,11 +6,13 @@ package p_vuegraph is
     type TV_Couleurs is array(t_coulP) of T_Couleur;
     couleurs : constant TV_Couleurs := (FL_RED, FL_CYAN, FL_DARKORANGE, FL_DEEPPINK, FL_DARKTOMATO, FL_BLUE, FL_DARKVIOLET, FL_GREEN, FL_YELLOW, FL_WHITE);
 
-    Quitter : exception;
+    EX_Quitter : exception;
+    EX_Pseudo: exception;
+    EX_Niveau : exception;
 
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
-    function AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural) return boolean;
+    procedure AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural);
 
     procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille);
     

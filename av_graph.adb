@@ -18,7 +18,7 @@ begin
 
     InitialiserFenetres;
 
-    if AffichefMenu(fmenu, pseudo, niveau) then
+    AffichefMenu(fmenu, pseudo, niveau);
     cacherFenetre(fmenu);
     Configurer(f, niveau, grille, pieces);
     ecrire_ligne(to_string(pseudo));
@@ -29,13 +29,10 @@ begin
         begin
             detectButton(fgrille, AttendreBouton(fgrille), grille, coul);
         exception
-            when Quitter =>
+            when ex_Quitter =>
                 exit;
         end;    
     end loop;
 
     finFenetre(fGrille);
-    else
-        finFenetre(fMenu);
-    end if;
 end av_graph;
