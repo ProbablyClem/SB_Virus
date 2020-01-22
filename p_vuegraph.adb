@@ -126,52 +126,59 @@ package body p_vuegraph is
         ChangerCouleurFond(f, "titre", fond);
         ChangerTailleTexte(f, "titre", 60);
         ChangerAlignementTexte(f, "titre", FL_ALIGN_CENTER);
+        
+        AjouterTexte(f, "author", "2020 - Clement Guiton - Thomas Duplessis", 0, 0, 400, 40);
+        ChangerCouleurTexte(f, "author", FL_BOTTOM_BCOL);
+        ChangerCouleurFond(f, "author", fond);
+        ChangerTailleTexte(f, "author", 15);
+        ChangerStyleTexte(f, "author", FL_ITALIC_STYLE);
 
-        AjouterChamp(f, "inputPseudo", "", "Invite", largeur/2 + 10, 140, 200, 60);
+        AjouterChamp(f, "inputPseudo", "", "Invite", largeur/2 + 10, 120, 200, 60);
         ChangerTailleTexte(f, "inputPseudo", 30);
 
-        AjouterTexte(f, "txtPseudo", "Pseudo :", 0, 140, largeur/2 - 10, 60);
+        AjouterTexte(f, "txtPseudo", "Pseudo :", 0, 120, largeur/2 - 10, 60);
         ChangerCouleurTexte(f, "txtPseudo", FL_CYAN);
         ChangerCouleurFond(f, "txtPseudo", fond);
         ChangerTailleTexte(f, "txtPseudo", 30);
         ChangerAlignementTexte(f, "txtPseudo", FL_ALIGN_RIGHT);
 
-        AjouterTexte(f, "lvlTitre", "Niveaux", 0, 220, largeur, 40);
+        AjouterTexte(f, "lvlTitre", "Niveaux", 0, 200, largeur, 40);
         ChangerCouleurTexte(f, "lvlTitre", FL_WHITE);
         ChangerCouleurFond(f, "lvlTitre", fond);
         ChangerTailleTexte(f, "lvlTitre", 30);
         ChangerAlignementTexte(f, "lvlTitre", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "lvlS", "Starter", 0, 280, largeur, 40);
+        AjouterTexte(f, "lvlS", "Starter", 0, 260, largeur, 40);
         ChangerCouleurTexte(f, "lvlS", FL_GREEN);
         ChangerCouleurFond(f, "lvlS", fond);
         ChangerTailleTexte(f, "lvlS", 24);
         ChangerAlignementTexte(f, "lvlS", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "lvlJ", "Junior", 0, 460, largeur, 40);
+        AjouterTexte(f, "lvlJ", "Junior", 0, 440, largeur, 40);
         ChangerCouleurTexte(f, "lvlJ", FL_DODGERBLUE);
         ChangerCouleurFond(f, "lvlJ", fond);
         ChangerTailleTexte(f, "lvlJ", 24);
         ChangerAlignementTexte(f, "lvlJ", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "lvlE", "Expert", 0, 640, largeur, 40);
+        AjouterTexte(f, "lvlE", "Expert", 0, 620, largeur, 40);
         ChangerCouleurTexte(f, "lvlE", FL_RED);
         ChangerCouleurFond(f, "lvlE", fond);
         ChangerTailleTexte(f, "lvlE", 24);
         ChangerAlignementTexte(f, "lvlE", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "lvlW", "Wizard", 0, 820, largeur, 40);
+        AjouterTexte(f, "lvlW", "Wizard", 0, 800, largeur, 40);
         ChangerCouleurTexte(f, "lvlW", FL_MAGENTA);
         ChangerCouleurFond(f, "lvlW", fond);
         ChangerTailleTexte(f, "lvlW", 24);
         ChangerAlignementTexte(f, "lvlW", FL_ALIGN_CENTER);
+
 
         for i in 1..20 loop
             AjouterBouton(f,
                         "cfg" & integer'image(i)(2..integer'image(i)'last),
                         "",
                         260 + (((i - 1) mod 5)) * 140 ,
-                        330 + ((i- 1) / 5) * 180,
+                        310 + ((i- 1) / 5) * 180,
                         120,
                         120);
             AjouterImage(f,
@@ -179,7 +186,7 @@ package body p_vuegraph is
                         "img/lvl" & integer'image(i)(2..integer'image(i)'last) & ".xpm",
                         "",
                         260 + (((i - 1) mod 5)) * 140 ,
-                        330 + ((i- 1) / 5) * 180,
+                        310 + ((i- 1) / 5) * 180,
                         120,
                         120);
         end loop;
@@ -187,6 +194,10 @@ package body p_vuegraph is
         AjouterBouton(f,"boutonQuitter","Quitter", largeur - 155 , 15, 140, 60);
         ChangerCouleurFond(f, "boutonQuitter", FL_WHITE);
         ChangerTailleTexte(f, "boutonQuitter", 20);
+
+        AjouterBouton(f,"boutonAide","?", largeur - 75 , hauteur - 75, 60, 60);
+        ChangerCouleurFond(f, "boutonAide", FL_WHITE);
+        ChangerTailleTexte(f, "boutonAide", 20);
 
         AjouterTexte(f, "warningPseudo", "Veuillez rentrer un pseudo", largeur/2 + 75, 50, 280, 30);
         ChangerCouleurTexte(f, "warningPseudo", FL_RED);
