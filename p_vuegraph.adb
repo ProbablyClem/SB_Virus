@@ -9,16 +9,22 @@ package body p_vuegraph is
         hauteur := 500;
         f := DebutFenetre("Virus", largeur, hauteur);
         
-        AjouterBouton(f, "background", "", 0, 0, largeur-2, hauteur-2);
+        AjouterTexte(f, "background", "", 0, 0, largeur, hauteur);
         ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
-        ChangerEtatBouton(f, "background", arret);
+        --ChangerEtatBouton(f, "background", arret);
         
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
 
-        AjouterBouton(f,"boutonFond", "", (largeur - (hauteur - 160)) / 2, 80, hauteur - 160, hauteur - 160);
-        ChangerCouleurFond(f, "boutonFond", FL_BLACK);
-        ChangerEtatBouton(f, "boutonFond", arret);
+        AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
+        ChangerCouleurFond(f, "fondGrille1", FL_WHITE);
+
+        AjouterTexte(f,"fondGrille2", "", (largeur - (hauteur - 160)) / 2, 80, hauteur - 160, hauteur - 160);
+        ChangerCouleurFond(f, "fondGrille2", FL_RIGHT_BCOL);
+        --ChangerEtatBouton(f, "boutonFond", arret);
+
+        AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 + 90, 65, 65);
+        CacherElem(f, "colorCase");
 
         AjouterBouton(f, "mvHG", "HG", largeur-155, hauteur / 2 - 75, 70, 70);
         AjouterBouton(f, "mvHD", "HD", largeur-75, hauteur / 2 - 75, 70, 70);
@@ -37,7 +43,7 @@ package body p_vuegraph is
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
                     AjouterBouton(f,
                                   "bg" & T_lig'image(l)(2..2) & c,
-                                  T_lig'image(l)(2..2) & c,
+                                  "",
                                   (largeur - (hauteur-160)) / 2 + (T_col'pos(c) - 65) * (hauteur - 160)/7,
                                   80 + (l - 1) * (hauteur - 160)/7,
                                   (hauteur - 160)/7,
@@ -52,20 +58,20 @@ package body p_vuegraph is
     largeur : natural := 700;
     hauteur : natural := 500;
     begin
-    f := DebutFenetre("Menu", largeur, hauteur);
+        f := DebutFenetre("Menu", largeur, hauteur);
         AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 50, 70, 30); 
         AjouterChamp(f, "inputPseudo","Pseudo","", largeur/2 - 130/2, 90, 130, 30);
-    MontrerFenetre(f);
-    While AttendreBouton(f) /="boutonJouer" loop
-        null;
-    end loop;
+        MontrerFenetre(f);
+        While AttendreBouton(f) /="boutonJouer" loop
+            null;
+        end loop;
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille) is
     begin
         for i in grille'range(1) loop
             for y in grille'range(2) loop
-                ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_MCOL);
+                ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
 
                 if grille(i,y) = vide then
                     ChangerEtatBouton(f,"bg" & t_lig'image(i)(2..2) & y , arret);
@@ -113,15 +119,17 @@ package body p_vuegraph is
 
             selectPiece(f, grille, coul);
 
-            showMoves(f);
+            showMoves(f, grille, coul);
         
         elsif btnStr(1..2) = "mv" then
 
-            if Possible(grille, coul, T_direction'value(btnStr(3..4))) then
-                MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
-            end if;
+            MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
+            showMoves(f, grille, coul);
             AfficheGrille(grille);
             RefreshfGrille(f, grille);
+            if Guerison(grille) then
+                raise EX_GG;
+            end if;
 
         else
                 if btnStr = "boutonQuitter" then
@@ -149,11 +157,34 @@ package body p_vuegraph is
         end loop;
     end selectPiece;
 
-    procedure showmoves (f: in out TR_Fenetre) is
+    procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul) is
     begin
+        MontrerElem(f, "colorCase");
+        ChangerCouleurFond(f, "colorCase", couleurs(coul));
         for i in 0..3 loop
             MontrerElem(f, "mv" & T_direction'image(T_direction'val(i)));
+            if Possible(grille, coul, T_direction'val(i)) then
+                ChangerCouleurFond(f, "mv" & T_direction'image(T_direction'val(i)), FL_TOP_BCOL);
+                ChangerEtatBouton(f, "mv" & T_direction'image(T_direction'val(i)), marche);
+            else
+                ChangerCouleurFond(f, "mv" & T_direction'image(T_direction'val(i)), FL_INACTIVE);
+                ChangerEtatBouton(f, "mv" & T_direction'image(T_direction'val(i)), arret);
+            end if;
         end loop;
     end showmoves;
+
+    procedure affichefGG(lvl: in positive) is
+        f : TR_fenetre;
+    begin
+        f := DebutFenetre("GG", 400, 300);
+
+        AjouterTexte(f, "titreGG", "Bravo !", 0, 0, 400, 125);
+        
+        AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl), 0, 125, 400, 50);
+
+        AjouterBouton(f, "btnGG", "Merci", 160, 200, 80 , 40);
+
+        FinFenetre(f);
+    end affichefGG;
 
 end p_vuegraph;

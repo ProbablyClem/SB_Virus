@@ -7,6 +7,7 @@ package p_vuegraph is
     couleurs : constant TV_Couleurs := (FL_RED, FL_CYAN, FL_DARKORANGE, FL_DEEPPINK, FL_DARKTOMATO, FL_BLUE, FL_DARKVIOLET, FL_GREEN, FL_YELLOW, FL_WHITE);
 
     Quitter : exception;
+    EX_GG: Exception;
 
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
@@ -18,6 +19,8 @@ package p_vuegraph is
 
     procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
-    procedure showmoves (f: in out TR_Fenetre);
+    procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
+
+    procedure affichefGG(lvl: in positive);
 
 end p_vuegraph;
