@@ -96,10 +96,9 @@ package body p_vuegraph is
             elsif to_string(valBouton) = "boutonQuitter" then 
                 raise EX_Quitter;
             elsif to_string(valBouton) = "boutonAide" then
-                CacherFenetre(f);
                 AffichefAide;
-                put("aide");
                 niveau := 666;
+                put("aide");
             end if;
 
             put_line(integer'image(niveau));

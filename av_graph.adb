@@ -1,4 +1,4 @@
-with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut;
+with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut, ADA.IO_EXCEPTIONS; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut;
 
 procedure av_graph is
     f : p_piece_io.file_type;
@@ -16,18 +16,21 @@ begin
 
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
     InitPartie(grille, pieces);
+
+    InitialiserFenetres;
+    
     loop
-        InitialiserFenetres;
         AffichefMenu(fmenu, pseudo, niveau);
-        if niveau /= 666 then
-            cacherFenetre(fmenu);
-            Configurer(f, niveau, grille, pieces);
-            ecrire_ligne(to_string(pseudo));
-            AffichefGrille(fGrille, grille);
-            RefreshfGrille(fGrille, Grille, score);
-        end if;
+        cacherFenetre(fmenu);
     exit when niveau /= 666;
     end loop;
+
+    cacherFenetre(fmenu);
+    Configurer(f, niveau, grille, pieces);
+    ecrire_ligne(to_string(pseudo));
+    AffichefGrille(fGrille, grille);
+    RefreshfGrille(fGrille, Grille, score);
+
     loop
         btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score, moves, indMoves);
         if btnResult = "quit" then
@@ -48,21 +51,16 @@ begin
             score := 0;
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
-            ecrire_ligne("test1");
             loop
                 AffichefMenu(fmenu, pseudo, niveau);
-                ecrire_ligne("test2");
-                if niveau /= 666 then
-                    ecrire_ligne("test3");
-                    MontrerFenetre(fGrille);
-                    Configurer(f, niveau, grille, pieces);
-                    ecrire_ligne(to_string(pseudo));
-                    RefreshfGrille(fGrille, Grille, score);
-                end if;
                 cacherFenetre(fmenu);
-                ecrire_ligne("test44");
             exit when niveau /= 666;
             end loop;
+            MontrerFenetre(fGrille);
+            cacherFenetre(fmenu);     
+            Configurer(f, niveau, grille, pieces);
+            ecrire_ligne(to_string(pseudo));
+            RefreshfGrille(fGrille, Grille, score);
         elsif btnResult = "reset" then
             reset(f, fgrille, grille, pieces, niveau, indMoves, score);
         elsif btnResult = "aide" then
