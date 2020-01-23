@@ -35,11 +35,16 @@ begin
         btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score, moves, indMoves);
         if btnResult = "quit" then
             score := 0;
+        RepriseTimer(fgrille, "timer");
+
             exit;
         elsif btnResult = "GG" then
-            score := 0;
-            affichefGG(niveau);
+            PauseTimer(fgrille, "timer");
+            affichefGG(niveau, pseudo, 100000.0 - ConsulterTimer(fgrille, "timer"));
             cacherFenetre(fGrille);
+            score := 0;
+            ChangerTempsMinuteur(fgrille, "timer", 100000.0);
+            PauseTimer(fgrille, "timer");
             InitPartie(grille, pieces);
             AffichefMenu(fmenu, pseudo, niveau);
             MontrerFenetre(fGrille);
@@ -61,6 +66,7 @@ begin
             Configurer(f, niveau, grille, pieces);
             ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille, score);
+            ChangerTempsMinuteur(fgrille, "timer", 100000.0);
         elsif btnResult = "reset" then
             reset(f, fgrille, grille, pieces, niveau, indMoves, score);
         elsif btnResult = "aide" then

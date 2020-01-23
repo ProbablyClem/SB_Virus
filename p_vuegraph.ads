@@ -30,7 +30,7 @@ package p_vuegraph is
 
     procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
-    procedure affichefGG (lvl: in positive);
+    procedure affichefGG (lvl: in positive; pseudo: unbounded_string; timer: float);
 
     procedure affichefAide;
 

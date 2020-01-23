@@ -16,6 +16,7 @@ package body p_vuegraph is
         ChangerCouleurFond(f, "timer", FL_WHITE);
         ChangerTailleTexte(f, "timer", 24);
         ChangerTempsMinuteur(f, "timer", 100000.0);
+        PauseTimer(f, "timer");
 
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
@@ -234,6 +235,7 @@ package body p_vuegraph is
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural) is
     begin
+
         for i in grille'range(1) loop
             for y in grille'range(2) loop
                 ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
@@ -291,6 +293,7 @@ package body p_vuegraph is
             showMoves(f, grille, coul); 
         
         elsif btnStr(btnStr'first..(btnStr'first+1)) = "mv" then
+            RepriseTimer(f, "timer");
             score := score + 1;
             put_line("score : " & natural'image(score));
             MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
@@ -370,16 +373,16 @@ package body p_vuegraph is
         end loop;
     end showmoves;
 
-    procedure affichefGG(lvl: in positive) is
+    procedure affichefGG(lvl: in positive; pseudo: in unbounded_string; timer: in float) is
         f : TR_fenetre;
     begin
         f := DebutFenetre("GG", 400, 300);
 
-        AjouterTexte(f, "titreGG", "Bravo !", 0, 0, 400, 125);
+        AjouterTexte(f, "titreGG", "Bravo " & (if pseudo = "Invite" then "" else to_string(pseudo)) & "!", 0, 0, 400, 125);
         ChangerTailleTexte(f, "titreGG", FL_HUGE_SIZE);
         ChangerAlignementTexte(f, "titreGG", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl), 0, 125, 400, 50);
+        AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl) & " en" & integer'image(integer(timer * 100.0) / 100) & "." & integer'image(integer(timer * 100.0) mod 100)(2..3) & " secondes", 0, 125, 400, 50);
         ChangerTailleTexte(f, "txtGG", FL_MEDIUM_SIZE);
         ChangerAlignementTexte(f, "txtGG", FL_ALIGN_CENTER);
 
