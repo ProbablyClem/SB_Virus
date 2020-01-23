@@ -435,9 +435,10 @@ package body p_vuegraph is
         ChangerCouleurTexte(f, "boutonOk", FL_BLACK);
 
         MontrerFenetre(f);
-        while AttendreBouton(f) /= "boutonOk" loop
-            null;
+        loop
+            exit when AttendreBouton(f)(1..8) = "boutonOk";
         end loop;
+
         CacherFenetre(f);
     end AffichefAide;
 
@@ -464,7 +465,7 @@ package body p_vuegraph is
         if indMoves = 0 then
             return false;
         else
-        indMoves := indMoves - 1;
+            indMoves := indMoves - 1;
             return true;
         end if;
     end removeLastMove;
