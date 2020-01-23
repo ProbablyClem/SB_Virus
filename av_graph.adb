@@ -6,7 +6,7 @@ procedure av_graph is
     grille : TV_Grille;
     pieces : TV_Pieces;
     coul : T_coul := vide;
-    pseudo : unbounded_string;
+    pseudo : unbounded_string := to_unbounded_string("invite");
     niveau : positive;
     btnResult : unbounded_string;
     score : natural := 0;
