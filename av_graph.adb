@@ -9,6 +9,7 @@ procedure av_graph is
     pseudo : unbounded_string;
     niveau : positive;
     btnResult : unbounded_string;
+    score : natural := 0;
     moves : TV_Deplacement (0..1000); -- natural'last raise une STORAGE_ERROR
     indMoves : natural := 0;
 begin
@@ -22,13 +23,15 @@ begin
     Configurer(f, niveau, grille, pieces);
     ecrire_ligne(to_string(pseudo));
     AffichefGrille(fGrille, grille);
-    RefreshfGrille(fGrille, Grille);
+    RefreshfGrille(fGrille, Grille, score);
 
     loop
-        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, moves, indMoves);
+        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score,moves, indMoves);
         if btnResult = "quit" then
+            score := 0;
             exit;
         elsif btnResult = "GG" then
+            score := 0;
             affichefGG(niveau);
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
@@ -37,8 +40,9 @@ begin
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
             ecrire_ligne(to_string(pseudo));
-            RefreshfGrille(fGrille, Grille);
+            RefreshfGrille(fGrille, Grille, score);
         elsif btnResult = "menu" then
+            score := 0;
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
             AffichefMenu(fmenu, pseudo, niveau);
@@ -46,9 +50,9 @@ begin
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
             ecrire_ligne(to_string(pseudo));
-            RefreshfGrille(fGrille, Grille);
+            RefreshfGrille(fGrille, Grille, score);
         elsif btnResult = "reset" then
-            reset(f, fgrille, grille, pieces, niveau, indMoves);
+            reset(f, fgrille, grille, pieces, niveau, indMoves, score);
         elsif btnResult = "aide" then
             affichefAide;
         end if;

@@ -21,9 +21,9 @@ package p_vuegraph is
 
     procedure AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural);
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille);
-    
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string;
+    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in out natural);
+
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string;
 
     procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
@@ -33,7 +33,7 @@ package p_vuegraph is
 
     procedure affichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural);
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural);
 
     procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement);
 
