@@ -22,7 +22,6 @@ begin
     AffichefMenu(fmenu, pseudo, niveau);
     cacherFenetre(fmenu);
     Configurer(f, niveau, grille, pieces);
-    ecrire_ligne(to_string(pseudo));
     AffichefGrille(fGrille, grille);
     RefreshfGrille(fGrille, Grille, score);
 
@@ -45,7 +44,6 @@ begin
             MontrerFenetre(fGrille);
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
-            ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille, score);
         elsif btnResult = "menu" then
             score := 0;
@@ -59,7 +57,6 @@ begin
             MontrerFenetre(fGrille);
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
-            ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille, score);
             ChangerTempsMinuteur(fgrille, "timer", 100000.0);
             for i in 0..3 loop
