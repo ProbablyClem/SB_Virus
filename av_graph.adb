@@ -1,4 +1,4 @@
-with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut;
+with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut, ADA.IO_EXCEPTIONS; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut;
 
 procedure av_graph is
     f : p_piece_io.file_type;
@@ -18,7 +18,13 @@ begin
     InitPartie(grille, pieces);
 
     InitialiserFenetres;
-    AffichefMenu(fmenu, pseudo, niveau);
+    
+    loop
+        AffichefMenu(fmenu, pseudo, niveau);
+        cacherFenetre(fmenu);
+    exit when niveau /= 666;
+    end loop;
+
     cacherFenetre(fmenu);
     Configurer(f, niveau, grille, pieces);
     ecrire_ligne(to_string(pseudo));
@@ -26,7 +32,7 @@ begin
     RefreshfGrille(fGrille, Grille, score);
 
     loop
-        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score,moves, indMoves);
+        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score, moves, indMoves);
         if btnResult = "quit" then
             score := 0;
             exit;
@@ -45,7 +51,11 @@ begin
             score := 0;
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
-            AffichefMenu(fmenu, pseudo, niveau);
+            loop
+                AffichefMenu(fmenu, pseudo, niveau);
+                cacherFenetre(fmenu);
+            exit when niveau /= 666;
+            end loop;
             MontrerFenetre(fGrille);
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
