@@ -12,6 +12,11 @@ package body p_vuegraph is
         AjouterTexte(f, "background", "", 0, 0, largeur, hauteur);
         ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
         
+        AjouterChrono(f, "timer", "", largeur/2 - 100, 10, 200, 60);
+        ChangerCouleurFond(f, "timer", FL_WHITE);
+        ChangerTailleTexte(f, "timer", 24);
+        ChangerTempsMinuteur(f, "timer", 100000.0);
+
         AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
         AjouterBouton(f,"boutonMenu","Menu", 15 , 15, 70, 30);
@@ -457,6 +462,7 @@ package body p_vuegraph is
     begin
     
         score := 0;
+        ChangerTempsMinuteur(fgrille, "timer", 100000.0);
         InitPartie(grille, pieces);
         Configurer(f, lvl, grille, pieces);
         RefreshfGrille(fGrille, Grille, score);
