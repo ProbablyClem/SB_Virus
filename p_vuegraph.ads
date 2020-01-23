@@ -33,7 +33,7 @@ package p_vuegraph is
 
     procedure affichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural);
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural);
 
     procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement);
 
