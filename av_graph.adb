@@ -5,14 +5,15 @@ procedure av_graph is
     fGrille, fMenu : TR_Fenetre;
     grille : TV_Grille;
     pieces : TV_Pieces;
-    numConfig : natural;
     coul : T_coul := vide;
-    couleurs : TV_Couleurs;
     pseudo : unbounded_string;
     niveau : positive;
     btnResult : unbounded_string;
     score : natural := 0;
+    moves : TV_Deplacement (0..1000); -- natural'last raise une STORAGE_ERROR
+    indMoves : natural := 0;
 begin
+
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
     InitPartie(grille, pieces);
 
@@ -26,6 +27,7 @@ begin
 
     loop
         btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score);
+        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, moves,score, indMoves);
         if btnResult = "quit" then
             score := 0;
             exit;
@@ -51,13 +53,10 @@ begin
             ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille, score);
         elsif btnResult = "reset" then
-            score := 0;
-            InitPartie(grille, pieces);
-            Configurer(f, niveau, grille, pieces);
-            RefreshfGrille(fGrille, Grille, score);
+            reset(f, fgrille, grille, pieces, niveau, indMoves, score);
         elsif btnResult = "aide" then
             affichefAide;
-        end if;    
+        end if;
     end loop;
 
     finFenetre(fGrille);

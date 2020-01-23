@@ -16,6 +16,15 @@ package body p_vuegraph is
         AjouterBouton(f, "boutonReset", "Recommencer", largeur - 80 - 135, 15, 120, 30);
         AjouterBouton(f,"boutonMenu","Menu", 15 , 15, 70, 30);
 
+        AjouterBouton(f, "boutonRetour", "Annuler", largeur-130 , hauteur / 2 + 105, 105, 40);
+        CacherElem(f, "boutonRetour");
+        AjouterTexte(f, "errorRetour", "Aucun mouvement precedent", 0, 430, largeur, 50);
+        ChangerAlignementTexte(f, "errorRetour", FL_ALIGN_CENTER);
+        ChangerCouleurFond(f, "errorRetour", FL_RIGHT_BCOL);
+        ChangerCouleurTexte(f, "errorRetour", FL_RED);
+        ChangerTailleTexte(f, "errorRetour", 15);
+        cacherElem(f, "errorRetour");
+
         AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
 
         AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
@@ -25,7 +34,7 @@ package body p_vuegraph is
         ChangerCouleurFond(f, "fondGrille2", FL_RIGHT_BCOL);
         --ChangerEtatBouton(f, "boutonFond", arret);
 
-        AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 + 90, 65, 65);
+        AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 - 155, 65, 65);
         CacherElem(f, "colorCase");
 
         AjouterBouton(f, "mvHG", "", largeur-155, hauteur / 2 - 75, 70, 70);
@@ -68,26 +77,21 @@ package body p_vuegraph is
     end AffichefGrille;
 
     procedure AffichefMenu(f : in out TR_Fenetre; pseudo : out unbounded_string; niveau : out natural) is
-    largeur : natural := 700;
-    hauteur : natural := 500;
+        largeur : natural := 1200;
+        hauteur : natural := 1000;
+        fond: T_Couleur := FL_RIGHT_BCOL;
 
         procedure getNiveau is
             valBouton : unbounded_string;
         begin
+            valBouton := to_unbounded_string(AttendreBouton(f));
+               put_line(to_string(valBouton));
 
-           loop 
-           valBouton := to_unbounded_string(AttendreBouton(f));
-
-           if valBouton = "boutonJouer" then
-                if positive'value(ConsulterContenu(f, "inputNiveau")) not in 1..20 then
-                        cacherElem(f, "warningPseudo");
-                        raise Ex_niveau;
-                    elsif ConsulterContenu(f, "inputPseudo") = "" then
-                        cacherElem(f, "warningNiveau");
-                        raise Ex_pseudo;
-                    else 
-                        niveau := natural'value(ConsulterContenu(f, "inputNiveau"));
-                        exit;
+            if to_string(valBouton)(1..3) = "cfg" then
+                if ConsulterContenu(f, "inputPseudo") = "" then
+                    raise Ex_pseudo;
+                else
+                    niveau := integer'value(to_string(valBouton)(4..to_string(valBouton)'last));
                 end if;
             elsif valBouton = "boutonQuitter" then 
                 raise EX_Quitter;
@@ -96,9 +100,7 @@ package body p_vuegraph is
                 put("aide");
             end if;
 
-               
-           end loop;
-            
+            put_line(integer'image(niveau));
 
             exception
                 when Constraint_Error => 
@@ -119,40 +121,104 @@ package body p_vuegraph is
         end getNiveau;
 
     begin
-    f := DebutFenetre("Menu", largeur, hauteur);
+        f := DebutFenetre("Menu", largeur, hauteur);
 
-        AjouterBouton(f, "background", "", 0, 0, largeur-2, hauteur-2);
-        ChangerCouleurFond(f, "background", FL_RIGHT_BCOL);
-        ChangerEtatBouton(f, "background", arret);
+        AjouterTexte(f, "background", "", 0, 0, largeur, hauteur);
+        ChangerCouleurFond(f, "background", fond);
 
-        AjouterBouton(f,"boutonQuitter","Quitter", largeur -80 , 15, 70, 30);
-        AjouterBouton(f, "boutonJouer","Jouer", largeur/2 - 70/2, 130, 70, 30); 
-        AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
-        AjouterChamp(f, "inputPseudo","Pseudo","Invite", largeur/2 - 130/2, 50, 130, 30);
-        AjouterChamp(f, "inputNiveau", "niveau", "", largeur/2 - 70/2, 90, 70, 30);
-        AjouterTexte(f, "warningNiveau", "Veuillez rentrer un niveau entre 1 et 20", largeur/2 + 45, 90, 280, 30);
+        AjouterTexte(f, "titre", "Anti-Virus", 0, 0, largeur, 120);
+        ChangerCouleurTexte(f, "titre", FL_WHITE);
+        ChangerCouleurFond(f, "titre", fond);
+        ChangerTailleTexte(f, "titre", 60);
+        ChangerAlignementTexte(f, "titre", FL_ALIGN_CENTER);
+        
+        AjouterTexte(f, "author", "2020 - Clement Guiton - Thomas Duplessis", 0, 0, 400, 40);
+        ChangerCouleurTexte(f, "author", FL_BOTTOM_BCOL);
+        ChangerCouleurFond(f, "author", fond);
+        ChangerTailleTexte(f, "author", 15);
+        ChangerStyleTexte(f, "author", FL_ITALIC_STYLE);
+
+        AjouterChamp(f, "inputPseudo", "", "Invite", largeur/2 + 10, 120, 200, 60);
+        ChangerTailleTexte(f, "inputPseudo", 30);
+
+        AjouterTexte(f, "txtPseudo", "Pseudo :", 0, 120, largeur/2 - 10, 60);
+        ChangerCouleurTexte(f, "txtPseudo", FL_CYAN);
+        ChangerCouleurFond(f, "txtPseudo", fond);
+        ChangerTailleTexte(f, "txtPseudo", 30);
+        ChangerAlignementTexte(f, "txtPseudo", FL_ALIGN_RIGHT);
+
+        AjouterTexte(f, "lvlTitre", "Niveaux", 0, 200, largeur, 40);
+        ChangerCouleurTexte(f, "lvlTitre", FL_WHITE);
+        ChangerCouleurFond(f, "lvlTitre", fond);
+        ChangerTailleTexte(f, "lvlTitre", 30);
+        ChangerAlignementTexte(f, "lvlTitre", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlS", "Starter", 0, 260, largeur, 40);
+        ChangerCouleurTexte(f, "lvlS", FL_GREEN);
+        ChangerCouleurFond(f, "lvlS", fond);
+        ChangerTailleTexte(f, "lvlS", 24);
+        ChangerAlignementTexte(f, "lvlS", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlJ", "Junior", 0, 440, largeur, 40);
+        ChangerCouleurTexte(f, "lvlJ", FL_DODGERBLUE);
+        ChangerCouleurFond(f, "lvlJ", fond);
+        ChangerTailleTexte(f, "lvlJ", 24);
+        ChangerAlignementTexte(f, "lvlJ", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlE", "Expert", 0, 620, largeur, 40);
+        ChangerCouleurTexte(f, "lvlE", FL_RED);
+        ChangerCouleurFond(f, "lvlE", fond);
+        ChangerTailleTexte(f, "lvlE", 24);
+        ChangerAlignementTexte(f, "lvlE", FL_ALIGN_CENTER);
+
+        AjouterTexte(f, "lvlW", "Wizard", 0, 800, largeur, 40);
+        ChangerCouleurTexte(f, "lvlW", FL_MAGENTA);
+        ChangerCouleurFond(f, "lvlW", fond);
+        ChangerTailleTexte(f, "lvlW", 24);
+        ChangerAlignementTexte(f, "lvlW", FL_ALIGN_CENTER);
+
+
+        for i in 1..20 loop
+            AjouterBouton(f,
+                        "cfg" & integer'image(i)(2..integer'image(i)'last),
+                        "",
+                        260 + (((i - 1) mod 5)) * 140 ,
+                        310 + ((i- 1) / 5) * 180,
+                        120,
+                        120);
+            AjouterImage(f,
+                        "img" & integer'image(i)(2..integer'image(i)'last),
+                        "img/lvl" & integer'image(i)(2..integer'image(i)'last) & ".xpm",
+                        "",
+                        260 + (((i - 1) mod 5)) * 140 ,
+                        310 + ((i- 1) / 5) * 180,
+                        120,
+                        120);
+        end loop;
+
+        AjouterBouton(f,"boutonQuitter","Quitter", largeur - 155 , 15, 140, 60);
+        ChangerCouleurFond(f, "boutonQuitter", FL_WHITE);
+        ChangerTailleTexte(f, "boutonQuitter", 20);
+
+        AjouterBouton(f,"boutonAide","?", largeur - 75 , hauteur - 75, 60, 60);
+        ChangerCouleurFond(f, "boutonAide", FL_WHITE);
+        ChangerTailleTexte(f, "boutonAide", 20);
+
         AjouterTexte(f, "warningPseudo", "Veuillez rentrer un pseudo", largeur/2 + 75, 50, 280, 30);
-        ChangerCouleurTexte(f, "warningNiveau", FL_RED);
         ChangerCouleurTexte(f, "warningPseudo", FL_RED);
-        cacherElem (f, "warningNiveau");
         cacherElem (f, "warningPseudo");
-        ChangerCouleurTexte(f, "inputPseudo", FL_WHITE);
-        ChangerCouleurTexte(f, "inputNiveau", FL_WHITE);
-        ChangerCouleurTexte(f, "boutonJouer", FL_WHITE);
-        ChangerCouleurFond(f, "boutonJouer", FL_RIGHT_BCOL);
-        ChangerCouleurFond(f, "warningNiveau", FL_RIGHT_BCOL);
         ChangerCouleurFond(f, "warningPseudo", FL_RIGHT_BCOL);
 
         MontrerFenetre(f);
 
-    getNiveau;
-    put_line(natural'image(niveau));
-    pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
-
+        getNiveau;
+        put_line(natural'image(niveau));
+        pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in natural) is
     begin
+        score := 0;
         for i in grille'range(1) loop
             for y in grille'range(2) loop
                 ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
@@ -184,19 +250,20 @@ package body p_vuegraph is
         ChangerTexte(f, "scoreText", "score : " & natural'image(score));
     end RefreshfGrille;
 
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural) return unbounded_string is
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string is
     
         c : T_col;
         l : T_lig;
-        mv: T_direction;
 
     begin
         put_line("'" & btnStr & "'");
 
-        if btnStr(1..2) = "bg" then
-            l := T_lig'value(btnStr(3..3));
+        -- Il est obligatoire de mettre btnStr'first pour le compilateur sous peine de warning
+
+        if btnStr(btnStr'first..(btnStr'first+1)) = "bg" then
+            l := T_lig'value(btnStr((btnStr'first+2)..(btnStr'first+2)));
             put_line("l =" & T_lig'image(l));
-            c := btnStr(4);
+            c := btnStr((btnStr'first+3));
             put_line("c =" & T_col'image(c));
             put_line(T_coul'image(grille(l, c)));
             put_line("---");
@@ -205,18 +272,19 @@ package body p_vuegraph is
 
             selectPiece(f, grille, coul);
 
-            showMoves(f, grille, coul);
+            showMoves(f, grille, coul); 
         
-        elsif btnStr(1..2) = "mv" then
-            score := score +1;
-            MajGrille(grille, coul, T_direction'value(btnStr(3..4)));
+        elsif btnStr(btnStr'first..(btnStr'first+1)) = "mv" then
+            score := score + 1;
+            MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
             showMoves(f, grille, coul);
             AfficheGrille(grille);
             RefreshfGrille(f, grille, score);
             if Guerison(grille) then
                 return to_unbounded_string("GG");
+            else
+                addMove(moves, indMoves, (coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3)))));
             end if;
-
         else
                 if btnStr = "boutonQuitter" then
                     return to_unbounded_string("quit");
@@ -226,6 +294,20 @@ package body p_vuegraph is
                     return to_unbounded_string("reset");
                 elsif btnStr = "boutonAide" then
                     return to_unbounded_string("aide");
+                elsif btnStr = "boutonRetour" then
+                    if not removeLastMove(indMoves) then
+                        MontrerElem(f, "errorRetour");
+                    else
+                        MajGrille(grille, moves(indMoves + 1).coul,
+                        (case moves(indMoves + 1).dir is
+                            when hg => bd,
+                            when hd => bg,
+                            when bg => hd,
+                            when bd => hg));
+                        coul := moves(indMoves + 1).coul;
+                        showMoves(f, grille, coul);
+                        RefreshfGrille(f, grille);
+                    end if;
                 else
                     put_line("pas encore implémenté");
                 end if;
@@ -253,6 +335,8 @@ package body p_vuegraph is
     procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul) is
     begin
         MontrerElem(f, "colorCase");
+        MontrerElem(f, "boutonRetour");
+        cacherElem(f, "errorRetour");
         ChangerCouleurFond(f, "colorCase", couleurs(coul));
         for i in 0..3 loop
             MontrerElem(f, "mv" & T_direction'image(T_direction'val(i)));
@@ -281,7 +365,7 @@ package body p_vuegraph is
         ChangerTailleTexte(f, "txtGG", FL_MEDIUM_SIZE);
         ChangerAlignementTexte(f, "txtGG", FL_ALIGN_CENTER);
 
-        AjouterBouton(f, "btnGG", "Merci", 145, 200, 120 , 60);
+        AjouterBouton(f, "btnGG", "Retourner au menu", 80, 200, 240 , 60);
         ChangerTailleTexte(f, "btnGG", FL_LARGE_SIZE);
 
         MontrerFenetre(f);
@@ -293,22 +377,103 @@ package body p_vuegraph is
 
     procedure AffichefAide is
         f : TR_Fenetre;
+        fond: T_Couleur := FL_RIGHT_BCOL;
+        largeur: positive := 600;
+        hauteur: positive := 625;
     begin
-        f := DebutFenetre("Regles", 400, 300);
-            AjouterTexte(f, "titre", "Regles du jeu", 400/2 - 100/2, 10, 100, 50);
-            AjouterTexte(f, "regles", "Le but du jeu Anti-Virus est de faire sortir le virus", 5, 60, 440, 30);
-            AjouterTexte(f, "regles2", "(la piece rouge), a l'aide de deplacements des autres pieces.", 5, 85, 440, 30);
-            AjouterTexte(f, "regles3", "Les pieces se deplacent exclusivement en diagonal", 5, 115, 440, 30);
-            AjouterTexte(f, "regles4", "et ne peuvent ni se chevaucher, ni sortir du plateau", 5, 140, 440, 30);
-            AjouterTexte(f, "regles5", "les pieces blanches sont des elements fixes", 5, 165, 440, 30);
-            AjouterTexte(f, "regles6", "Il existe 20 configurations de partie differentes", 5, 190, 440, 30);
+        f := DebutFenetre("Regles", largeur, hauteur);
 
-            AjouterBouton(f, "boutonOk", "ok", 400/2 - 70/2, 260, 70, 30);
+        AjouterTexte(f, "bg1", "", 0, 0, largeur, hauteur);
+        ChangerCouleurFond(f, "bg1", FL_WHITE);
 
-            MontrerFenetre(f);
-            while AttendreBouton(f) /= "boutonOk" loop
+        AjouterTexte(f, "bg2", "", 5, 90, largeur - 10, hauteur - 95);
+        ChangerCouleurFond(f, "bg2", fond);
+
+        AjouterTexte(f, "titre", "Regles du jeu",5, 5, largeur - 10, 80);
+        ChangerCouleurTexte(f, "titre", FL_WHITE);
+        ChangerCouleurFond(f, "titre", fond);
+        ChangerTailleTexte(f, "titre", 35);
+        ChangerAlignementTexte(f, "titre", FL_ALIGN_CENTER);
+        
+        AjouterTexte(f, "regles", "Le but du jeu Anti-Virus est de faire sortir le virus", 5, 90, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles", fond);
+        ChangerCouleurTexte(f, "regles", FL_WHITE);
+        ChangerAlignementTexte(f, "regles", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles", 20);
+
+        AjouterTexte(f, "regles2", "(la piece rouge), a l'aide", 5, 140, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles2", fond);
+        ChangerCouleurTexte(f, "regles2", FL_WHITE);
+        ChangerAlignementTexte(f, "regles2", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles2", 20);
+
+        AjouterTexte(f, "regles2.5", "de deplacements des autres pieces.", 5, 190, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles2.5", fond);
+        ChangerCouleurTexte(f, "regles2.5", FL_WHITE);
+        ChangerAlignementTexte(f, "regles2.5", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles2.5", 20);
+
+        AjouterTexte(f, "regles3", "Les pieces se deplacent exclusivement en diagonal", 5, 260, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles3", fond);
+        ChangerCouleurTexte(f, "regles3", FL_WHITE);
+        ChangerAlignementTexte(f, "regles3", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles3", 20);
+
+        AjouterTexte(f, "regles4", "et ne peuvent ni se chevaucher, ni sortir du plateau", 5, 310, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles4", fond);
+        ChangerCouleurTexte(f, "regles4", FL_WHITE);
+        ChangerAlignementTexte(f, "regles4", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles4", 20);
+
+        AjouterTexte(f, "regles5", "Les pieces blanches sont des elements fixes", 5, 380, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles5", fond);
+        ChangerCouleurTexte(f, "regles5", FL_WHITE);
+        ChangerAlignementTexte(f, "regles5", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles5", 20);
+
+        AjouterTexte(f, "regles6", "Il existe 20 configurations de partie differentes", 5, 450, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles6", fond);
+        ChangerCouleurTexte(f, "regles6", FL_WHITE);
+        ChangerAlignementTexte(f, "regles6", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles6", 20);
+
+        AjouterBouton(f, "boutonOk", "J'ai compris", largeur / 2 - 120, 520, 240, 80);
+        ChangerTailleTexte(f, "boutonOk", 30);
+        ChangerCouleurFond(f, "boutonOk", FL_WHITE);
+        ChangerCouleurTexte(f, "boutonOk", FL_BLACK);
+
+        MontrerFenetre(f);
+        while AttendreBouton(f) /= "boutonOk" loop
             null;
         end loop;
         CacherFenetre(f);
     end AffichefAide;
+
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural) is
+    begin
+        InitPartie(grille, pieces);
+        Configurer(f, lvl, grille, pieces);
+        RefreshfGrille(fGrille, Grille);
+        showmoves(fgrille, grille, blanc);
+        indMoves := 0;
+
+        cacherElem(fgrille, "colorCase");
+        cacherElem(fgrille, "boutonRetour");
+    end reset;
+
+    procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement) is
+    begin
+        moves(indMoves + 1) := deplacement;
+        indMoves := indMoves + 1;
+    end addMove;
+
+    function removeLastMove (indMoves: in out natural) return boolean is
+    begin
+        if indMoves = 0 then
+            return false;
+        else
+        indMoves := indMoves - 1;
+            return true;
+        end if;
+    end removeLastMove;
 end p_vuegraph;
