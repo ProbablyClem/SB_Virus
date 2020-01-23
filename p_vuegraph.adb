@@ -88,27 +88,34 @@ package body p_vuegraph is
 
         procedure getNiveau is
             valBouton : unbounded_string;
+            tempPseudo : unbounded_string;
         begin
-            valBouton := to_unbounded_string(AttendreBouton(f));
-               put_line(to_string(valBouton));
-
-            if to_string(valBouton)(1..3) = "cfg" then
-                if ConsulterContenu(f, "inputPseudo") = "" then
-                    raise Ex_pseudo;
-                else
-                    niveau := integer'value(to_string(valBouton)(4..to_string(valBouton)'last));
-                end if;
-            elsif to_string(valBouton) = "boutonQuitter" then 
-                raise EX_Quitter;
-            elsif to_string(valBouton) = "boutonAide" then
-                AffichefAide;
-                niveau := 666;
-                put("aide");
-            end if;
 
             put_line(integer'image(niveau));
 
+            loop
+                valBouton := to_unbounded_string(AttendreBouton(f));
+                tempPseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+
+                if to_string(valBouton)(1..3) = "cfg" and tempPseudo /= "" then
+                        niveau := integer'value(to_string(valBouton)(4..to_string(valBouton)'last));
+                        pseudo := tempPseudo;
+                        exit;
+            elsif valBouton = "boutonQuitter" then 
+                raise EX_Quitter;
+            elsif valBouton = "boutonAide" then
+                CacherElem(f, "boutonAide");
+                AffichefAide;
+                MontrerElem(f, "boutonAide");
+                tempPseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+                put("aide");
+            end if;
+
+            end loop;
+
             exception
+                when Ex_help => 
+                        getNiveau;
                 when Constraint_Error => 
                     MontrerElem(f, "warningNiveau");
                     if ConsulterContenu(f, "inputPseudo") = "" then
@@ -124,6 +131,7 @@ package body p_vuegraph is
                 when Ex_pseudo =>
                     MontrerElem(f, "warningPseudo");
                     getNiveau;
+                
         end getNiveau;
 
     begin
@@ -219,7 +227,9 @@ package body p_vuegraph is
 
         getNiveau;
         put_line(natural'image(niveau));
-        pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+        --pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
+        exception
+            when Constraint_Error => getNiveau;
     end AffichefMenu;
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural) is

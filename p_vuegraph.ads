@@ -16,6 +16,7 @@ package p_vuegraph is
     EX_Quitter : exception;
     EX_Pseudo: exception;
     EX_Niveau : exception;
+    EX_Help : exception;
 
     procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
 
