@@ -26,8 +26,7 @@ begin
     RefreshfGrille(fGrille, Grille, score);
 
     loop
-        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score);
-        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, moves,score, indMoves);
+        btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score,moves, indMoves);
         if btnResult = "quit" then
             score := 0;
             exit;

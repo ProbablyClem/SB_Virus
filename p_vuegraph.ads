@@ -21,7 +21,7 @@ package p_vuegraph is
 
     procedure AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural);
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in natural);
+    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in out natural);
 
     function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string;
 

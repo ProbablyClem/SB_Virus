@@ -216,7 +216,7 @@ package body p_vuegraph is
         pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
     end AffichefMenu;
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in natural) is
+    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural) is
     begin
         score := 0;
         for i in grille'range(1) loop
@@ -306,7 +306,7 @@ package body p_vuegraph is
                             when bd => hg));
                         coul := moves(indMoves + 1).coul;
                         showMoves(f, grille, coul);
-                        RefreshfGrille(f, grille);
+                        RefreshfGrille(f, grille, score);
                     end if;
                 else
                     put_line("pas encore implémenté");
@@ -449,11 +449,11 @@ package body p_vuegraph is
         CacherFenetre(f);
     end AffichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural) is
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural) is
     begin
         InitPartie(grille, pieces);
         Configurer(f, lvl, grille, pieces);
-        RefreshfGrille(fGrille, Grille);
+        RefreshfGrille(fGrille, Grille, score);
         showmoves(fgrille, grille, blanc);
         indMoves := 0;
 
