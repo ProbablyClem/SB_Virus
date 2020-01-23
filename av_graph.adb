@@ -19,12 +19,7 @@ begin
 
     InitialiserFenetres;
     
-    loop
-        AffichefMenu(fmenu, pseudo, niveau);
-        cacherFenetre(fmenu);
-    exit when niveau /= 666;
-    end loop;
-
+    AffichefMenu(fmenu, pseudo, niveau);
     cacherFenetre(fmenu);
     Configurer(f, niveau, grille, pieces);
     ecrire_ligne(to_string(pseudo));
@@ -61,12 +56,24 @@ begin
             Configurer(f, niveau, grille, pieces);
             ecrire_ligne(to_string(pseudo));
             RefreshfGrille(fGrille, Grille, score);
+            for i in 0..3 loop
+                CacherElem(fgrille, "mv" & T_direction'image(T_direction'val(i)));
+                CacherElem(fgrille, "img" & T_direction'image(T_direction'val(i)));
+            end loop;
+            CacherElem(fgrille, "colorCase");
+            CacherElem(fgrille, "boutonRetour");
+            
+            
         elsif btnResult = "reset" then
             reset(f, fgrille, grille, pieces, niveau, indMoves, score);
         elsif btnResult = "aide" then
+            CacherElem(fGrille, "boutonAide");
             affichefAide;
+            MontrerElem(fgrille, "boutonAide");
         end if;
     end loop;
 
     finFenetre(fGrille);
+    exception
+        when Ex_quitter => null;
 end av_graph;
