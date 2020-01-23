@@ -369,20 +369,73 @@ package body p_vuegraph is
 
     procedure AffichefAide is
         f : TR_Fenetre;
+        fond: T_Couleur := FL_RIGHT_BCOL;
+        largeur: positive := 600;
+        hauteur: positive := 625;
     begin
-        f := DebutFenetre("Regles", 400, 300);
-            AjouterTexte(f, "titre", "Regles du jeu", 400/2 - 100/2, 10, 100, 50);
-            AjouterTexte(f, "regles", "Le but du jeu Anti-Virus est de faire sortir le virus", 5, 60, 440, 30);
-            AjouterTexte(f, "regles2", "(la piece rouge), a l'aide de deplacements des autres pieces.", 5, 85, 440, 30);
-            AjouterTexte(f, "regles3", "Les pieces se deplacent exclusivement en diagonal", 5, 115, 440, 30);
-            AjouterTexte(f, "regles4", "et ne peuvent ni se chevaucher, ni sortir du plateau", 5, 140, 440, 30);
-            AjouterTexte(f, "regles5", "les pieces blanches sont des elements fixes", 5, 165, 440, 30);
-            AjouterTexte(f, "regles6", "Il existe 20 configurations de partie differentes", 5, 190, 440, 30);
+        f := DebutFenetre("Regles", largeur, hauteur);
 
-            AjouterBouton(f, "boutonOk", "ok", 400/2 - 70/2, 260, 70, 30);
+        AjouterTexte(f, "bg1", "", 0, 0, largeur, hauteur);
+        ChangerCouleurFond(f, "bg1", FL_WHITE);
 
-            MontrerFenetre(f);
-            while AttendreBouton(f) /= "boutonOk" loop
+        AjouterTexte(f, "bg2", "", 5, 90, largeur - 10, hauteur - 95);
+        ChangerCouleurFond(f, "bg2", fond);
+
+        AjouterTexte(f, "titre", "Regles du jeu",5, 5, largeur - 10, 80);
+        ChangerCouleurTexte(f, "titre", FL_WHITE);
+        ChangerCouleurFond(f, "titre", fond);
+        ChangerTailleTexte(f, "titre", 35);
+        ChangerAlignementTexte(f, "titre", FL_ALIGN_CENTER);
+        
+        AjouterTexte(f, "regles", "Le but du jeu Anti-Virus est de faire sortir le virus", 5, 90, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles", fond);
+        ChangerCouleurTexte(f, "regles", FL_WHITE);
+        ChangerAlignementTexte(f, "regles", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles", 20);
+
+        AjouterTexte(f, "regles2", "(la piece rouge), a l'aide", 5, 140, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles2", fond);
+        ChangerCouleurTexte(f, "regles2", FL_WHITE);
+        ChangerAlignementTexte(f, "regles2", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles2", 20);
+
+        AjouterTexte(f, "regles2.5", "de deplacements des autres pieces.", 5, 190, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles2.5", fond);
+        ChangerCouleurTexte(f, "regles2.5", FL_WHITE);
+        ChangerAlignementTexte(f, "regles2.5", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles2.5", 20);
+
+        AjouterTexte(f, "regles3", "Les pieces se deplacent exclusivement en diagonal", 5, 260, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles3", fond);
+        ChangerCouleurTexte(f, "regles3", FL_WHITE);
+        ChangerAlignementTexte(f, "regles3", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles3", 20);
+
+        AjouterTexte(f, "regles4", "et ne peuvent ni se chevaucher, ni sortir du plateau", 5, 310, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles4", fond);
+        ChangerCouleurTexte(f, "regles4", FL_WHITE);
+        ChangerAlignementTexte(f, "regles4", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles4", 20);
+
+        AjouterTexte(f, "regles5", "Les pieces blanches sont des elements fixes", 5, 380, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles5", fond);
+        ChangerCouleurTexte(f, "regles5", FL_WHITE);
+        ChangerAlignementTexte(f, "regles5", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles5", 20);
+
+        AjouterTexte(f, "regles6", "Il existe 20 configurations de partie differentes", 5, 450, largeur - 10, 50);
+        ChangerCouleurFond(f, "regles6", fond);
+        ChangerCouleurTexte(f, "regles6", FL_WHITE);
+        ChangerAlignementTexte(f, "regles6", FL_ALIGN_CENTER);
+        ChangerTailleTexte(f, "regles6", 20);
+
+        AjouterBouton(f, "boutonOk", "J'ai compris", largeur / 2 - 120, 520, 240, 80);
+        ChangerTailleTexte(f, "boutonOk", 30);
+        ChangerCouleurFond(f, "boutonOk", FL_WHITE);
+        ChangerCouleurTexte(f, "boutonOk", FL_BLACK);
+
+        MontrerFenetre(f);
+        while AttendreBouton(f) /= "boutonOk" loop
             null;
         end loop;
         CacherFenetre(f);
