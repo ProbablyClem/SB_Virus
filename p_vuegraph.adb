@@ -220,7 +220,6 @@ package body p_vuegraph is
 
     procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural) is
     begin
-        score := 0;
         for i in grille'range(1) loop
             for y in grille'range(2) loop
                 ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
@@ -247,9 +246,10 @@ package body p_vuegraph is
                         ChangerCouleurFond(f, "bg" & t_lig'image(i)(2..2) & y, couleurs(grille(i,y)));
                 end case;
             end loop;
+
+            ChangerTexte(f, "scoreText", "score : " & natural'image(score));
         end loop;
 
-        ChangerTexte(f, "scoreText", "score : " & natural'image(score));
     end RefreshfGrille;
 
     function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string is
@@ -278,6 +278,7 @@ package body p_vuegraph is
         
         elsif btnStr(btnStr'first..(btnStr'first+1)) = "mv" then
             score := score + 1;
+            put_line("score : " & natural'image(score));
             MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
             showMoves(f, grille, coul);
             AfficheGrille(grille);
@@ -297,6 +298,7 @@ package body p_vuegraph is
                 elsif btnStr = "boutonAide" then
                     return to_unbounded_string("aide");
                 elsif btnStr = "boutonRetour" then
+                    score := score +1;
                     if not removeLastMove(indMoves) then
                         MontrerElem(f, "errorRetour");
                     else
@@ -454,6 +456,8 @@ package body p_vuegraph is
 
     procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural) is
     begin
+    
+        score := 0;
         InitPartie(grille, pieces);
         Configurer(f, lvl, grille, pieces);
         RefreshfGrille(fGrille, Grille, score);
