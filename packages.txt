@@ -1,0 +1,63 @@
+Explication des package devellopé pendant le projet
+Binome : Guiton, Duplessis
+
+p_virus : contient les fonctions et procedures utilisées pour le texte et pour le graphique neccesaire au fonctionnement du jeu
+	procedure InitPartie(Grille: in out TV_Grille; Pieces: in out TV_Pieces);
+		initialise les differents elements de la parti avec des valeurs par defaut (vide)
+	procedure Configurer(f : in out p_piece_io.file_type; nb : in positive; Grille:in out TV_Grille; Pieces: in out TV_Pieces);
+		permet de configurer la jeu avec les valeurs d'un niveau
+
+	procedure PosPiece(Grille: in TV_Grille; coul: in T_coulP);
+		affiche la position des differents elements d'une piece	
+	
+	function Possible (Grille: in TV_Grille; coul: T_CoulP; Dir : in T_Direction) return boolean;
+		verifie si le deplacement specifie est possible pour une piece donné
+
+	procedure MajGrille (Grille: in out TV_Grille; coul: in T_coulP; Dir :in T_Direction);
+		met a jour la grille en deplacant une piece de couleur donné en fonction d'une direction
+	
+	function Guerison(Grille: in TV_Grille) return boolean;
+		verifie si le niveau est fini
+
+p_vuetext : contient les elements utilisés pour laffichage du jeu sous forme texte
+	procedure AfficheGrille (Grille: in TV_Grille);
+		Affiche la grille de jeu sur l'ecran
+	procedure clear;
+		nettoie la console
+
+       procedure sautLigne (x: in positive);
+		permet de sauter de ligne autant de fois que specifié		
+
+p_vuegraph : contient les elements utilisés pour l'affichage du jeu sous forme graphique
+    procedure AffichefGrille(f : in out TR_Fenetre; Grille : TV_Grille);
+	Affiche la fenetre de jeu	
+
+    procedure AffichefMenu(f : in out TR_Fenetre; pseudo: in out unbounded_string; niveau : out natural);
+	Affiche la fenetre de menu	
+
+    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in out natural);
+	met a jour l'affichage de la fenetre de jeu pour la faire correspondre avec les nouvelles informations
+
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string;
+	gere les entres utilisateurs de la fenetre de jeu, en faisant correspondre une action avec les differents boutons
+
+    procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
+	recupere la couleur de la piece selectionné par l'utilisateur dans la fenetre de jeu
+
+    procedure showmoves (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
+	active ou desactive les boutons de directions en fonctions des possibilités de la piece selectionné
+
+    procedure affichefGG (lvl: in positive; pseudo: unbounded_string; timer: float);
+	affiche la fenetre de victoire
+
+    procedure affichefAide;
+	affiche la fenetre d'aide indiquant les regles du jeu	
+
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural);
+	remet la zero la partie en cours
+
+    procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement);
+	ajoute un deplacement dans un vecteur, ce qui nous permet de revenir en arriere avec le bouton retour	
+
+    function removeLastMove (indMoves: in out natural) return boolean;
+	enleve le dernier deplacement de la pile
