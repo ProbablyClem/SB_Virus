@@ -82,7 +82,7 @@ package body p_vuegraph is
         MontrerFenetre(f);
     end AffichefGrille;
 
-    procedure AffichefMenu(f : in out TR_Fenetre; pseudo : out unbounded_string; niveau : out natural) is
+    procedure AffichefMenu(f : in out TR_Fenetre; pseudo : in out unbounded_string; niveau : out natural) is
         largeur : natural := 1200;
         hauteur : natural := 1000;
         fond: T_Couleur := FL_RIGHT_BCOL;
@@ -153,7 +153,7 @@ package body p_vuegraph is
         ChangerTailleTexte(f, "author", 15);
         ChangerStyleTexte(f, "author", FL_ITALIC_STYLE);
 
-        AjouterChamp(f, "inputPseudo", "", "Invite", largeur/2 + 10, 120, 200, 60);
+        AjouterChamp(f, "inputPseudo", "", to_string(pseudo), largeur/2 + 10, 120, 200, 60);
         ChangerTailleTexte(f, "inputPseudo", 30);
 
         AjouterTexte(f, "txtPseudo", "Pseudo :", 0, 120, largeur/2 - 10, 60);
