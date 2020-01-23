@@ -501,4 +501,5 @@ package body p_vuegraph is
             return true;
         end if;
     end removeLastMove;
+
 end p_vuegraph;

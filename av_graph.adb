@@ -80,6 +80,6 @@ begin
     end loop;
 
     finFenetre(fGrille);
-    exception
-        when Ex_quitter => null;
+exception
+    when Ex_quitter => null;
 end av_graph;
