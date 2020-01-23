@@ -59,7 +59,6 @@ package body p_vuegraph is
 
 
         for i in 0..3 loop
-            put_line("cache '" & "mv" & T_direction'image(T_direction'val(i)) & "'");
             CacherElem(f, "mv" & T_direction'image(T_direction'val(i)));
             CacherElem(f, "img" & T_direction'image(T_direction'val(i)));
         end loop;
@@ -92,8 +91,6 @@ package body p_vuegraph is
             tempPseudo : unbounded_string;
         begin
 
-            put_line(integer'image(niveau));
-
             loop
                 valBouton := to_unbounded_string(AttendreBouton(f));
                 tempPseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
@@ -109,7 +106,6 @@ package body p_vuegraph is
                 AffichefAide;
                 MontrerElem(f, "boutonAide");
                 tempPseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
-                put("aide");
             end if;
 
             end loop;
@@ -227,7 +223,6 @@ package body p_vuegraph is
         MontrerFenetre(f);
 
         getNiveau;
-        put_line(natural'image(niveau));
         --pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
         exception
             when Constraint_Error => getNiveau;
@@ -274,17 +269,12 @@ package body p_vuegraph is
         l : T_lig;
 
     begin
-        put_line("'" & btnStr & "'");
 
         -- Il est obligatoire de mettre btnStr'first pour le compilateur sous peine de warning
 
         if btnStr(btnStr'first..(btnStr'first+1)) = "bg" then
             l := T_lig'value(btnStr((btnStr'first+2)..(btnStr'first+2)));
-            put_line("l =" & T_lig'image(l));
             c := btnStr((btnStr'first+3));
-            put_line("c =" & T_col'image(c));
-            put_line(T_coul'image(grille(l, c)));
-            put_line("---");
 
             coul := grille(l, c);
 
@@ -295,10 +285,9 @@ package body p_vuegraph is
         elsif btnStr(btnStr'first..(btnStr'first+1)) = "mv" then
             RepriseTimer(f, "timer");
             score := score + 1;
-            put_line("score : " & natural'image(score));
             MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
             showMoves(f, grille, coul);
-            AfficheGrille(grille);
+            --AfficheGrille(grille);
             RefreshfGrille(f, grille, score);
             if Guerison(grille) then
                 return to_unbounded_string("GG");
