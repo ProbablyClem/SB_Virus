@@ -1,4 +1,4 @@
-with p_vuetxt; use p_vuetxt;
+with p_vuetxt, p_score; use p_vuetxt, p_score;
 with p_fenbase, forms, p_virus, ada.strings.unbounded; use p_fenbase, forms, p_virus, ada.strings.unbounded;
 
 package p_vuegraph is
@@ -21,9 +21,9 @@ package p_vuegraph is
 
     procedure AffichefMenu(f : in out TR_Fenetre; pseudo: out unbounded_string; niveau : out natural);
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in out natural);
+    procedure RefreshfGrille(f : in out TR_Fenetre; Grille : TV_Grille; score : in out natural; v : in TV_score; niveau : in natural);
 
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string;
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural; niveau : in natural; v : in TV_score) return unbounded_string;
 
     procedure selectPiece (f: in out TR_Fenetre; grille: in TV_Grille; coul: in T_coul);
 
@@ -33,7 +33,7 @@ package p_vuegraph is
 
     procedure affichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural);
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural; vecScore : in out TV_score);
 
     procedure addMove (moves: in out TV_Deplacement; indMoves: in out natural; deplacement: in TR_Deplacement);
 

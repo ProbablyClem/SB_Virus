@@ -51,7 +51,11 @@ package body p_vuegraph is
         ChangerCouleurTexte(f, "scoreText", FL_WHITE);
         ChangerTailleTexte(f, "scoreText", 14);
 
-
+        for i in 1..5 loop
+            AjouterTexte(f, "top"& natural'image(i), "", 15, 70 + i * 50 , 100, 30);
+            ChangerCouleurFond(f, "top" & natural'image(i), FL_RIGHT_BCOL);
+            ChangerCouleurTexte(f, "top" & natural'image(i), FL_WHITE);
+        end loop;
         for i in 0..3 loop
             put_line("cache '" & "mv" & T_direction'image(T_direction'val(i)) & "'");
             CacherElem(f, "mv" & T_direction'image(T_direction'val(i)));
@@ -63,10 +67,7 @@ package body p_vuegraph is
         for c in T_col'range loop
             for l in T_lig'range loop
                 if (T_col'pos(c) mod 2) = (T_lig'pos(l) mod 2) then
-                    AjouterBouton(f,
-                                  "bg" & T_lig'image(l)(2..2) & c,
-                                  "",
-                                  (largeur - (hauteur-160)) / 2 + (T_col'pos(c) - 65) * (hauteur - 160)/7,
+                    AjouterBouton(f,"","",(largeur - (hauteur-160)) / 2 + (T_col'pos(c) - 65) * (hauteur - 160)/7,
                                   80 + (l - 1) * (hauteur - 160)/7,
                                   (hauteur - 160)/7,
                                   (hauteur - 160)/7);
@@ -216,8 +217,11 @@ package body p_vuegraph is
         pseudo := to_unbounded_string(ConsulterContenu(f, "inputPseudo"));
     end AffichefMenu;
 
-    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural) is
+    procedure RefreshfGrille(f : in out TR_Fenetre; grille : TV_Grille; score : in out natural; v : in TV_score; niveau : in natural) is
+        top : TV_score(1..5);
     begin
+        top := top5(v, niveau);
+
         for i in grille'range(1) loop
             for y in grille'range(2) loop
                 ChangerCouleurFond(f,"bg" & t_lig'image(i)(2..2) & y , FL_INACTIVE);
@@ -248,9 +252,13 @@ package body p_vuegraph is
             ChangerTexte(f, "scoreText", "score : " & natural'image(score));
         end loop;
 
+        for i in 1..5 loop
+            ChangerTexte(f, "top" & natural'image(i), natural'image(i) &". " & top(i).pseudo & " : " & natural'image(top(i).score));
+        end loop;
+
     end RefreshfGrille;
 
-    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural) return unbounded_string is
+    function detectButton (f: in out TR_Fenetre; btnStr: string; grille: in out TV_Grille; coul: in out T_coul; score : in out natural; moves: in out TV_Deplacement; indMoves: in out natural;niveau : in natural; v : in TV_score) return unbounded_string is
     
         c : T_col;
         l : T_lig;
@@ -280,7 +288,7 @@ package body p_vuegraph is
             MajGrille(grille, coul, T_direction'value(btnStr((btnStr'first+2)..(btnStr'first+3))));
             showMoves(f, grille, coul);
             AfficheGrille(grille);
-            RefreshfGrille(f, grille, score);
+            RefreshfGrille(f, grille, score, v, niveau);
             if Guerison(grille) then
                 return to_unbounded_string("GG");
             else
@@ -308,7 +316,7 @@ package body p_vuegraph is
                             when bd => hg));
                         coul := moves(indMoves + 1).coul;
                         showMoves(f, grille, coul);
-                        RefreshfGrille(f, grille, score);
+                        RefreshfGrille(f, grille, score, v, niveau);
                     end if;
                 else
                     put_line("pas encore implémenté");
@@ -451,13 +459,13 @@ package body p_vuegraph is
         CacherFenetre(f);
     end AffichefAide;
 
-    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural) is
+    procedure reset (f: in out p_piece_io.file_type; fgrille: in out TR_Fenetre; grille: in out TV_Grille; pieces: in out TV_Pieces; lvl: in positive; indMoves: in out natural; score : in out natural; vecScore : in out TV_score) is
     begin
     
         score := 0;
         InitPartie(grille, pieces);
         Configurer(f, lvl, grille, pieces);
-        RefreshfGrille(fGrille, Grille, score);
+        RefreshfGrille(fGrille, Grille, score, vecScore, lvl);
         showmoves(fgrille, grille, blanc);
         indMoves := 0;
 
