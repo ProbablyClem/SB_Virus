@@ -517,7 +517,7 @@ package body p_vuegraph is
         for i in 1..5 loop
             if V(i).temps /= 0.0 then
                 ChangerTexte(f, "lb" & integer'image(i), V(i).pseudo);
-                ChangerTexte(f, "lbsc" & integer'image(i),integer'image(integer(V(i).temps * 100.0) / 100) & "." & integer'image(integer(V(i).temps * 100.0) mod 100)(2..3));
+                ChangerTexte(f, "lbsc" & integer'image(i),integer'image(integer(V(i).temps * 100.0) / 100) & "." & (if integer(V(i).temps * 100.0) mod 100 < 10 then "0" & integer'image(integer(V(i).temps * 100.0) mod 100)(2..2) else integer'image(integer(V(i).temps * 100.0) mod 100)(2..3)));
             else
                 ChangerTexte(f, "lb" & integer'image(i), V(i).pseudo);
                 ChangerTexte(f, "lbsc" & integer'image(i), "");

@@ -37,12 +37,14 @@ begin
         elsif btnResult = "GG" then
             PauseTimer(fgrille, "timer");
             if pseudo /= "invite" then
+                pseudoScore := "                    ";
                 pseudoScore(1..to_string(pseudo)'last) := to_string(pseudo);
                 addScore(niveau, pseudoScore, score, 100000.0 - ConsulterTimer(fgrille, "timer"));
             end if;
             affichefGG(niveau, pseudo, 100000.0 - ConsulterTimer(fgrille, "timer"));
             cacherFenetre(fGrille);
             score := 0;
+            indMoves := 0;
             ChangerTempsMinuteur(fgrille, "timer", 100000.0);
             PauseTimer(fgrille, "timer");
             InitPartie(grille, pieces);
