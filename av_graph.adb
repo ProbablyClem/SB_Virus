@@ -1,4 +1,4 @@
-with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut, ADA.IO_EXCEPTIONS; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut;
+with p_fenbase, p_vuegraph, p_virus, sequential_io, forms, ada.strings.unbounded, p_esiut, ADA.IO_EXCEPTIONS, p_score; use p_fenbase, p_vuegraph, p_virus, forms, ada.strings.unbounded, p_esiut, p_score;
 
 procedure av_graph is
     f : p_piece_io.file_type;
@@ -12,6 +12,7 @@ procedure av_graph is
     score : natural := 0;
     moves : TV_Deplacement (0..1000); -- natural'last raise une STORAGE_ERROR
     indMoves : natural := 0;
+    pseudoScore: string (1..20):= "                    ";
 begin
 
     p_piece_io.open(f, p_piece_io.in_file, "Parties");
@@ -24,6 +25,7 @@ begin
     Configurer(f, niveau, grille, pieces);
     AffichefGrille(fGrille, grille);
     RefreshfGrille(fGrille, Grille, score);
+    Leaderboard(fgrille, niveau);
 
     loop
         btnResult := detectButton(fgrille, AttendreBouton(fgrille), grille, coul, score, moves, indMoves);
@@ -34,6 +36,10 @@ begin
             exit;
         elsif btnResult = "GG" then
             PauseTimer(fgrille, "timer");
+            if pseudo /= "invite" then
+                pseudoScore(1..to_string(pseudo)'last) := to_string(pseudo);
+                addScore(niveau, pseudoScore, score, 100000.0 - ConsulterTimer(fgrille, "timer"));
+            end if;
             affichefGG(niveau, pseudo, 100000.0 - ConsulterTimer(fgrille, "timer"));
             cacherFenetre(fGrille);
             score := 0;
@@ -45,8 +51,10 @@ begin
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
             RefreshfGrille(fGrille, Grille, score);
+            Leaderboard(fgrille, niveau);
         elsif btnResult = "menu" then
             score := 0;
+            indMoves := 0;
             cacherFenetre(fGrille);
             InitPartie(grille, pieces);
             loop
@@ -58,7 +66,9 @@ begin
             cacherFenetre(fmenu);     
             Configurer(f, niveau, grille, pieces);
             RefreshfGrille(fGrille, Grille, score);
+            Leaderboard(fgrille, niveau);
             ChangerTempsMinuteur(fgrille, "timer", 100000.0);
+            PauseTimer(fgrille, "timer");
             for i in 0..3 loop
                 CacherElem(fgrille, "mv" & T_direction'image(T_direction'val(i)));
                 CacherElem(fgrille, "img" & T_direction'image(T_direction'val(i)));

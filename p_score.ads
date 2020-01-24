@@ -9,66 +9,22 @@ package p_score is
         temps: float;
     end record;
 
-    type TV_Score is array (positive range TV_Score) of TR_Score;
+    type TV_Score is array (positive range <>) of TR_Score;
 
-    package p_score_io is new sequential_io(TV_Score); use p_score_io;
+    package p_score_io is new sequential_io(TR_Score); use p_score_io;
 
     nomFic : constant string(1..14) := "data/score.bin";
 
-    function fileExist return boolean is
-    -- on vérifie si un fichier existe en se basant sur une exception
-        f: p_score_io.file_type;
-    begin
-        open(f, in_file, nomFic);
-        close(f);
-        return true;
-    exception
-        when others =>
-            return false;
-    end fileExist;
+    function fileExist return boolean;
 
-    procedure createFile is
-    -- on créé un fichier pour stocker les scores
-        f: p_score_io.file_type;
-    begin
-        create(f, out_file, nomFic);
-        close(f);
-    end createFile
+    procedure createFile;
 
-    procedure fileToVec (V: out TV_Score) is
-    -- on récupère le vecteur associé au fichier de score par défaut
-        i: positive := 1;
-        score: TR_Score;
-        f: in p_score_io.file_type; 
-    begin
-        open(f, in_file, nomFic);
-        while not end_of_file(f) loop
-            read(f, V(i));
-            i := i + 1;
-        end loop;
-        close(f);
-    end fileToVec
+    procedure binToVec (V: out TV_Score);
 
-    procedure getHighScore (lvl: in positive; highScore: out TV_Score) is
-    -- on récupère un vecteur contenant les 5 meilleurs temps d'un niveau voulu
-        V: TV_Score;
-        i: positive := 1;
-    begin
+    procedure vecToBin (V: in TV_Score);
 
-        if not fileExist then
-            createFile;
-        end if;
+    procedure getHighScore (lvl: in positive; highScore: out TV_Score);
 
-        fileToVec(V);
-        while lvl > V(i).niveau and i <= V'last loop
-            i := i + 1;
-        end loop;
-
-        if lvl < V(i) then
-            highScore := ();
-        else
-            
-        end if;
-    end getScore;
+    procedure addScore (lvl: positive; pseudo: string; score: positive; temps: float);
 
 end p_score;

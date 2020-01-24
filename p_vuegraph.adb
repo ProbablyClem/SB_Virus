@@ -1,4 +1,4 @@
-with text_io, ada.strings.unbounded, forms; use text_io, ada.strings.unbounded, forms;
+with text_io, ada.strings.unbounded, forms, p_score; use text_io, ada.strings.unbounded, forms, p_score;
 
 package body p_vuegraph is
 
@@ -33,12 +33,30 @@ package body p_vuegraph is
 
         AjouterBouton(f, "boutonAide","?", 30, hauteur - 50, 30, 30);
 
+        AjouterTexte(f, "lbTitle", "Leaderboard", 10, 140, 160, 30);
+        ChangerTailleTexte(f, "lbTitle", 18);
+        ChangerAlignementTexte(f, "lbTitle", FL_ALIGN_CENTER);
+        ChangerCouleurFond(f, "lbTitle", FL_RIGHT_BCOL);
+        ChangerCouleurTexte(f, "lbTitle", FL_WHITE);
+
+        for i in 1..5 loop
+            AjouterTexte(f, "lb" & integer'image(i), "Erreur de lecture", 10, 150 + i * 30, 160, 25);
+            ChangerTailleTexte(f, "lb" & integer'image(i), 10);
+            ChangerCouleurFond(f, "lb" & integer'image(i), FL_RIGHT_BCOL);
+            ChangerCouleurTexte(f, "lb" & integer'image(i), FL_WHITE);
+
+            AjouterTexte(f, "lbsc" & integer'image(i), "T", 130, 150 + i * 30, 40, 25);
+            ChangerAlignementTexte(f, "lbsc" & integer'image(i), FL_ALIGN_RIGHT);
+            ChangerTailleTexte(f, "lbsc" & integer'image(i), 10);
+            ChangerCouleurFond(f, "lbsc" & integer'image(i), FL_RIGHT_BCOL);
+            ChangerCouleurTexte(f, "lbsc" & integer'image(i), FL_WHITE);
+        end loop;
+
         AjouterTexte(f,"fondGrille1", "", (largeur - (hauteur - 160)) / 2 - 2, 78, hauteur - 156, hauteur - 156);
         ChangerCouleurFond(f, "fondGrille1", FL_WHITE);
 
         AjouterTexte(f,"fondGrille2", "", (largeur - (hauteur - 160)) / 2, 80, hauteur - 160, hauteur - 160);
         ChangerCouleurFond(f, "fondGrille2", FL_RIGHT_BCOL);
-        --ChangerEtatBouton(f, "boutonFond", arret);
 
         AjouterTexte(f,"colorCase","", largeur-110 , hauteur / 2 - 155, 65, 65);
         CacherElem(f, "colorCase");
@@ -367,7 +385,7 @@ package body p_vuegraph is
     begin
         f := DebutFenetre("GG", 400, 300);
 
-        AjouterTexte(f, "titreGG", "Bravo " & (if pseudo = "Invite" then "" else to_string(pseudo)) & "!", 0, 0, 400, 125);
+        AjouterTexte(f, "titreGG", "Bravo " & (if pseudo = "invite" then "" else to_string(pseudo)) & "!", 0, 0, 400, 125);
         ChangerTailleTexte(f, "titreGG", FL_HUGE_SIZE);
         ChangerAlignementTexte(f, "titreGG", FL_ALIGN_CENTER);
 
@@ -490,5 +508,22 @@ package body p_vuegraph is
             return true;
         end if;
     end removeLastMove;
+
+    procedure leaderboard (f: in out TR_Fenetre; lvl: in positive) is
+        V: TV_Score (1..5);
+    begin
+        getHighScore(lvl, V);
+
+        for i in 1..5 loop
+            if V(i).temps /= 0.0 then
+                ChangerTexte(f, "lb" & integer'image(i), V(i).pseudo);
+                ChangerTexte(f, "lbsc" & integer'image(i),integer'image(integer(V(i).temps * 100.0) / 100) & "." & integer'image(integer(V(i).temps * 100.0) mod 100)(2..3));
+            else
+                ChangerTexte(f, "lb" & integer'image(i), V(i).pseudo);
+                ChangerTexte(f, "lbsc" & integer'image(i), "");
+            end if;
+
+        end loop;
+    end leaderboard;
 
 end p_vuegraph;

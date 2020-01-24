@@ -40,4 +40,6 @@ package p_vuegraph is
 
     function removeLastMove (indMoves: in out natural) return boolean;
 
+    procedure leaderboard (f: in out TR_Fenetre; lvl: in positive);
+
 end p_vuegraph;
