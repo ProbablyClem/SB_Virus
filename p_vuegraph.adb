@@ -389,7 +389,7 @@ package body p_vuegraph is
         ChangerTailleTexte(f, "titreGG", FL_HUGE_SIZE);
         ChangerAlignementTexte(f, "titreGG", FL_ALIGN_CENTER);
 
-        AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl) & " en" & integer'image(integer(timer * 100.0) / 100) & "." & integer'image(integer(timer * 100.0) mod 100)(2..3) & " secondes", 0, 125, 400, 50);
+        AjouterTexte(f, "txtGG", "Vous avez battu le niveau" & positive'image(lvl) & " en" & integer'image(integer(timer * 100.0) / 100) & "." & (if (integer(timer * 100.0) mod 100 < 10) then (integer'image(integer(timer * 100.0) mod 100)(2..2)) else (integer'image(integer(timer * 100.0) mod 100)(2..3))) & " secondes", 0, 125, 400, 50);
         ChangerTailleTexte(f, "txtGG", FL_MEDIUM_SIZE);
         ChangerAlignementTexte(f, "txtGG", FL_ALIGN_CENTER);
 
